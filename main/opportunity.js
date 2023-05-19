@@ -12,6 +12,7 @@ const Opportunity = () => {
     const [role, setRole] = useState('');
     const [salary, setSalary] = useState('');
     const [location, setLocation] = useState('');
+    const [type, setType] = useState('');
 
     return (
         <View style={styles.container}>
@@ -38,6 +39,14 @@ const Opportunity = () => {
                 placeholder="Salary"
                 onChangeText={(salary) => {
                     setSalary(salary);
+                }}
+            />
+            <Text style={styles.fieldInput}>Job Type</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Job Type"
+                onChangeText={(Type) => {
+                    setType(type);
                 }}
             />
         </View>

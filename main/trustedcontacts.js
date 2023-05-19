@@ -11,11 +11,18 @@ const TrustedContacts = () => {
     const nav = useNavigation();
 
     contacts = [{name: 'John Doe', id: 1}, {name: 'Jane Doe', id:2}]
-    suggestedContacts = [{name: 'Fred Smith', id: 1}, {name: 'Jane Smith', id:2}]
 
     return (
         <View style={styles.containerListView}>
-            <Text style={styles.heading}>Trusted Contacts</Text>
+            <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-between', paddingRight: 15, paddingLeft: 25,
+                    paddingTop: 25}}>
+                <Text style={styles.heading}>Trusted Contacts</Text>
+                <TouchableOpacity
+                    style={styles.smallButton}
+                    onPress={() => {nav.navigate('ContactList');}}>
+                    <Text style={styles.buttonText}>Add</Text>
+                </TouchableOpacity>
+            </View>
             <FlatList
                 data={contacts}
                 keyExtractor={(item) => item.id}

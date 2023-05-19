@@ -50,7 +50,7 @@ export default StyleSheet.create({
         paddingLeft: 7,
     },
     text: {
-        fontSize: 18,
+        fontSize: 15,
         paddingBottom: 5,
     },
     contactCon: {
@@ -86,7 +86,7 @@ export default StyleSheet.create({
     contactAdd: {
         justifyContent: 'center',
     },
-    contactAddText: {
+    smallButton: {
         backgroundColor: 'blue',
         color: 'white',
         borderRadius: 10,
@@ -126,7 +126,8 @@ export default StyleSheet.create({
         zIndex: 1,
     },
     buttonText: {
-        color: 'white'
+        color: 'white',
+        fontSize: 16,
     },
     circle: {
         width: 40,

@@ -13,6 +13,7 @@ import Profile from './setup/profile';
 import KeywordSelector from './main/keywordselector';
 import Employment from './setup/employment';
 import Organisation from './setup/organisation';
+import Location from './setup/location';
 
 import { RegisterContext, SetupContext} from './setup/context';
 
@@ -23,34 +24,33 @@ const Stack = createStackNavigator();
 
 export const ContactsNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+        headerMode: 'none',
+      }}>
       <Stack.Screen name="Contacts" component={TrustedContacts} />
       <Stack.Screen name="KeywordsSelector" component={KeywordSelector} />
+      <Stack.Screen name="ContactList" component={ContactsList} />
     </Stack.Navigator>
   );
-};
-
-const MainNavigator = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="TrustedContacts" component={ContactsNavigator} />
-      <Tab.Screen name="Reputation" component={Reputation} />
-      <Tab.Screen name="Next Move" component={Opportunity} />
-    </Tab.Navigator>
-  );
-}
+};  
 
 export const AppNavigator = () => {
   const { registered } = useContext(RegisterContext);
   const { setup } = useContext(SetupContext);
-
   if(setup){
-
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name="TrustedContacts" component={ContactsNavigator} />
+        <Tab.Screen name="Reputation" component={Reputation} />
+        <Tab.Screen name="Next Move" component={Opportunity} />
+        <Tab.Screen name="Profile" component={Profile} />
+      </Tab.Navigator>
+    );
   } else if (registered) {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Setup" component={Setup} />
-        <Stack.Screen name="Invite Contact" component={ContactsList} />
+        <Stack.Screen name="Trusted Colleagues" component={ContactsList} />
       </Stack.Navigator>
     );
   } else {
@@ -58,6 +58,7 @@ export const AppNavigator = () => {
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Location" component={Location} />
         <Stack.Screen name="Employment" component={Employment} />
         <Stack.Screen name="Organisation" component={Organisation} />
         <Stack.Screen name="Verification" component={Register} />

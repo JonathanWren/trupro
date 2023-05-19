@@ -14,6 +14,7 @@ const ContactsList = () => {
     const [contacts, setContacts] = useState([]);
     const [search, setSearch] = useState('');
     const [added, setAdded] = useState([]);
+    const [showIntro, setShowIntro] = useState(true);
     const nav = useNavigation();
     const { setSetup } = useContext(SetupContext);
     const defaultList = [
@@ -89,6 +90,9 @@ const ContactsList = () => {
 
     const handlePress = (item) => {
         // show another screen passing in the contact object
+        if(added.length == 0) {
+            alert("This will cause a text/email to be sent to " + item.name + " telling them that they are in the top 25 people you have worked with and inviting them to join TruPro");
+        }
         setAdded([...added, item.name]);
     }
 
@@ -124,21 +128,26 @@ const ContactsList = () => {
     return (
         <View style={styles.containerListView}>
             <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25,}}>
-                    <TextInput style={styles.input}
-                    placeholder="Enter name, email address or phone number"
-                    onChangeText={(search) => {
-                        setSearch(search);
-                    }}
-                    />
+                {showIntro && 
+                    <Text style={styles.text}>You can now commend to up to 25 of your colleagues who are 
+                    good at their job and professional opinion you trust.</Text>
+                }   
+                <TextInput style={styles.input}
+                placeholder="Enter name, email address or phone number"
+                onChangeText={(search) => {
+                    setSearch(search);
+                    setShowIntro(false);
+                }}
+                />
             </View>
                 {filteredContacts.length == 0 && <View style={{width: '100%', paddingLeft: 25, paddingRight: 25,}}>
-                    <Text style={styles.text}>Invite {search}</Text>
+                    <Text style={styles.text}>Commend {search}</Text>
                     <TouchableOpacity
                 style={[styles.button, {width: '100%'}]}
                 onPress={() => {                    
                     alert("Please enter a complete phone number or email address");}}
             >
-                <Text style={styles.buttonText}>Invite</Text>
+                <Text style={styles.buttonText}>Send recognition</Text>
             </TouchableOpacity>
                 </View>}
             
@@ -163,7 +172,7 @@ const ContactsList = () => {
                     </View>
                     <View style={styles.contactAdd}>
                         <TouchableOpacity onPress={() => handlePress(item)}>
-                        <Text style={styles.contactAddText}>{added.some(contact => contact === item.name)? 'Added': 'Add'}</Text>
+                        <Text style={styles.smallButton}>{added.some(contact => contact === item.name)? 'Added': 'Add'}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

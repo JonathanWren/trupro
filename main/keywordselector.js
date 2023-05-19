@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import styles from '../component.style.js';
 import { useNavigation } from '@react-navigation/native';
-import { SetupContext } from '../setup/context.js';
 
 const keywords = ['Innovative', 'Hard Working', 'Smart', 'Intelligent', 'Astute', 'Positive Attitude', 'Able to admit mistakes', 'Good Communicator', 
 'Listener', 'Perseverance', 'Team Player', 'Leader', 'Good Manager', 'Reliable', 'Courageous'];
@@ -17,7 +16,6 @@ const keywords = ['Innovative', 'Hard Working', 'Smart', 'Intelligent', 'Astute'
 const KeywordSelector = (props) => {
   const [keywordsSelected, setKeywordsSelected] = useState([]);
   const nav  = useNavigation();
-  const { setSetup } = useContext(SetupContext);
   const { contact } = props.route.params;
 
   const renderKeywords = () => {
@@ -45,9 +43,9 @@ const KeywordSelector = (props) => {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {setSetup(true);}}
+          onPress={() => {nav.goBack();}}
         > 
-          <Text style={styles.buttonText}>Invite</Text>
+          <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
 
       </View>

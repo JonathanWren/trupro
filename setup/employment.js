@@ -40,6 +40,11 @@ const Role = ({route}) => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
+                        if (role === '' || !route.params) {
+                            alert('Please enter your role and organisation');
+                            return;
+                        }
+
                         nav.navigate('Verification');
                     }}
                 >

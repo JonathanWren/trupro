@@ -4,34 +4,17 @@ import React, { useState} from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
-import Autocomplete from "react-native-autocomplete-input";
 
-const Profile = () => {
+const Profile = ({route}) => {
     const nav = useNavigation();
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [location, setLocation] = useState('');
-    const [locationList, setLocationList] = useState([]);
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
     //TODO Allow entering a phone number country code
-
-    const searchLocation = (query) => {
-        if (query.length > 1) {
-          // Use api to search for locations
-          let suggestedLocations = ["New York", "Boston", "Chicago"].filter((location) => {return location.includes(query);});
-          setLocationList(suggestedLocations);
-        } else {
-            setLocationList([]);
-        }
-      };
-    
-      const onLocationChange = (text) => {
-        setLocation(text);
-        searchLocation(text);
-      };
     
     return (
         <View style={styles.container}>
@@ -71,23 +54,13 @@ const Profile = () => {
                     }}
                 />
                 <Text style={styles.fieldInput}>Where do you live?</Text>
-                <Autocomplete
-                    data={locationList}
-                    placeholder="Enter your location"
-                    value={location}
-                    style={[styles.input]}
-                    inputContainerStyle={styles.autoCompleteContainer}
-                    onChangeText={(text) => onLocationChange(text)}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                        onPress={() => {
-                            setLocation(item);
-                        }}
-                        >
-                        <Text>{item}</Text>
-                        </TouchableOpacity>
-                    )}
-                    />
+                <Text
+                    style={[styles.input, !route.params && {color: '#d9d9d9'}]}
+                    onPress={() => {
+                        nav.navigate('Location');
+                    }}
+                >{route.params ? route.params?.location : 'Location'}
+                </Text>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {            

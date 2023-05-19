@@ -1,46 +1,52 @@
 //Screen showing three scores, one below the other, each with a label and next to it a number in a red circle
 //
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import styles from '../component.style.js';
 
 const Reputation = () => {
     const [showText, setShowText] = useState(false);
+    contactsTrustingYou = [{name: 'Fred Smith', id: 1}, {name: 'Jane Smith', id:2}]
 
     return (
         <View style={styles.container}>
             <View style={styles.score}>
                 <Text style={styles.heading}>Reputation:</Text>
                 <View style={styles.circle}>
-                    <Text style={styles.number}>25</Text>
+                    <Text style={styles.number}>5</Text>
                 </View>
             </View>
 
             <View>
                 <TouchableOpacity onPress={() => setShowText(!showText)}>
-                    <Text>How is this calculated?</Text>
+                    <Text style={styles.smallPrint}>How is this calculated?</Text>
                 </TouchableOpacity>
                 {showText && 
                     <View>
-                        <Text>Your reputation is made up of two components</Text>
-                        <Text>Firstly the contacts that you trust. 
-                            This is both the number and quality of the contacts. 
-                            You should only trust people you know and whose professional judgement you trust.
-                            Adding more contacts will not always increase your reputation as your reputation 
-                            is not just based on the number of your contacts, but also on their reputation.</Text>
-                        <Text>Secondly the contacts that trust you.
-                            Again, this is both the number and quality of the contacts.
-                            The best way to increase the number of people who trust you is to trust other people</Text>
+                        <Text style={styles.text}>Your reputation shows the number of people who trust you.</Text>
                     </View>
                 }
-            </View>
-
-            <View style={styles.score}>
-                <Text style={styles.label}>Average reputation in your network:</Text>
-                <View style={styles.circle}>
-                    <Text style={styles.number}>30</Text>
-                </View>
-            </View>        
+            </View>  
+            <Text style={styles.heading}>People who trust you</Text>
+            <FlatList
+                data={contactsTrustingYou}
+                keyExtractor={(item) => item.id}
+                style={{width: '100%'}}
+                renderItem={({ item }) => (
+                    <View style={styles.contactCon} >
+                        <View style={styles.imgCon}>
+                            <View style={styles.contactImageTextCircle}>
+                                <Text style={styles.contactImgTxt}>{item?.name[0]}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.contactDat}>
+                            <Text style={styles.contactName}>
+                                {item.name}
+                            </Text>
+                        </View>
+                    </View>
+                )} 
+            />     
         </View>
 
     );
