@@ -1,14 +1,16 @@
 //Screen asking what the applicant's role is, which company they work for and when they started there
 //
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import CheckBox from "expo-checkbox";
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
+import { RegisterContext } from './context.js';
 
 const Role = ({route}) => {
     
         const nav = useNavigation();
+        const { setRegistered } = useContext(RegisterContext);
     
         const [role, setRole] = useState('');
         const [stillInRole, setStillInRole] = useState(false);
@@ -45,7 +47,7 @@ const Role = ({route}) => {
                             return;
                         }
 
-                        nav.navigate('Verification');
+                        setRegistered(true);
                     }}
                 >
                     <Text style={styles.buttonText}>Continue</Text>

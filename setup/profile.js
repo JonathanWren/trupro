@@ -13,13 +13,11 @@ const Profile = ({route}) => {
     const [location, setLocation] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-
-    //TODO Allow entering a phone number country code
     
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
-                <Text style={styles.fieldInput}>Email address</Text>
+                {/* <Text style={styles.fieldInput}>Email address</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Email Address"
@@ -36,7 +34,7 @@ const Profile = ({route}) => {
                         setPhoneNumber(phoneNumber);
                     }}
                     keyboardType="phone-pad"
-                />
+                /> */}
                 <Text style={styles.fieldInput}>First name</Text>
                 <TextInput
                     style={styles.input}
