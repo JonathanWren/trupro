@@ -18,8 +18,8 @@ const Welcome = () => {
             </Text>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => {nav.navigate('Register');}}>
-                <Text style={styles.buttonText}>Continue</Text>
+                onPress={() => {nav.navigate('Profile');}}>
+                <Text style={styles.buttonText}>Join TruPro</Text>
             </TouchableOpacity>
         </View>
     );

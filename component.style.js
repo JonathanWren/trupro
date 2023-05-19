@@ -3,16 +3,51 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    containerListView:{
+        flex: 1,
+        height: '100%',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        backgroundColor: 'white',
+    },
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        margin: 16,
+        alignItems: 'flex-start',
+        padding: 25,
+        backgroundColor: 'white',
+    },
+    scrollView: {
+        flex: 1,
+        width: '100%',
+        alignContent: 'center',
     },
     heading: {
         fontSize: 20,
         fontWeight: 'bold',
         paddingBottom: 8,
+        alignSelf: 'center',
+    },
+    fieldInput: {
+        fontFamily: 'Roboto',
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#6B6B6B',
+        paddingBottom: 7,
+        alignContent: 'flex-start',
+    },
+    checkboxContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginBottom: 15,
+    },
+    checkboxText: {
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#6B6B6B',
+        paddingLeft: 7,
     },
     text: {
         fontSize: 18,
@@ -25,7 +60,9 @@ export default StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: '#d9d9d9',
     },
-    imgCon: {},
+    imgCon: {
+        marginLeft: 15,
+    },
     contactImageTextCircle: {
         width: 55,
         height: 55,
@@ -46,16 +83,32 @@ export default StyleSheet.create({
     contactName: {
         fontSize: 16,
     },
+    contactAdd: {
+        justifyContent: 'center',
+    },
+    contactAddText: {
+        backgroundColor: 'blue',
+        color: 'white',
+        borderRadius: 10,
+        padding: 10,
+        marginRight: 15,
+        marginLeft: 10,
+    },
     input: {
-        width: '80%',
+        width: '100%',
         height: 40,
-        borderColor: 'gray',
-        borderBottomWidth: 1,
-        marginBottom: 5,
-        marginTop: 10,
+        backgroundColor: '#F0F4F7',
+        borderWidth: 0,
+        marginBottom: 15,
+        borderRadius: 7,
+        padding: 10,
+        paddingLeft: 10, //Needed for autocomplete
+    },
+    disabledInput: {
+        backgroundColor: '#E5E8F0',
     },
     button: {
-        width: '80%',
+        width: '100%',
         height: 40,
         backgroundColor: 'blue',
         justifyContent: 'center',
@@ -63,9 +116,14 @@ export default StyleSheet.create({
         borderRadius: 10,
         marginTop: 10,
     },
-    bottomButton: {
+    floatingButton: {
+        //Button positioned at bottom of screen
         position: 'absolute',
-        bottom:0,
+        backgroundColor: 'white',
+        paddingBottom: 15,
+        bottom: 0,
+        width: '100%',
+        zIndex: 1,
     },
     buttonText: {
         color: 'white'
@@ -88,4 +146,12 @@ export default StyleSheet.create({
         marginVertical: 10,
         alignItems: 'center',
     },
-  });
+    smallPrint: {
+        fontSize: 12,
+        color: '#888',
+        marginTop: 10,
+    },
+    autoCompleteContainer: {    
+        borderWidth: 0,
+    }
+});

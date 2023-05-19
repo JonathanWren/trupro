@@ -15,7 +15,8 @@ const Opportunity = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>What role are you looking for?</Text>
+            <Text style={styles.heading}>Where would you like your career to go next?</Text>
+            <Text style={styles.fieldInput}>Role</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Role"
@@ -23,7 +24,7 @@ const Opportunity = () => {
                     setRole(role);
                 }}
             />
-            <Text style={styles.heading}>Where do you want to work?</Text>
+            <Text style={styles.fieldInput}>Location</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Location"
@@ -31,7 +32,7 @@ const Opportunity = () => {
                     setLocation(location);
                 }}
             />
-            <Text style={styles.heading}>What salary are you looking for?</Text>
+            <Text style={styles.fieldInput}>Salary</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Salary"
@@ -39,18 +40,6 @@ const Opportunity = () => {
                     setSalary(salary);
                 }}
             />
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                    setRegistered(true);
-                    nav.reset({
-                        index: 0,
-                        routes: [{ name: 'Reputation' }],
-                    });
-                }}
-            >
-                <Text style={styles.buttonText}>Continue</Text>
-            </TouchableOpacity>
         </View>
     );
 }

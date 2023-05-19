@@ -1,17 +1,21 @@
 //Screen that shows a list of contacts that can be searched and allows the user to select one or add a contact manually
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Contacts from 'expo-contacts';
 import styles from '../component.style.js';
+import { SetupContext } from './context';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 //TODO Allow adding a contact manually
 
 const ContactsList = () => {
     const [contacts, setContacts] = useState([]);
     const [search, setSearch] = useState('');
+    const [added, setAdded] = useState([]);
     const nav = useNavigation();
+    const { setSetup } = useContext(SetupContext);
     const defaultList = [
         {
             id: '1',
@@ -58,8 +62,8 @@ const ContactsList = () => {
             firstName: 'Fred',
             lastName: 'Jones',
             name: 'Fred Jones',
-            role: 'QA Lead',
-            company: 'Sky',
+            role: 'Top person who does everything that you can think of',
+            company: 'The company with a really long name',
         }]
 
     useEffect(() => {
@@ -85,12 +89,13 @@ const ContactsList = () => {
 
     const handlePress = (item) => {
         // show another screen passing in the contact object
-        nav.navigate('KeywordSelector', { contact: item });
+        setAdded([...added, item.name]);
     }
 
     const filterContacts = (contacts, search) => {
         return contacts.filter((contact) => {
-            const searchlowerlist = search.toLocaleLowerCase().split(' ');
+            const searchLower = search.toLowerCase();
+            const searchlowerlist = searchLower.split(' ');
             found = true
             const namelower = contact.name.toLowerCase();
             searchlowerlist.forEach((searchlower) => {
@@ -98,48 +103,81 @@ const ContactsList = () => {
                     found = false;
                 }
             });
+            if(!found) {
+                if(contact.phoneNumbers) {
+                    if(contact.phoneNumbers[0].number.includes(searchLower)) {
+                        found = true;
+                    }
+                }
+                if(contact.emails) {
+                    if(contact.emails[0].email.toLowerCase().includes(searchLower)) {
+                        found = true;
+                    }
+                }
+            }
             return found
         });
     }
 
     const filteredContacts = search != '' ? [...filterContacts(contacts, search).slice(0,5), ...filterContacts(defaultList, search)] : filterContacts(defaultList, search);
 
-
     return (
-        <View style={styles.container}>
-            <View style={{Flex: 1, flexDirection: 'row'}} >
-                <TextInput style={styles.input}
-                placeholder="Enter name, email address or phone number"
-                onChangeText={(search) => {
-                    setSearch(search);
-                }}
-                />
+        <View style={styles.containerListView}>
+            <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25,}}>
+                    <TextInput style={styles.input}
+                    placeholder="Enter name, email address or phone number"
+                    onChangeText={(search) => {
+                        setSearch(search);
+                    }}
+                    />
             </View>
+                {filteredContacts.length == 0 && <View style={{width: '100%', paddingLeft: 25, paddingRight: 25,}}>
+                    <Text style={styles.text}>Invite {search}</Text>
+                    <TouchableOpacity
+                style={[styles.button, {width: '100%'}]}
+                onPress={() => {                    
+                    alert("Please enter a complete phone number or email address");}}
+            >
+                <Text style={styles.buttonText}>Invite</Text>
+            </TouchableOpacity>
+                </View>}
+            
             <FlatList
             style={{width: '100%'}}
             data={filteredContacts.slice(0, 500)}
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handlePress(item)}>
-                    <View style={styles.contactCon} >
-                        <View style={styles.imgCon}>
-                            <View style={styles.contactImageTextCircle}>
-                                <Text style={styles.contactImgTxt}>{item?.name[0].toUpperCase()}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.contactDat}>
-                        <Text style={styles.contactName}>
-                            {item?.firstName} {item?.middleName && item.middleName + ' '}
-                            {item?.lastName}
-                        </Text>
-                        <Text style={localstyles.emailText}>
-                            {item.phoneNumbers ? item.phoneNumbers[0].number : item.role ? item.role + ' at ' + item.company : ''}
-                        </Text>
+                <View style={styles.contactCon} >
+                    <View style={styles.imgCon}>
+                        <View style={styles.contactImageTextCircle}>
+                            <Text style={styles.contactImgTxt}>{item?.name[0].toUpperCase()}</Text>
                         </View>
                     </View>
-                </TouchableOpacity>
+                    <View style={styles.contactDat}>
+                    <Text style={styles.contactName}>
+                        {item?.firstName} {item?.middleName && item.middleName + ' '}
+                        {item?.lastName}
+                    </Text>
+                    <Text style={localstyles.emailText}>
+                        {item.phoneNumbers ? item.phoneNumbers[0].number : item.role ? item.role + ' at ' + item.company : ''}
+                    </Text>
+                    </View>
+                    <View style={styles.contactAdd}>
+                        <TouchableOpacity onPress={() => handlePress(item)}>
+                        <Text style={styles.contactAddText}>{added.some(contact => contact === item.name)? 'Added': 'Add'}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             )}
             keyExtractor={(item) => item.id}
             />
+
+            <HideWithKeyboard style={{paddingLeft: 25, paddingRight: 25, paddingBottom: 10, width: '100%'}}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {setSetup(true);}}>
+                    <Text style={styles.buttonText}>Finished</Text>
+                </TouchableOpacity>
+            </HideWithKeyboard>
         </View>
     );
 }

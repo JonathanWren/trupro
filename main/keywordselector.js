@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import styles from '../component.style.js';
 import { useNavigation } from '@react-navigation/native';
-import { SetupContext } from './context';
+import { SetupContext } from '../setup/context.js';
 
 const keywords = ['Innovative', 'Hard Working', 'Smart', 'Intelligent', 'Astute', 'Positive Attitude', 'Able to admit mistakes', 'Good Communicator', 
 'Listener', 'Perseverance', 'Team Player', 'Leader', 'Good Manager', 'Reliable', 'Courageous'];
