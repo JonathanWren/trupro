@@ -101,7 +101,7 @@ const ContactsList = () => {
             const searchLower = search.toLowerCase();
             const searchlowerlist = searchLower.split(' ');
             found = true
-            const namelower = contact.name.toLowerCase();
+            const namelower = contact.name ? contact.name.toLowerCase() : "";
             searchlowerlist.forEach((searchlower) => {
                 if (!namelower.includes(searchlower)) {
                     found = false;
@@ -130,7 +130,7 @@ const ContactsList = () => {
             <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25,}}>
                 {showIntro && 
                     <Text style={styles.text}>You can now commend to up to 25 of your colleagues who are 
-                    good at their job and professional opinion you trust.</Text>
+                    good at their job and whose professional opinion you trust.</Text>
                 }   
                 <TextInput style={styles.input}
                 placeholder="Enter name, email address or phone number"
