@@ -126,7 +126,7 @@ const ContactsList = ({route}) => {
 
     return (
         <View style={styles.containerListView}>
-            <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25,}}>
+            <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25, width: '100%'}}>
                 {showIntro && 
                     <Text style={styles.text}>You can now commend to up to 25 of your colleagues who are 
                     good at their job and whose professional opinion you trust.</Text>
