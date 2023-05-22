@@ -4,7 +4,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Contacts from 'expo-contacts';
-import styles from '../component.style.js';
+import styles, { colors } from '../component.style.js';
 import { SetupContext } from './context';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 

@@ -3,7 +3,7 @@
 import React, {useState, useEffect, useRef } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import styles from '../component.style.js';
+import styles, { colors } from '../component.style.js';
 
 //TODO get favicon from URL as follows: https://stackoverflow.com/questions/10282939/how-to-get-favicons-url-from-a-generic-webpage-in-javascript
 

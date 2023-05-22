@@ -3,7 +3,7 @@
 import React, {useState, useEffect, useRef } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import styles from '../component.style.js';
+import styles, { colors } from '../component.style.js';
 
 const Location = () => {
     const [locations, setLocations] = useState([]);

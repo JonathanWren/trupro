@@ -11,7 +11,7 @@ const Setup = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>You are now TruPro member!</Text>
+            <Text style={styles.heading}>You are now a TruPro member!</Text>
             <Text style={styles.heading}>How it works.</Text>
             <Text style={styles.text}>1. Show up to 25 colleagues who are good at their job that you respect them.</Text>
             <Text style={styles.text}>2. Get recognised in return.</Text>
