@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 export const ContactsNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Trusted Contacts" component={TrustedContacts} />
+      <Stack.Screen name="Commended Colleagues" component={TrustedContacts} />
       <Stack.Screen name="Keywords Selector" component={KeywordSelector} />
       <Stack.Screen name="Contacts List" component={ContactsList} initialParams={{'inWizard':false}}/>
     </Stack.Navigator>
@@ -47,7 +47,7 @@ export const AppNavigator = () => {
   if(setup){
     return (
       <Tab.Navigator>
-        <Tab.Screen name="TrustedContactsNav" component={ContactsNavigator} options={{headerShown: false, tabBarLabel: "Trusted Contacts"}} />
+        <Tab.Screen name="TrustedContactsNav" component={ContactsNavigator} options={{headerShown: false, tabBarLabel: "Commended Colleagues"}} />
         <Tab.Screen name="Reputation" component={Reputation} />
         <Tab.Screen name="Next Move" component={Opportunity} />
         <Tab.Screen name="ProfileNav" component={ProfileNavigator} options={{headerShown: false, tabBarLabel: "Profile"}} />
@@ -57,7 +57,7 @@ export const AppNavigator = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Setup" component={Setup} />
-        <Stack.Screen name="Trusted Colleagues" component={ContactsList} initialParams={{'inWizard':true}}/>
+        <Stack.Screen name="Commended Colleagues" component={ContactsList} initialParams={{'inWizard':true}}/>
       </Stack.Navigator>
     );
   } else {

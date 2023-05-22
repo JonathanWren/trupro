@@ -128,13 +128,14 @@ const ContactsList = ({route}) => {
         <View style={styles.containerListView}>
             <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25, width: '100%'}}>
                 {showIntro && 
-                    <Text style={styles.text}>You can now commend to up to 25 of your colleagues who are 
+                    <Text style={styles.text}>Now you can add up to 25 of your colleagues to your list of commended colleagues. They should be people who are 
                     good at their job and whose professional opinion you trust.</Text>
                 }   
                 <TextInput style={styles.input}
                 placeholder="Enter name, email address or phone number"
                 placeholderTextColor={colors.fieldPlaceHolderTextColor}
                 keyboardType='email-address'
+                multiline={true}
                 onChangeText={(search) => {
                     setSearch(search);
                     setShowIntro(false);

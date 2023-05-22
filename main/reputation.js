@@ -26,12 +26,12 @@ const Reputation = () => {
                             </TouchableOpacity>
                             {showText && 
                                 <View>
-                                    <Text style={styles.text}>Your reputation shows the number of people who trust you.</Text>
+                                    <Text style={styles.text}>Your reputation shows the number of people who commend you.</Text>
                                 </View>
                             }
                         </View>  
             </View>
-            <Text style={[styles.heading, {paddingTop: 20}]}>People who trust you</Text>
+            <Text style={[styles.heading, {paddingTop: 20}]}>People who commend you</Text>
             <FlatList
                 data={contactsTrustingYou}
                 keyExtractor={(item) => item.id}

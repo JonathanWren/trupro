@@ -16,7 +16,7 @@ const TrustedContacts = () => {
         <View style={styles.containerListView}>
             <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-between', paddingRight: 15, paddingLeft: 25,
                     paddingTop: 25}}>
-                <Text style={styles.heading}>Trusted Contacts</Text>
+                <Text style={styles.heading}>Commended Colleagues</Text>
                 <TouchableOpacity
                     style={styles.smallButton}
                     onPress={() => {nav.navigate('Contacts List');}}>
