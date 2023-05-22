@@ -10,7 +10,7 @@ import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 //TODO Allow adding a contact manually
 
-const ContactsList = () => {
+const ContactsList = ({route}) => {
     const [contacts, setContacts] = useState([]);
     const [search, setSearch] = useState('');
     const [added, setAdded] = useState([]);
@@ -179,14 +179,15 @@ const ContactsList = () => {
             )}
             keyExtractor={(item) => item.id}
             />
-
-            <HideWithKeyboard style={{paddingLeft: 25, paddingRight: 25, paddingBottom: 10, width: '100%'}}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {setSetup(true);}}>
-                    <Text style={styles.buttonText}>Finished</Text>
-                </TouchableOpacity>
-            </HideWithKeyboard>
+            {route.params.inWizard &&
+                <HideWithKeyboard style={{paddingLeft: 25, paddingRight: 25, paddingBottom: 10, width: '100%'}}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {setSetup(true);}}>
+                        <Text style={styles.buttonText}>Finished</Text>
+                    </TouchableOpacity>
+                </HideWithKeyboard>
+            }
         </View>
     );
 }

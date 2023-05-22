@@ -40,14 +40,6 @@ const KeywordSelector = (props) => {
       <View style={localStyles.container}>
         <Text style={styles.heading}>What keywords describe {contact.name}'s character?</Text>
         {renderKeywords()}
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {nav.goBack();}}
-        > 
-          <Text style={styles.buttonText}>Save</Text>
-        </TouchableOpacity>
-
       </View>
     </View>
   )

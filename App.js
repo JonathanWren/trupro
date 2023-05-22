@@ -24,15 +24,22 @@ const Stack = createStackNavigator();
 
 export const ContactsNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{
-        headerMode: 'none',
-      }}>
-      <Stack.Screen name="Contacts" component={TrustedContacts} />
-      <Stack.Screen name="KeywordsSelector" component={KeywordSelector} />
-      <Stack.Screen name="ContactList" component={ContactsList} />
+    <Stack.Navigator>
+      <Stack.Screen name="Trusted Contacts" component={TrustedContacts} />
+      <Stack.Screen name="Keywords Selector" component={KeywordSelector} />
+      <Stack.Screen name="Contact List" component={ContactsList} initialParams={{'inWizard':false}}/>
     </Stack.Navigator>
   );
 };  
+
+export const ProfileNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':false}}/>
+      <Stack.Screen name="Location" component={Location} />
+    </Stack.Navigator>
+  );
+};
 
 export const AppNavigator = () => {
   const { registered } = useContext(RegisterContext);
@@ -40,24 +47,24 @@ export const AppNavigator = () => {
   if(setup){
     return (
       <Tab.Navigator>
-        <Tab.Screen name="TrustedContacts" component={ContactsNavigator} />
+        <Tab.Screen name="TrustedContactsNav" component={ContactsNavigator} options={{headerShown: false, tabBarLabel: "Trusted Contacts"}} />
         <Tab.Screen name="Reputation" component={Reputation} />
         <Tab.Screen name="Next Move" component={Opportunity} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="ProfileNav" component={ProfileNavigator} options={{headerShown: false, tabBarLabel: "Profile"}} />
       </Tab.Navigator>
     );
   } else if (registered) {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Setup" component={Setup} />
-        <Stack.Screen name="Trusted Colleagues" component={ContactsList} />
+        <Stack.Screen name="Trusted Colleagues" component={ContactsList} initialParams={{'inWizard':true}}/>
       </Stack.Navigator>
     );
   } else {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':true}}/>
         <Stack.Screen name="Location" component={Location} />
         <Stack.Screen name="Employment" component={Employment} />
         <Stack.Screen name="Organisation" component={Organisation} />

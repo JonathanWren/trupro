@@ -59,20 +59,22 @@ const Profile = ({route}) => {
                     }}
                 >{route.params ? route.params?.location : 'Location'}
                 </Text>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {            
-                        //Validate that name and job title are completed
-                        if (firstName === '') {
-                            alert('Please complete your first name');
-                            return;
-                        }
+                {route.params.inWizard &&
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {            
+                            //Validate that name and job title are completed
+                            if (firstName === '') {
+                                alert('Please complete your first name');
+                                return;
+                            }
 
-                        nav.navigate('Employment');
-                    }}
-                >
-                    <Text style={styles.buttonText}>Continue</Text>
-                </TouchableOpacity>
+                            nav.navigate('Employment');
+                        }}
+                    >
+                        <Text style={styles.buttonText}>Continue</Text>
+                    </TouchableOpacity>
+                }
             </ScrollView>
         </View>
     );
