@@ -10,6 +10,7 @@ export default StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         backgroundColor: 'white',
+        width: '100%',
     },
     container: {
         flex: 1,
@@ -144,8 +145,9 @@ export default StyleSheet.create({
     },
     score: {
         flexDirection: 'row',
-        marginVertical: 10,
         alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
     },
     smallPrint: {
         fontSize: 12,

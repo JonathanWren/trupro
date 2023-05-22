@@ -9,25 +9,29 @@ const Reputation = () => {
     contactsTrustingYou = [{name: 'Fred Smith', id: 1}, {name: 'Jane Smith', id:2}]
 
     return (
-        <View style={styles.container}>
-            <View style={styles.score}>
-                <Text style={styles.heading}>Reputation:</Text>
-                <View style={styles.circle}>
-                    <Text style={styles.number}>5</Text>
-                </View>
-            </View>
-
-            <View>
-                <TouchableOpacity onPress={() => setShowText(!showText)}>
-                    <Text style={styles.smallPrint}>How is this calculated?</Text>
-                </TouchableOpacity>
-                {showText && 
+        <View style={styles.containerListView}>
+            <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25, width: '100%'}}>
+                <View style={styles.score}>
                     <View>
-                        <Text style={styles.text}>Your reputation shows the number of people who trust you.</Text>
+                        <Text style={styles.heading}>Reputation:</Text>
                     </View>
-                }
-            </View>  
-            <Text style={styles.heading}>People who trust you</Text>
+                    <View style={styles.circle}>
+                        <Text style={styles.number}>5</Text>
+                    </View>
+                </View>
+
+                <View>
+                            <TouchableOpacity onPress={() => setShowText(!showText)}>
+                                <Text style={styles.smallPrint}>How is this calculated?</Text>
+                            </TouchableOpacity>
+                            {showText && 
+                                <View>
+                                    <Text style={styles.text}>Your reputation shows the number of people who trust you.</Text>
+                                </View>
+                            }
+                        </View>  
+            </View>
+            <Text style={[styles.heading, {paddingTop: 20}]}>People who trust you</Text>
             <FlatList
                 data={contactsTrustingYou}
                 keyExtractor={(item) => item.id}
