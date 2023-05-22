@@ -5,24 +5,7 @@ import { View, Text, FlatList, TextInput, TouchableOpacity, Image } from 'react-
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
 
-//TODO get favicon from URL as follows: https://stackoverflow.com/questions/10282939/how-to-get-favicons-url-from-a-generic-webpage-in-javascript
-
 const OrganisationListItem = ({ item }) => {
-    // const [favicon, setFavicon] = useState(null);
-
-    // useEffect(() => {
-    //     const fetchFavicon = async () => {
-    //       try {
-    //         const response = await fetch(item.URL);
-    //         setFavicon(response);
-    //         console.log(item.URL);
-    //         console.log(response);
-    //       } catch (err) {
-    //         console.log(err);
-    //       }
-    //     }
-    //     fetchFavicon();
-    //   }, []);
     const nav = useNavigation();
 
     const handlePress = (item) => {
@@ -35,7 +18,7 @@ const OrganisationListItem = ({ item }) => {
         <View style={styles.contactCon} >
             <View style={styles.imgCon}>
                 <View style={styles.contactImageTextCircle}>
-                    <Text style={styles.contactImgTxt}>{item?.name[0].toUpperCase()}</Text>
+                    <Image source={{ uri: 'https://s2.googleusercontent.com/s2/favicons?sz=32&domain=' + item.URL }} style={{ width: 32, height: 32 }} />
                 </View>
             </View>
             <View style={styles.contactDat}>
@@ -62,17 +45,17 @@ const Organisation = () => {
         {
             id: '2',
             name: 'Hazy',
-            URL: 'https://www.hazy.com/images/favicons/favicon.svg',
+            URL: 'https://www.hazy.com',
         },
         {
             id: '3',
             name: 'BBC',
-            URL: 'https://www.bbc.co.uk/favicon.ico',
+            URL: 'https://www.bbc.co.uk',
         },
         {
             id: '4',
             name: 'ITV',
-            URL: 'https://app.10ft.itv.com/itvstatic/assets/images/brands/itvx/favicon-32x32.png',
+            URL: 'https://www.itv.com',
         },
         {
             id: '5',
@@ -141,15 +124,25 @@ const Organisation = () => {
                 {filteredOrganisations.length == 0 && <View style={{width: '100%'}}>
                     <Text style={styles.text}>Add New organisation "{search}"</Text>
                     <Text style={styles.fieldInput}>Organisation URL</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="URL"
-                        placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                        onChangeText={(url) => {
-                            setURL(url);
-                        }}
-                        keyboardType='url'
-                    />
+                    <View style={{flexDirection: 'row', width: '100%', alignContent: 'center'}}>
+                        <View style={{justifyContent: 'space-around', paddingRight: 10,}}>
+                            <View style={styles.contactImageTextCircle}>
+                                <Image source={{ uri: 'https://s2.googleusercontent.com/s2/favicons?sz=32&domain=' + url }} style={{ width: 32, height: 32 }} />
+                            </View>
+                        </View>
+                        <View style={[styles.input, {flex: 1, flexDirection: 'row'}]}>
+                            <Text style={{paddingRight: 10, justifyContent: 'space-around', color: colors.fieldPlaceHolderTextColor}}>https://</Text>
+                            <TextInput
+                            style={{flex: 1}}
+                                placeholder="URL"
+                                placeholderTextColor={colors.fieldPlaceHolderTextColor}
+                                onChangeText={(url) => {
+                                    setURL(url);
+                                }}
+                                keyboardType='url'
+                            />
+                        </View>
+                    </View>
                     <TouchableOpacity
                 style={styles.button}
                 onPress={() => {                    
