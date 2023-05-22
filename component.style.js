@@ -42,7 +42,6 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     fieldInput: {
-        fontFamily: 'Roboto',
         fontSize: 12,
         fontWeight: 'bold',
         color: colors.fieldTextColor,
@@ -55,7 +54,6 @@ export default StyleSheet.create({
         marginBottom: 15,
     },
     checkboxText: {
-        fontFamily: 'Roboto',
         fontSize: 14,
         fontWeight: 'bold',
         color: colors.fieldLabelColor,
