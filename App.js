@@ -27,7 +27,7 @@ export const ContactsNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen name="Trusted Contacts" component={TrustedContacts} />
       <Stack.Screen name="Keywords Selector" component={KeywordSelector} />
-      <Stack.Screen name="Contact List" component={ContactsList} initialParams={{'inWizard':false}}/>
+      <Stack.Screen name="Contacts List" component={ContactsList} initialParams={{'inWizard':false}}/>
     </Stack.Navigator>
   );
 };  

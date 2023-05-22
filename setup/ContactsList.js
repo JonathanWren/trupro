@@ -8,7 +8,7 @@ import styles from '../component.style.js';
 import { SetupContext } from './context';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
-//TODO Allow adding a contact manually
+//TODO Validate contact added manually
 
 const ContactsList = ({route}) => {
     const [contacts, setContacts] = useState([]);

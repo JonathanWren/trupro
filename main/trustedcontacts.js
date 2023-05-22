@@ -19,7 +19,7 @@ const TrustedContacts = () => {
                 <Text style={styles.heading}>Trusted Contacts</Text>
                 <TouchableOpacity
                     style={styles.smallButton}
-                    onPress={() => {nav.navigate('ContactList');}}>
+                    onPress={() => {nav.navigate('Contacts List');}}>
                     <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
             </View>
@@ -29,7 +29,7 @@ const TrustedContacts = () => {
                 style={{width: '100%'}}
                 renderItem={({ item }) => (
                     <TouchableOpacity 
-                        onPress={() => {nav.navigate('KeywordsSelector', {contact: item})}}
+                        onPress={() => {nav.navigate('Keywords Selector', {contact: item})}}
                     >
                         <View style={styles.contactCon} >
                             <View style={styles.imgCon}>
