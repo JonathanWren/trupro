@@ -3,7 +3,7 @@
 import React, { useState} from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from '../component.style.js';
+import styles, { colors } from '../component.style.js';
 
 const Profile = ({route}) => {
     const nav = useNavigation();
@@ -39,6 +39,7 @@ const Profile = ({route}) => {
                 <TextInput
                     style={styles.input}
                     placeholder="First name"
+                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
                     onChangeText={(firstName) => {
                         setFirstName(firstName);
                     }}
@@ -47,17 +48,18 @@ const Profile = ({route}) => {
                 <TextInput
                     style={styles.input}
                     placeholder="Last name"
+                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
                     onChangeText={(lastName) => {
                         setLastName(lastName);
                     }}
                 />
                 <Text style={styles.fieldInput}>Where do you live?</Text>
                 <Text
-                    style={[styles.input, !route.params && {color: '#d9d9d9'}]}
+                    style={[styles.input, !route.params.location && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
                         nav.navigate('Location');
                     }}
-                >{route.params ? route.params?.location : 'Location'}
+                >{route.params.location ? route.params?.location : 'Location'}
                 </Text>
                 {route.params.inWizard &&
                     <TouchableOpacity

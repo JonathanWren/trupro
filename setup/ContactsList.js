@@ -134,6 +134,7 @@ const ContactsList = ({route}) => {
                 }   
                 <TextInput style={styles.input}
                 placeholder="Enter name, email address or phone number"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
                 onChangeText={(search) => {
                     setSearch(search);
                     setShowIntro(false);

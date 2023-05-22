@@ -4,7 +4,7 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import CheckBox from "expo-checkbox";
 import { useNavigation } from '@react-navigation/native';
-import styles from '../component.style.js';
+import styles, { colors } from '../component.style.js';
 import { RegisterContext } from './context.js';
 
 const Role = ({route}) => {
@@ -22,13 +22,14 @@ const Role = ({route}) => {
                 <TextInput
                     style={styles.input}
                     placeholder="Role"
+                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
                     onChangeText={(role) => {
                         setRole(role);
                     }}
                 />
                 <Text style={styles.fieldInput}>Organisation</Text>
                 <Text
-                    style={[styles.input, !route.params && {color: '#d9d9d9'}]}
+                    style={[styles.input, !route.params && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
                         nav.navigate('Organisation');
                     }}

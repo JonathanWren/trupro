@@ -132,6 +132,7 @@ const Organisation = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="Search"
+                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
                     onChangeText={(search) => {
                         setSearch(search);
                     }}
@@ -143,6 +144,7 @@ const Organisation = () => {
                     <TextInput
                         style={styles.input}
                         placeholder="URL"
+                        placeholderTextColor={colors.fieldPlaceHolderTextColor}
                         onChangeText={(url) => {
                             setURL(url);
                         }}

@@ -112,6 +112,7 @@ const Location = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="Search"
+                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
                     onChangeText={(search) => {
                         setSearch(search);
                     }}

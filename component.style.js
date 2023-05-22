@@ -2,6 +2,17 @@
 
 import { StyleSheet } from 'react-native';
 
+export const colors = {
+    appBackgroundColor: 'white',
+    fieldLabelColor: '#6B6B6B',
+    fieldTextColor: '#6B6B6B',
+    fieldBackgroundColor: '#F0F4F7',
+    circleBackgroundColor: '#d9d9d9',
+    buttonBackgroundColor: 'blue', 
+    buttonTextColor: 'white',
+    fieldPlaceHolderTextColor: '#A0A0A0', 
+}
+
 export default StyleSheet.create({
     containerListView:{
         flex: 1,
@@ -9,7 +20,7 @@ export default StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        backgroundColor: 'white',
+        backgroundColor: colors.appBackgroundColor,
         width: '100%',
     },
     container: {
@@ -17,7 +28,7 @@ export default StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         padding: 25,
-        backgroundColor: 'white',
+        backgroundColor: colors.appBackgroundColor,
     },
     scrollView: {
         flex: 1,
@@ -34,7 +45,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontSize: 12,
         fontWeight: 'bold',
-        color: '#6B6B6B',
+        color: colors.fieldTextColor,
         paddingBottom: 7,
         alignContent: 'flex-start',
     },
@@ -47,7 +58,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontSize: 14,
         fontWeight: 'bold',
-        color: '#6B6B6B',
+        color: colors.fieldLabelColor,
         paddingLeft: 7,
     },
     text: {
@@ -59,7 +70,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         padding: 5,
         borderBottomWidth: 0.5,
-        borderBottomColor: '#d9d9d9',
+        borderBottomColor: colors.circleBackgroundColor,
     },
     imgCon: {
         marginLeft: 15,
@@ -69,7 +80,7 @@ export default StyleSheet.create({
         height: 55,
         borderRadius: 30,
         overflow: 'hidden',
-        backgroundColor: '#d9d9d9',
+        backgroundColor: colors.circleBackgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
       },
@@ -88,8 +99,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     smallButton: {
-        backgroundColor: 'blue',
-        color: 'white',
+        backgroundColor: colors.buttonBackgroundColor,
+        color: colors.buttonTextColor,
         borderRadius: 10,
         padding: 10,
         marginRight: 15,
@@ -98,50 +109,38 @@ export default StyleSheet.create({
     input: {
         width: '100%',
         height: 40,
-        backgroundColor: '#F0F4F7',
+        backgroundColor: colors.fieldBackgroundColor,
         borderWidth: 0,
         marginBottom: 15,
         borderRadius: 7,
         padding: 10,
         paddingLeft: 10, //Needed for autocomplete
     },
-    disabledInput: {
-        backgroundColor: '#E5E8F0',
-    },
     button: {
         width: '100%',
         height: 40,
-        backgroundColor: 'blue',
+        backgroundColor: colors.buttonBackgroundColor,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
         marginTop: 10,
     },
-    floatingButton: {
-        //Button positioned at bottom of screen
-        position: 'absolute',
-        backgroundColor: 'white',
-        paddingBottom: 15,
-        bottom: 0,
-        width: '100%',
-        zIndex: 1,
-    },
     buttonText: {
-        color: 'white',
+        color: colors.buttonTextColor,
         fontSize: 16,
     },
-    circle: {
+    reputationCircle: {
         width: 40,
         height: 40,
-        backgroundColor: 'red',
+        backgroundColor: colors.buttonBackgroundColor,
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 10,
     },
-    number: {
+    reputationNumber: {
         fontSize: 18,
-        color: 'white',
+        color: colors.buttonTextColor,
     },
     score: {
         flexDirection: 'row',
@@ -154,7 +153,4 @@ export default StyleSheet.create({
         color: '#888',
         marginTop: 10,
     },
-    autoCompleteContainer: {    
-        borderWidth: 0,
-    }
 });

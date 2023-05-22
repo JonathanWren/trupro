@@ -15,8 +15,8 @@ const Reputation = () => {
                     <View>
                         <Text style={styles.heading}>Reputation:</Text>
                     </View>
-                    <View style={styles.circle}>
-                        <Text style={styles.number}>5</Text>
+                    <View style={styles.reputationCircle}>
+                        <Text style={styles.reputationNumber}>5</Text>
                     </View>
                 </View>
 
