@@ -4,6 +4,7 @@ import React, {useState, useEffect, useRef } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
+import validator from 'validator';
 
 const OrganisationListItem = ({ item }) => {
     const nav = useNavigation();
@@ -148,6 +149,8 @@ const Organisation = () => {
                 onPress={() => {                    
                     if (url == '') {
                         alert("Please enter the url of the organisation you want to add");
+                    } else if (!validator.isURL(url)) {
+                        alert("Please enter a valid url");
                     } else {
                         nav.navigate('Employment', {organisation: search});
                     }}}

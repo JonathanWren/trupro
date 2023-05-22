@@ -7,8 +7,7 @@ import * as Contacts from 'expo-contacts';
 import styles, { colors } from '../component.style.js';
 import { SetupContext } from './context';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-
-//TODO Validate contact added manually
+import validator from 'validator';
 
 const ContactsList = ({route}) => {
     const [contacts, setContacts] = useState([]);
@@ -135,18 +134,26 @@ const ContactsList = ({route}) => {
                 <TextInput style={styles.input}
                 placeholder="Enter name, email address or phone number"
                 placeholderTextColor={colors.fieldPlaceHolderTextColor}
+                keyboardType='email-address'
                 onChangeText={(search) => {
                     setSearch(search);
                     setShowIntro(false);
                 }}
+                ref={input => { this.searchInput = input }}
                 />
             </View>
                 {filteredContacts.length == 0 && <View style={{width: '100%', paddingLeft: 25, paddingRight: 25,}}>
                     <Text style={styles.text}>Commend {search}</Text>
                     <TouchableOpacity
                 style={[styles.button, {width: '100%'}]}
-                onPress={() => {                    
-                    alert("Please enter a complete phone number or email address");}}
+                onPress={() => {       
+                    if(validator.isEmail(search) || validator.isMobilePhone(search)) {
+                        alert("added " + search );
+                        this.searchInput.clear();
+                        setSearch('');
+                    } else {
+                        alert("Please enter a complete phone number or email address");
+                    }}}
             >
                 <Text style={styles.buttonText}>Send recognition</Text>
             </TouchableOpacity>
