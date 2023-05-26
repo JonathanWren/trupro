@@ -1,10 +1,9 @@
 //Screen showing a list of chats with floating button to add a new chat
 //
-import React, {useState, useEffect, useRef, useContext } from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, Image, StyleSheet, } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
-import {contacts} from '../setup/names.js'
 import { ChatsContext } from '../setup/context.js';
 
 const ChatsListItem = ({ item }) => {

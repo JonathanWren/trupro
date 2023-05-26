@@ -1,20 +1,12 @@
 //Screen showing the name, role and company for a contact then a button to request an introduction from Adriano Basso
 //
-import React, {useState, useEffect, useContext } from 'react';
-import { View, Text, FlatList, TextInput, TouchableOpacity, Image, StyleSheet, } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, } from 'react-native';
+import { useNavigation, } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
-import {contacts} from '../setup/names.js'
-import { ChatsContext } from '../setup/context.js';
 
 const RequestIntroduction = ({route}) => {
     const { contact } = route.params;
-    const nav = useNavigation();
-    const { chats, setChats } = useContext(ChatsContext);
-
-    const handlePress = (item) => {
-        nav.navigate('Chat', {contact: item})
-    }
 
     const handleAdd = () => {
         alert("request an introduction from Adriano Basso")

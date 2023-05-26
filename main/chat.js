@@ -1,9 +1,8 @@
 //Chat screen for messaging with a contact with some example messages
 //
 import styles, { colors } from '../component.style.js';
-import { FlatList, Image, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { FlatList, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import Chats from './chats.js';
 
 
 const Chat = ({ route, navigation }) => {
