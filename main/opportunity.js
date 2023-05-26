@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from '../component.style.js';
+import styles, {colors} from '../component.style.js';
 
 const Opportunity = () => {
 
@@ -21,6 +21,7 @@ const Opportunity = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Role"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
                 onChangeText={(role) => {
                     setRole(role);
                 }}
@@ -29,6 +30,7 @@ const Opportunity = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Location"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
                 onChangeText={(location) => {
                     setLocation(location);
                 }}
@@ -37,6 +39,7 @@ const Opportunity = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Salary"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
                 onChangeText={(salary) => {
                     setSalary(salary);
                 }}
@@ -45,6 +48,7 @@ const Opportunity = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Job Type"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
                 onChangeText={(Type) => {
                     setType(type);
                 }}

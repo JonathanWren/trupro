@@ -1,6 +1,6 @@
 //write a reach native component to allow selecting from a list of keywords displayed in boxes or entering a custom one
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,

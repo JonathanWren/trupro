@@ -14,8 +14,12 @@ import KeywordSelector from './main/keywordselector';
 import Employment from './setup/employment';
 import Organisation from './setup/organisation';
 import Location from './setup/location';
+import Chats from './main/chats';
+import Chat from './main/chat';
+import AddChat from './main/addchat';
+import RequestIntroduction from './main/requestintroduction';
 
-import { RegisterContext, SetupContext} from './setup/context';
+import { RegisterContext, SetupContext, ChatsContext} from './setup/context';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -41,12 +45,24 @@ export const ProfileNavigator = () => {
   );
 };
 
+export const ChatNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Chats" component={Chats} />
+      <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="AddChat" component={AddChat} />
+      <Stack.Screen name="RequestIntroduction" component={RequestIntroduction} />
+    </Stack.Navigator>
+  );
+};
+
 export const AppNavigator = () => {
   const { registered } = useContext(RegisterContext);
   const { setup } = useContext(SetupContext);
-  if(setup){
+  if(true){
     return (
       <Tab.Navigator>
+        <Tab.Screen name="ChatsNav" component={ChatNavigator} options={{headerShown: false, tabBarLabel: "Chats"}}/>
         <Tab.Screen name="TrustedContactsNav" component={ContactsNavigator} options={{headerShown: false, tabBarLabel: "Commended Colleagues"}} />
         <Tab.Screen name="Reputation" component={Reputation} />
         <Tab.Screen name="Next Move" component={Opportunity} />
@@ -77,13 +93,16 @@ export const AppNavigator = () => {
 const App = () => {
   const [registered, setRegistered] = useState(false);
   const [setup, setSetup] = useState(false);
+  const [chats, setChats] = useState([]);
 
   return (
     <RegisterContext.Provider value={{ registered, setRegistered }}>
       <SetupContext.Provider value={{ setup, setSetup }}>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
+        <ChatsContext.Provider value={{ chats, setChats }}>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </ChatsContext.Provider>
       </SetupContext.Provider>
     </RegisterContext.Provider>
   );

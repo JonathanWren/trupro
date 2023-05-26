@@ -4,6 +4,7 @@ import React from 'react';
 import { View, Text, FlatList, TouchableOpacity} from 'react-native';
 import styles from '../component.style.js';
 import { useNavigation } from '@react-navigation/native';
+import { defaultList } from '../setup/names';
 
 
 const TrustedContacts = () => {

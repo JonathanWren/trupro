@@ -8,6 +8,7 @@ import styles, { colors } from '../component.style.js';
 import { SetupContext } from './context';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import validator from 'validator';
+import {defaultList} from './names';
 
 const ContactsList = ({route}) => {
     const [contacts, setContacts] = useState([]);
@@ -16,55 +17,6 @@ const ContactsList = ({route}) => {
     const [showIntro, setShowIntro] = useState(true);
     const nav = useNavigation();
     const { setSetup } = useContext(SetupContext);
-    const defaultList = [
-        {
-            id: '1',
-            firstName: 'John',
-            lastName: 'Doe',
-            name: 'John Doe',
-            role: 'Developer',
-            company: 'ABC',
-        },
-        {
-            id: '2',
-            firstName: 'Jane',
-            lastName: 'Doe',
-            name: 'Jane Doe',
-            role: 'Developer',
-            company: 'ABC',
-        },
-        {
-            id: '3',
-            firstName: 'Fred',
-            lastName: 'Smith',
-            name: 'Fred Smith',
-            role: 'Product Manager',
-            company: 'Hazy',
-        },
-        {
-            id: '4',
-            firstName: 'Jane',
-            lastName: 'Smith',
-            name: 'Jane Smith',
-            role: 'Product Owner',
-            company: 'BBC',
-        },
-        {
-            id: '5',
-            firstName: 'John',
-            lastName: 'Smith',
-            name: 'John Smith',
-            role: 'Tester',
-            company: 'ITV',
-        },
-        {
-            id: '6',
-            firstName: 'Fred',
-            lastName: 'Jones',
-            name: 'Fred Jones',
-            role: 'Top person who does everything that you can think of',
-            company: 'The company with a really long name',
-        }]
 
     useEffect(() => {
         showFirstContactAsync();
@@ -95,8 +47,8 @@ const ContactsList = ({route}) => {
         setAdded([...added, item.name]);
     }
 
-    const filterContacts = (contacts, search) => {
-        return contacts.filter((contact) => {
+    const filterContacts = (sourceContacts, search) => {
+        return sourceContacts.filter((contact) => {
             const searchLower = search.toLowerCase();
             const searchlowerlist = searchLower.split(' ');
             found = true
