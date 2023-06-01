@@ -1,58 +1,57 @@
 //Screen asking questions about what roles they are looking for
 //
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import React from 'react';
+import { View, Text, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles, {colors} from '../component.style.js';
 
-const Opportunity = () => {
+const Opportunity = ({route}) => {
 
     const nav = useNavigation();
-
-    const [role, setRole] = useState('');
-    const [salary, setSalary] = useState('');
-    const [location, setLocation] = useState('');
-    const [type, setType] = useState('');
 
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Where would you like your career to go next?</Text>
             <Text style={styles.fieldInput}>Role</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Role"
-                placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                onChangeText={(role) => {
-                    setRole(role);
-                }}
-            />
+            <Text
+                    style={[styles.input, (!route.params || !route.params.opportunity || !route.params.opportunity.role) && {color: colors.fieldPlaceHolderTextColor}]}
+                    onPress={() => {
+                        nav.navigate('Role', {opportunity: route.params ? route.params.opportunity : {}});
+                    }}
+                >{route.params && route.params.opportunity && route.params.opportunity.role ? route.params.opportunity.role : 'Role'}
+            </Text>
             <Text style={styles.fieldInput}>Location</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Location"
-                placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                onChangeText={(location) => {
-                    setLocation(location);
-                }}
-            />
+            <Text
+                    style={[styles.input, (!route.params || !route.params.opportunity || !route.params.opportunity.location) && {color: colors.fieldPlaceHolderTextColor}]}
+                    onPress={() => {
+                        nav.navigate('RoleLocation', {opportunity: route.params ? route.params.opportunity : {}});
+                    }}
+                >{route.params && route.params.opportunity && route.params.opportunity.location ? route.params.opportunity.location : 'Location'}
+            </Text>
             <Text style={styles.fieldInput}>Salary</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Salary"
-                placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                onChangeText={(salary) => {
-                    setSalary(salary);
-                }}
-            />
+            <Text
+                    style={[styles.input, (!route.params || !route.params.opportunity || !route.params.opportunity.salary) && {color: colors.fieldPlaceHolderTextColor}]}
+                    onPress={() => {
+                        nav.navigate('RoleSalary', {opportunity: route.params ? route.params.opportunity : {}});
+                    }}
+                >{route.params && route.params.opportunity && route.params.opportunity.salary ? '£' + route.params.opportunity.salary + 'K' : 'Salary'}
+            </Text>
             <Text style={styles.fieldInput}>Job Type</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Job Type"
-                placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                onChangeText={(Type) => {
-                    setType(type);
-                }}
-            />
+            <Text
+                    style={[styles.input, (!route.params || !route.params.opportunity || !route.params.opportunity.jobType || route.params.opportunity.jobType.length == 0) && {color: colors.fieldPlaceHolderTextColor}]}
+                    onPress={() => {
+                        nav.navigate('RoleJobType', {opportunity: route.params ? route.params.opportunity : {}});
+                    }}
+                >{route.params && route.params.opportunity && route.params.opportunity.jobType && route.params.opportunity.jobType.length > 0 ? route.params.opportunity.jobType.map(item => item).join(', ') : 'Job Type'}
+            </Text>
+            <Text style={styles.fieldInput}>Seniority</Text>
+            <Text
+                    style={[styles.input, (!route.params || !route.params.opportunity || !route.params.opportunity.seniority || route.params.opportunity.seniority.length == 0) && {color: colors.fieldPlaceHolderTextColor}]}
+                    onPress={() => {
+                        nav.navigate('RoleSeniority', {opportunity: route.params ? route.params.opportunity : {}});
+                    }}
+                >{route.params && route.params.opportunity && route.params.opportunity.seniority && route.params.opportunity.seniority.length > 0 ? route.params.opportunity.seniority.map(item => item).join(', ') : 'Seniority'}
+            </Text>
         </View>
     );
 }

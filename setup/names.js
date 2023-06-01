@@ -833,7 +833,7 @@ export const defaultList = [
     }]
 
 
-export const contacts = [
+export const commendedByContacts = [
     {
         id: '201',
         firstName: 'Alex',
@@ -874,3 +874,5 @@ export const contacts = [
         role: 'Product Manager',
         company: 'Hazy',
     }]
+
+export const commendedContacts = [{name: 'John Doe', id: 1}, {name: 'Jane Doe', id:2}]

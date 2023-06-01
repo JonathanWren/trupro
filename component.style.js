@@ -140,6 +140,19 @@ export default StyleSheet.create({
         fontSize: 18,
         color: colors.buttonTextColor,
     },
+    contactsCircle: {
+        width: 30,
+        height: 30,
+        backgroundColor: colors.buttonBackgroundColor,
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 10,
+    },
+    contactsNumber: {
+        fontSize: 15,
+        color: colors.buttonTextColor,
+    },
     score: {
         flexDirection: 'row',
         alignItems: 'center',

@@ -4,17 +4,16 @@ import React from 'react';
 import { View, Text, FlatList, TouchableOpacity} from 'react-native';
 import styles from '../component.style.js';
 import { useNavigation } from '@react-navigation/native';
+import { commendedContacts } from '../setup/names';
 
 
 const TrustedContacts = () => {
 
     const nav = useNavigation();
 
-    contacts = [{name: 'John Doe', id: 1}, {name: 'Jane Doe', id:2}]
-
     return (
         <View style={styles.containerListView}>
-            <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-between', paddingRight: 15, paddingLeft: 25,
+            <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-between', paddingRight: 25, paddingLeft: 25,
                     paddingTop: 25}}>
                 <Text style={styles.heading}>Commended Colleagues</Text>
                 <TouchableOpacity
@@ -23,8 +22,9 @@ const TrustedContacts = () => {
                     <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
             </View>
+            <Text style={[styles.text, {paddingRight: 25, paddingLeft: 25,}]}>Click on a contact to add keywords to make the commendation more specific.</Text>
             <FlatList
-                data={contacts}
+                data={commendedContacts}
                 keyExtractor={(item) => item.id}
                 style={{width: '100%'}}
                 renderItem={({ item }) => (

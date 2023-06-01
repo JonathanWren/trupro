@@ -3,8 +3,8 @@
 import React, {useContext, useState, } from 'react';
 import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles, { colors } from '../component.style.js';
-import {defaultList, contacts} from '../setup/names';
+import styles from '../component.style.js';
+import {defaultList, commendedByContacts} from '../setup/names';
 import { ChatsContext } from '../setup/context.js';
 
 //TODO, request an introduction for people not in contact list
@@ -15,7 +15,7 @@ const AddChat = ({route}) => {
     const {chats, setChats } = useContext(ChatsContext);
 
     const handlePress = (item) => {
-       if(contacts.includes(item)) {
+       if(commendedByContacts.includes(item)) {
             if(!chats.includes(item)) {
                 setChats([...chats, item]);
             }
@@ -64,7 +64,7 @@ const AddChat = ({route}) => {
         );
     };
 
-    const filteredContacts = [...filterContacts(contacts, search).slice(0,5), ...filterContacts(defaultList, search)];
+    const filteredContacts = [...filterContacts(commendedByContacts, search).slice(0,5), ...filterContacts(defaultList, search)];
 
     return (
         <View style={styles.containerListView}>

@@ -108,7 +108,7 @@ const ContactsList = ({route}) => {
                         alert("Please enter a complete phone number or email address");
                     }}}
             >
-                <Text style={styles.buttonText}>Send recognition</Text>
+                <Text style={styles.buttonText}>Commend</Text>
             </TouchableOpacity>
                 </View>}
             
