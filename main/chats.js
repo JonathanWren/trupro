@@ -1,10 +1,10 @@
 //Screen showing a list of chats with floating button to add a new chat
 //
-import React, {useState, useEffect, useContext } from 'react';
-import { View, Text, FlatList, TextInput, TouchableOpacity, Image, StyleSheet, } from 'react-native';
+import React, {useState, useEffect } from 'react';
+import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, } from 'react-native';
 import { useNavigation, } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
-import { ChatsContext } from '../setup/context.js';
+import { useSelector } from 'react-redux';
 
 const ChatsListItem = ({ item }) => {
     const nav = useNavigation();
@@ -32,24 +32,18 @@ const ChatsListItem = ({ item }) => {
     );
 }
 
-const Chats = ({navigation}) => {
-    const { chats } = useContext(ChatsContext);
-    const [localChats, setLocalChats] = useState([]);
+const Chats = () => {
+    const chats = useSelector(state => state.chats.chats);
     const [search, setSearch] = useState('');
+    const [filteredChats, setFilteredChats] = useState([]);
     const nav = useNavigation();
-    
-    useEffect(() => {
-        setLocalChats(chats);
-    }
-    , [chats] );
 
-    const handleSearch = (text) => {
-        setSearch(text);
-        const filtered = chats.filter(item => {
-            return item.name.toLowerCase().includes(text.toLowerCase())
-        })
-        setLocalChats(filtered);
-    }
+    useEffect(() => {
+        if(chats) {
+            setFilteredChats(chats.filter((chat) => {
+                return chat.name.toLowerCase().includes(search.toLowerCase())}));
+        }
+    }, [search, chats]);
 
     const handlePress = (item) => {
         nav.navigate('ChatScreen', { item: item });
@@ -65,13 +59,15 @@ const Chats = ({navigation}) => {
                 <TextInput
                     style={localStyles.searchInput}
                     placeholder="Search"
-                    onChangeText={handleSearch}
+                    onChangeText={(search) => {
+                        setSearch(search);
+                    }}
                     value={search}
                 />
             </View>
             <FlatList
 
-                data={localChats}
+                data={filteredChats}
                 renderItem={({ item }) => <ChatsListItem item={item} onPress={() => handlePress(item)} />}
                 keyExtractor={item => item.id}
             />

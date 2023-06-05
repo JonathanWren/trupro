@@ -9,8 +9,3 @@ export const SetupContext = createContext({
     setup: false,
     setSetup: () => {},
   });
-
-export const ChatsContext = createContext({
-    chats: [],
-    setChats: () => {},
-  });

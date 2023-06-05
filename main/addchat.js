@@ -1,24 +1,23 @@
 //Screen that shows the list of people who trust you and allows clicking on them to start a conversation
 //
-import React, {useContext, useState, } from 'react';
+import React, {useState, } from 'react';
 import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import {defaultList, commendedByContacts} from '../setup/names';
-import { ChatsContext } from '../setup/context.js';
+import { addChat } from '../redux/chatsSlice.js';
+import { useDispatch } from 'react-redux';
 
 //TODO, request an introduction for people not in contact list
 
-const AddChat = ({route}) => {
+const AddChat = () => {
     const [search, setSearch] = useState('');
     const nav = useNavigation();
-    const {chats, setChats } = useContext(ChatsContext);
+    const dispatch = useDispatch();
 
     const handlePress = (item) => {
        if(commendedByContacts.includes(item)) {
-            if(!chats.includes(item)) {
-                setChats([...chats, item]);
-            }
+            dispatch(addChat(item));
             nav.replace('Chat', {contact: item})
         } else {
 

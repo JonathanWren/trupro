@@ -31,7 +31,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
-import { RegisterContext, SetupContext, ChatsContext} from './setup/context';
+import { RegisterContext, SetupContext} from './setup/context';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -150,17 +150,14 @@ export const AppNavigator = () => {
 const App = () => {
   const [registered, setRegistered] = useState(false);
   const [setup, setSetup] = useState(false);
-  const [chats, setChats] = useState([]);
 
   return (
     <Provider store={store}>
       <RegisterContext.Provider value={{ registered, setRegistered }}>
         <SetupContext.Provider value={{ setup, setSetup }}>
-          <ChatsContext.Provider value={{ chats, setChats }}>
-            <NavigationContainer>
-              <AppNavigator />
-            </NavigationContainer>
-          </ChatsContext.Provider>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
         </SetupContext.Provider>
       </RegisterContext.Provider>
     </Provider>
