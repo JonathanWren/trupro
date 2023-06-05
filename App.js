@@ -24,6 +24,8 @@ import RoleLocation from './main/rolelocation';
 import RoleSalary from './main/rolesalary';
 import RoleJobType from './main/roletype';
 import RoleSeniority from './main/roleseniority';
+import Jobs from './main/jobs';
+import JobDetails from './main/jobdetails';
 
 import { RegisterContext, SetupContext, ChatsContext} from './setup/context';
 
@@ -87,6 +89,15 @@ export const OpportunityNavigator = () => {
   );
 };
 
+export const JobsNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Jobs" component={Jobs} />
+      <Stack.Screen name="Job Details" component={JobDetails} />
+    </Stack.Navigator>
+  );
+};
+
 export const AppNavigator = () => {
   const { registered } = useContext(RegisterContext);
   const { setup } = useContext(SetupContext);
@@ -96,6 +107,7 @@ export const AppNavigator = () => {
         <Tab.Screen name="ChatsNav" component={ChatNavigator} options={{headerShown: false, tabBarLabel: "Chats", unmountOnBlur: true }}/>
         <Tab.Screen name="ReputationNav" component={ReputationNavigator} options={{headerShown: false, tabBarLabel: "Reputation", unmountOnBlur: true}} />
         <Tab.Screen name="Next Move Nav" component={OpportunityNavigator} options={{headerShown: false, tabBarLabel: "Next Move"}} />
+        <Tab.Screen name="JobsNav" component={JobsNavigator} options={{headerShown: false, tabBarLabel: "Jobs"}}/>
         <Tab.Screen name="ProfileNav" component={ProfileNavigator} options={{headerShown: false, tabBarLabel: "Profile"}} />
       </Tab.Navigator>
     );
