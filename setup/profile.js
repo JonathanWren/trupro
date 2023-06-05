@@ -1,18 +1,19 @@
 //Screen to allow entering name and job title and validate that are completed before continuing
 //
-import React, { useState} from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
+import { updateFirstName, updateLastName } from '../redux/profileSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = ({route}) => {
     const nav = useNavigation();
+    const dispatch = useDispatch();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [location, setLocation] = useState('');
-    const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const firstName = useSelector(state => state.profile.mainDetails.firstName); 
+    const lastName = useSelector(state => state.profile.mainDetails.lastName);
+    const location = useSelector(state => state.profile.mainDetails.location);
     
     return (
         <View style={styles.container}>
@@ -40,8 +41,11 @@ const Profile = ({route}) => {
                     style={styles.input}
                     placeholder="First name"
                     placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                    onChangeText={(firstName) => {
-                        setFirstName(firstName);
+                    defaultValue={firstName}
+                    onEndEditing={(name) => {
+                        dispatch (
+                            updateFirstName({firstName: name.nativeEvent.text})
+                        )
                     }}
                 />
                 <Text style={styles.fieldInput}>Last name</Text>
@@ -49,17 +53,20 @@ const Profile = ({route}) => {
                     style={styles.input}
                     placeholder="Last name"
                     placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                    onChangeText={(lastName) => {
-                        setLastName(lastName);
+                    defaultValue={lastName}
+                    onEndEditing={(name) => {
+                        dispatch (
+                            updateLastName({lastName: name.nativeEvent.text})
+                        )
                     }}
                 />
                 <Text style={styles.fieldInput}>Where do you live?</Text>
                 <Text
-                    style={[styles.input, !route.params.location && {color: colors.fieldPlaceHolderTextColor}]}
+                    style={[styles.input, !location && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
                         nav.navigate('Location');
                     }}
-                >{route.params.location ? route.params?.location : 'Location'}
+                >{location ? location : 'Location'}
                 </Text>
                 {route.params.inWizard &&
                     <TouchableOpacity

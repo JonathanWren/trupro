@@ -4,10 +4,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
+import { useDispatch } from 'react-redux';
+import { updateNextTitle } from '../redux/profileSlice.js';
 
-const Role = ({route}) => {
+const Role = () => {
 
     const nav = useNavigation();
+    const dispatch = useDispatch();
 
     return (
         <View style={styles.container}>
@@ -21,7 +24,8 @@ const Role = ({route}) => {
 
                 style={styles.button}
                 onPress={() => {
-                    nav.navigate("Next Move", {opportunity: {...route.params.opportunity, role: "Product Management"}});
+                    dispatch(updateNextTitle({title: "Product Management"}));
+                    nav.navigate("Next Move");
                 }}
             >
                 <Text style={styles.buttonText}>Save</Text>

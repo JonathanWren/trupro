@@ -4,10 +4,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
+import { useDispatch } from 'react-redux';
+import { updateNextLocation } from '../redux/profileSlice.js';
 
-const RoleLocation = ({route}) => {
+const RoleLocation = () => {
 
     const nav = useNavigation();
+    const dispatch = useDispatch();
 
     return (
         <View style={styles.container}>
@@ -20,7 +23,8 @@ const RoleLocation = ({route}) => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    nav.navigate("Next Move", {opportunity: {...route.params.opportunity, location: "London, UK"}});
+                    dispatch(updateNextLocation({location: "London, UK"}));
+                    nav.navigate("Next Move");
                 }}
             >
                 <Text style={styles.buttonText}>Save</Text>

@@ -4,6 +4,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import CheckBox from "expo-checkbox";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateNextSeniority } from '../redux/profileSlice.js';
 
 const SeniorityCheckBox = ({ type, checked: isChecked, onChange }) => {
     return (
@@ -15,16 +17,19 @@ const SeniorityCheckBox = ({ type, checked: isChecked, onChange }) => {
     );
 }
 
-const RoleSeniority = ({route}) => {
+const RoleSeniority = () => {
     
         const nav = useNavigation();
+        const dispatch = useDispatch();
+
+        const initialSeniority = useSelector(state => state.profile.nextMove.seniority);
     
-        const [seniorityInternship, setSeniorityInternship] = useState(route.params.opportunity && route.params.opportunity.seniority && route.params.opportunity.seniority.some(data => data === 'Internship'));
-        const [seniorityEntryLevel, setSeniorityEntryLevel] = useState(route.params.opportunity && route.params.opportunity.seniority && route.params.opportunity.seniority.some(data => data === 'Entry Level'));
-        const [seniorityJunior, setSeniorityJunior] = useState(route.params.opportunity && route.params.opportunity.seniority && route.params.opportunity.seniority.some(data => data === 'Junior'));
-        const [seniorityMidLevel, setSeniorityMidLevel] = useState(route.params.opportunity && route.params.opportunity.seniority && route.params.opportunity.seniority.some(data => data === 'Mid Level'));
-        const [senioritySenior, setSenioritySenior] = useState(route.params.opportunity && route.params.opportunity.seniority && route.params.opportunity.seniority.some(data => data === 'Senior'));
-        const [seniorityExpert, setSeniorityExpert] = useState(route.params.opportunity && route.params.opportunity.seniority && route.params.opportunity.seniority.some(data => data === 'Expert'));
+        const [seniorityInternship, setSeniorityInternship] = useState(initialSeniority.some(data => data === 'Internship'));
+        const [seniorityEntryLevel, setSeniorityEntryLevel] = useState(initialSeniority.some(data => data === 'Entry Level'));
+        const [seniorityJunior, setSeniorityJunior] = useState(initialSeniority.some(data => data === 'Junior'));
+        const [seniorityMidLevel, setSeniorityMidLevel] = useState(initialSeniority.some(data => data === 'Mid Level'));
+        const [senioritySenior, setSenioritySenior] = useState(initialSeniority.some(data => data === 'Senior'));
+        const [seniorityExpert, setSeniorityExpert] = useState(initialSeniority.some(data => data === 'Expert'));
     
         return (
             <View style={styles.container}>
@@ -58,8 +63,10 @@ const RoleSeniority = ({route}) => {
                         if (seniorityExpert) {
                             newSeniority.push('Expert');
                         }
+
+                        dispatch(updateNextSeniority({seniority: newSeniority}));
     
-                        nav.navigate("Next Move", {opportunity: {...route.params.opportunity, seniority: newSeniority}});
+                        nav.navigate("Next Move");
                     }}
                 >
                     <Text style={styles.buttonText}>Save</Text>

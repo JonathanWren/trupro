@@ -4,11 +4,15 @@ import React, {useState, useEffect, useRef } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
+import { updateMainLocation } from '../redux/profileSlice.js';
+import { useDispatch } from 'react-redux';
 
 const Location = () => {
     const [locations, setLocations] = useState([]);
     const [search, setSearch] = useState('');
     const nav = useNavigation();
+    const dispatch = useDispatch();
+    
     //List of locations
     const defaultList = [
         {
@@ -88,7 +92,8 @@ const Location = () => {
 
     const handlePress = (item) => {
         // show another screen passing in the contact object
-        nav.navigate('Profile', {location: item.name});
+        dispatch(updateMainLocation({location: item.name}));
+        nav.navigate('Profile');
     }
 
     const filteredLocations = search.length > -1 ? filterLocations(locations, search).slice(0,5): [];

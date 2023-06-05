@@ -5,13 +5,17 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import Slider from '@react-native-community/slider';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateNextSalary } from '../redux/profileSlice.js';
 
 
-const RoleSalary = ({route}) => {
+const RoleSalary = () => {
     
         const nav = useNavigation();
+        const dispatch = useDispatch();
     
-        const [salary, setSalary] = useState(0);      
+        const initialSalary = useSelector(state => state.profile.nextMove.salary);
+        const [salary, setSalary] = useState(initialSalary);      
     
         return (
             <View style={styles.container}>
@@ -23,6 +27,7 @@ const RoleSalary = ({route}) => {
                     minimumValue={10}
                     maximumValue={500}
                     step={1}
+                    value={salary}
                     minimumTrackTintColor="#FFFFFF"
                     maximumTrackTintColor="#000000"
                     onValueChange={(salary) => {
@@ -32,7 +37,8 @@ const RoleSalary = ({route}) => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
-                        nav.navigate("Next Move", {opportunity: {...route.params.opportunity, salary: salary}});
+                        dispatch(updateNextSalary({salary: salary}));
+                        nav.navigate("Next Move");
                     }}
                 >
                     <Text style={styles.buttonText}>Save</Text>

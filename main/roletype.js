@@ -4,6 +4,8 @@ import { View, Text, TouchableOpacity, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import CheckBox from "expo-checkbox";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateNextJobType } from '../redux/profileSlice.js';
 
 const JobTypeCheckBox = ({ type, checked: isChecked, onChange }) => {
     return (
@@ -15,20 +17,23 @@ const JobTypeCheckBox = ({ type, checked: isChecked, onChange }) => {
     );
 }
 
-const RoleJobType = ({route}) => {
+const RoleJobType = () => {
     
         const nav = useNavigation();
+        const dispatch = useDispatch();
+
+        const initialJobType = useSelector(state => state.profile.nextMove.jobType);
     
-        const [jobTypeFullTime, setJobTypeFullTime] = useState(route.params.opportunity && route.params.opportunity.jobType && route.params.opportunity.jobType.some(data => data === 'Full Time'));
-        const [jobTypePartTime, setJobTypePartTime] = useState(route.params.opportunity && route.params.opportunity.jobType && route.params.opportunity.jobType.some(data => data === 'Part Time'));
-        const [jobTypeContract, setJobTypeContract] = useState(route.params.opportunity && route.params.opportunity.jobType && route.params.opportunity.jobType.some(data => data === 'Contract'));
-        const [jobTypeTemporary, setJobTypeTemporary] = useState(route.params.opportunity && route.params.opportunity.jobType && route.params.opportunity.jobType.some(data => data === 'Temporary'));
+        const [jobTypeFullTime, setJobTypeFullTime] = useState(initialJobType.some(data => data === 'Full Time'));
+        const [jobTypePartTime, setJobTypePartTime] = useState(initialJobType.some(data => data === 'Part Time'));
+        const [jobTypeContract, setJobTypeContract] = useState(initialJobType.some(data => data === 'Contract'));
+        const [jobTypeTemporary, setJobTypeTemporary] = useState(initialJobType.some(data => data === 'Temporary'));
     
         return (
             <View style={styles.container}>
                 <Text style={styles.heading}>Job Type</Text>
                 <Text style={styles.text}>What type of job are you looking for?</Text>
-                <JobTypeCheckBox type="Full Time" checked={jobTypeFullTime} onChange={setJobTypeFullTime}/>
+                <JobTypeCheckBox type="Full Time"  checked={jobTypeFullTime} onChange={setJobTypeFullTime}/>
                 <JobTypeCheckBox type="Part Time" checked={jobTypePartTime} onChange={setJobTypePartTime}/>
                 <JobTypeCheckBox type="Contract" checked={jobTypeContract} onChange={setJobTypeContract}/>
                 <JobTypeCheckBox type="Temporary" checked={jobTypeTemporary} onChange={setJobTypeTemporary}/>
@@ -48,7 +53,8 @@ const RoleJobType = ({route}) => {
                         if (jobTypeTemporary) {
                             newJobType.push('Temporary');
                         }
-                        nav.navigate("Next Move", {opportunity: {...route.params.opportunity, jobType: newJobType}});
+                        dispatch(updateNextJobType({jobType: newJobType}));
+                        nav.navigate("Next Move");
                     }}
                 >
                     <Text style={styles.buttonText}>Save</Text>
