@@ -26,6 +26,10 @@ import RoleJobType from './main/roletype';
 import RoleSeniority from './main/roleseniority';
 import Jobs from './main/jobs';
 import JobDetails from './main/jobdetails';
+import MyJobs from './main/myjobs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 import { RegisterContext, SetupContext, ChatsContext} from './setup/context';
 
@@ -92,9 +96,20 @@ export const OpportunityNavigator = () => {
 export const JobsNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Jobs" component={Jobs} />
+      <Stack.Screen name="JobsTabs" component={JobsTopTabNavigator}/>
       <Stack.Screen name="Job Details" component={JobDetails} />
     </Stack.Navigator>
+  );
+};
+
+const TopTab = createMaterialTopTabNavigator();
+
+export const JobsTopTabNavigator = () => {
+  return (
+    <TopTab.Navigator>
+      <TopTab.Screen name="Jobs" component={Jobs} />
+      <TopTab.Screen name="My Jobs" component={MyJobs} />
+    </TopTab.Navigator>
   );
 };
 
@@ -138,15 +153,17 @@ const App = () => {
   const [chats, setChats] = useState([]);
 
   return (
-    <RegisterContext.Provider value={{ registered, setRegistered }}>
-      <SetupContext.Provider value={{ setup, setSetup }}>
-        <ChatsContext.Provider value={{ chats, setChats }}>
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>
-        </ChatsContext.Provider>
-      </SetupContext.Provider>
-    </RegisterContext.Provider>
+    <Provider store={store}>
+      <RegisterContext.Provider value={{ registered, setRegistered }}>
+        <SetupContext.Provider value={{ setup, setSetup }}>
+          <ChatsContext.Provider value={{ chats, setChats }}>
+            <NavigationContainer>
+              <AppNavigator />
+            </NavigationContainer>
+          </ChatsContext.Provider>
+        </SetupContext.Provider>
+      </RegisterContext.Provider>
+    </Provider>
   );
 }
 

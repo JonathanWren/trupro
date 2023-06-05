@@ -4,15 +4,39 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Linking, StyleSheet, } from 'react-native';
 import { useNavigation, } from '@react-navigation/native';
 import style, { colors } from '../component.style.js';
+import { useDispatch } from 'react-redux';
+import { discardJob, saveJob, applyForJob } from '../redux/jobsSlice.js';
 
 const JobDetails = ({ route }) => {
     const { job } = route.params;
     const nav = useNavigation();
+    const dispatch = useDispatch();
 
-    const navigateBack = () => {
-        const newList = route.params.jobsList.filter((item) => item.id !== job.id);
-        console.log(newList);
-        nav.navigate('Jobs', { jobsList: newList });
+    const save = () => {
+        dispatch(
+            saveJob({
+              id: job.id
+            })
+          )
+        nav.goBack();
+    }
+
+    const discard = () => {
+        dispatch(
+            discardJob({
+                id: job.id
+            })
+        )
+        nav.goBack();
+    }
+
+    const apply = () => {
+        dispatch(
+            applyForJob({
+                id: job.id
+            })
+        )
+        Linking.openURL(job.companyURL);
     }
 
     return (
@@ -26,13 +50,13 @@ const JobDetails = ({ route }) => {
             <Text style={localStyle.jobDescription}>{job.description}</Text>
 
             <View style={localStyle.buttonRow}>
-                <TouchableOpacity style={style.smallButton} onPress={() => navigateBack()}>
+                <TouchableOpacity style={style.smallButton} onPress={() => discard()}>
                     <Text style={style.buttonText}>Discard</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={style.smallButton} onPress={() => Linking.openURL('https://www.totaljobs.com/job/product-manager/aj-bell-limited-job100529017')}>
+                <TouchableOpacity style={style.smallButton} onPress={() => apply()}>
                     <Text style={style.buttonText}>Apply</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={style.smallButton} onPress={() => navigateBack()}>
+                <TouchableOpacity style={style.smallButton} onPress={() => save()}>
                     <Text style={style.buttonText}>Save</Text>
                 </TouchableOpacity>
             </View>
