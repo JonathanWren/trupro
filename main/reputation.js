@@ -48,7 +48,7 @@ const Reputation = () => {
                         <Text style={styles.contactsNumber}>{commendedContacts.length}</Text>
                     </View>
                 </TouchableOpacity>
-                <Text style={styles.text}>You have commended {commendedContacts.length} of 25 contacts. </Text>
+                <Text style={styles.text}>You have commended {commendedContacts.length} of 25 possible contacts. </Text>
                 <TouchableOpacity onPress={() => nav.navigate("Commended By")} style={styles.score}>
                     <View>
                         <Text style={styles.text}>Commended By:</Text>
