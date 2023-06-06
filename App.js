@@ -18,7 +18,7 @@ import Chats from './main/chats';
 import Chat from './main/chat';
 import AddChat from './main/addchat';
 import RequestIntroduction from './main/requestintroduction';
-import CommendedBy from './main/commendedby';
+import RecommendedBy from './main/recommendedby';
 import Role from './main/role';
 import RoleLocation from './main/rolelocation';
 import RoleSalary from './main/rolesalary';
@@ -40,8 +40,8 @@ function ReputationNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Reputation" component={Reputation} />
-      <Stack.Screen name="Commended By" component={CommendedBy} />
-      <Stack.Screen name="Commended" component={TrustedContacts} />
+      <Stack.Screen name="Recommended By" component={RecommendedBy} />
+      <Stack.Screen name="Recommended" component={TrustedContacts} />
       <Stack.Screen name="Keywords Selector" component={KeywordSelector} />
       <Stack.Screen name="Contacts List" component={ContactsList} initialParams={{'inWizard':false}} />
     </Stack.Navigator>
@@ -53,7 +53,7 @@ function ReputationNavigator() {
 export const ContactsNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Commended Colleagues" component={TrustedContacts} />
+      <Stack.Screen name="Recommended Colleagues" component={TrustedContacts} />
       <Stack.Screen name="Keywords Selector" component={KeywordSelector} />
       <Stack.Screen name="Contacts List" component={ContactsList} initialParams={{'inWizard':false}}/>
     </Stack.Navigator>
@@ -130,7 +130,7 @@ export const AppNavigator = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Setup" component={Setup} />
-        <Stack.Screen name="Commended Colleagues" component={ContactsList} initialParams={{'inWizard':true}}/>
+        <Stack.Screen name="Recommended Colleagues" component={ContactsList} initialParams={{'inWizard':true}}/>
       </Stack.Navigator>
     );
   } else {

@@ -3,14 +3,14 @@
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import styles from '../component.style.js';
-import { commendedByContacts } from '../setup/names.js';
+import { recommendedByContacts as recommendedByContacts } from '../setup/names.js';
 
-const CommendedBy = () => {
+const RecommendedBy = () => {
     return (
         <View style={styles.containerListView}>
-            <Text style={[styles.heading, {paddingTop: 20}]}>People who commend you</Text>
+            <Text style={[styles.heading, {paddingTop: 20}]}>People who recommend you</Text>
             <FlatList
-                data={commendedByContacts}
+                data={recommendedByContacts}
                 keyExtractor={(item) => item.id}
                 style={{width: '100%'}}
                 renderItem={({ item }) => (
@@ -33,4 +33,4 @@ const CommendedBy = () => {
     );
 }
 
-export default CommendedBy;
+export default RecommendedBy;

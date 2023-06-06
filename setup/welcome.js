@@ -10,7 +10,7 @@ const Welcome = () => {
     return (
         <View style={localStyles.container}>
             <Text style={localStyles.heading}>Give recognition, show your reputation, progress your career</Text>
-            <Text style={localStyles.text}>TruPro is a reputation network for professionals. It allows you to commend colleagues you trust, get commended in return and showcase your reputation amongst your peers.</Text>
+            <Text style={localStyles.text}>TruPro is a reputation network for professionals. It allows you to recommend colleagues you trust, get recommended in return and showcase your reputation amongst your peers.</Text>
             <TouchableOpacity
                 style={localStyles.button}
                 onPress={() => {nav.navigate('Profile');}}>

@@ -80,7 +80,7 @@ const ContactsList = ({route}) => {
         <View style={styles.containerListView}>
             <View style={{paddingTop: 25, paddingLeft: 25, paddingRight: 25, width: '100%'}}>
                 {showIntro && 
-                    <Text style={styles.text}>Now you can add up to 25 of your colleagues to your list of commended colleagues. They should be people who are 
+                    <Text style={styles.text}>Now you can add up to 25 of your colleagues to your list of recommended colleagues. They should be people who are 
                     good at their job and whose professional opinion you trust.</Text>
                 }   
                 <TextInput style={styles.input}
@@ -96,7 +96,7 @@ const ContactsList = ({route}) => {
                 />
             </View>
                 {filteredContacts.length == 0 && <View style={{width: '100%', paddingLeft: 25, paddingRight: 25,}}>
-                    <Text style={styles.text}>Commend {search}</Text>
+                    <Text style={styles.text}>Recommend {search}</Text>
                     <TouchableOpacity
                 style={[styles.button, {width: '100%'}]}
                 onPress={() => {       
@@ -108,7 +108,7 @@ const ContactsList = ({route}) => {
                         alert("Please enter a complete phone number or email address");
                     }}}
             >
-                <Text style={styles.buttonText}>Commend</Text>
+                <Text style={styles.buttonText}>Recommend</Text>
             </TouchableOpacity>
                 </View>}
             

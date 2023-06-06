@@ -59,7 +59,7 @@ const Location = () => {
 
     useEffect(() => {
         setLocations(defaultList);
-    }, [defaultList]);
+    }, []);
 
     const locationFieldRef = useRef(null);
 

@@ -72,7 +72,7 @@ const Organisation = () => {
 
     useEffect(() => {
         setOrganisations(defaultList);
-    }, [defaultList]);
+    }, []);
 
     const organisationFieldRef = useRef(null);
 

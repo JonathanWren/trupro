@@ -4,7 +4,7 @@ import React, {useState, } from 'react';
 import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
-import {defaultList, commendedByContacts} from '../setup/names';
+import {defaultList, recommendedByContacts} from '../setup/names';
 import { addChat } from '../redux/chatsSlice.js';
 import { useDispatch } from 'react-redux';
 
@@ -16,7 +16,7 @@ const AddChat = () => {
     const dispatch = useDispatch();
 
     const handlePress = (item) => {
-       if(commendedByContacts.includes(item)) {
+       if(recommendedByContacts.includes(item)) {
             dispatch(addChat(item));
             nav.replace('Chat', {contact: item})
         } else {
@@ -63,7 +63,7 @@ const AddChat = () => {
         );
     };
 
-    const filteredContacts = [...filterContacts(commendedByContacts, search).slice(0,5), ...filterContacts(defaultList, search)];
+    const filteredContacts = [...filterContacts(recommendedByContacts, search).slice(0,5), ...filterContacts(defaultList, search)];
 
     return (
         <View style={styles.containerListView}>
