@@ -16,7 +16,6 @@ const LeftSwipeActions = () => {
         <Text
           style={{
             color: '#40394a',
-            paddingHorizontal: 10,
             fontWeight: '600',
             paddingHorizontal: 30,
             paddingVertical: 20,
@@ -41,7 +40,6 @@ const LeftSwipeActions = () => {
         <Text
           style={{
             color: '#1b1a17',
-            paddingHorizontal: 10,
             fontWeight: '600',
             paddingHorizontal: 30,
             paddingVertical: 20,

@@ -36,7 +36,7 @@ const JobDetails = ({ route }) => {
                 id: job.id
             })
         )
-        Linking.openURL(job.companyURL);
+        Linking.openURL("https://www.totaljobs.com/job/product-manager/wpp-job100538509");
     }
 
     return (
@@ -65,12 +65,6 @@ const JobDetails = ({ route }) => {
 }
 
 const localStyle = StyleSheet.create({
-    jobTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.text,
-        textAlign: 'center',
-    },
     jobLocation: {
         fontSize: 16,
         fontWeight: 'bold',

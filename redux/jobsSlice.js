@@ -1,12 +1,12 @@
 // Redux slice for jobs storing list of jobs to review and also a list of saved jobs
 
 import { createSlice } from '@reduxjs/toolkit';
-import { jobsList } from './examplejobs';
+import { jobsList as initialJobsList } from './examplejobs';
 
 export const jobsSlice = createSlice({
     name: 'jobs',
     initialState: {
-        jobsList: jobsList,
+        jobsList: initialJobsList,
         savedJobs: [],
         discardedJobs: [],
         appliedJobs: [],
@@ -14,7 +14,7 @@ export const jobsSlice = createSlice({
     reducers: {
         saveJob: (state, action) => {
             const savedJob = state.jobsList.find(job => job.id === action.payload.id);
-            if(saveJob){
+            if(savedJob){
                 const remainingJobs = state.jobsList.filter(job => job.id !== action.payload.id);
                 state.jobsList = remainingJobs;
                 state.savedJobs.push(savedJob);
@@ -29,7 +29,7 @@ export const jobsSlice = createSlice({
             }
         },
         applyForJob: (state, action) => {
-            const appliedJob = state.jobsList.find(job => job.id === action.payload.id);
+            var appliedJob = state.jobsList.find(job => job.id === action.payload.id);
             if(appliedJob){
                 const remainingJobs = state.jobsList.filter(job => job.id !== action.payload.id);
                 state.jobsList = remainingJobs;

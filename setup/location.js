@@ -12,7 +12,7 @@ const Location = () => {
     const [search, setSearch] = useState('');
     const nav = useNavigation();
     const dispatch = useDispatch();
-    
+
     //List of locations
     const defaultList = [
         {
@@ -59,7 +59,7 @@ const Location = () => {
 
     useEffect(() => {
         setLocations(defaultList);
-    }, []);
+    }, [defaultList]);
 
     const locationFieldRef = useRef(null);
 
