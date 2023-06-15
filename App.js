@@ -8,7 +8,6 @@ import Welcome from './setup/welcome';
 import Setup from './setup/setup';
 import Reputation from './main/reputation';
 import Opportunity from './main/opportunity';
-import TrustedContacts from './main/trustedcontacts';
 import Profile from './setup/profile';
 import KeywordSelector from './main/keywordselector';
 import Employment from './setup/employment';
@@ -41,7 +40,6 @@ function ReputationNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Reputation" component={Reputation} />
       <Stack.Screen name="Recommended By" component={RecommendedBy} />
-      <Stack.Screen name="Recommended" component={TrustedContacts} />
       <Stack.Screen name="Keywords Selector" component={KeywordSelector} />
       <Stack.Screen name="Contacts List" component={ContactsList} initialParams={{'inWizard':false}} />
     </Stack.Navigator>

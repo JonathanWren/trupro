@@ -1,7 +1,7 @@
 //Screen showing three scores, one below the other, each with a label and next to it a number in a red circle
 //
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import styles from '../component.style.js';
 import { useNavigation } from '@react-navigation/native';
 import { recommendedContacts, recommendedByContacts } from '../setup/names';
@@ -24,7 +24,8 @@ const Reputation = () => {
 
                 <View>
                     <TouchableOpacity onPress={() => setShowText(!showText)}>
-                        <Text style={styles.smallPrint}>What is Reputation?</Text>
+                        <Text style={styles.smallPrint}>TruPro uses reputation to showcase your ability to potential employers and match you with hidden jobs 
+                        that may not be publicly advertised. It is also used to tell potential employees your excellence as a manager. Read more.</Text>
                     </TouchableOpacity>
                     {showText && 
                         <View>
@@ -40,15 +41,7 @@ const Reputation = () => {
                         </View>
                     }
                 </View>  
-                <TouchableOpacity onPress={() => nav.navigate("Recommended")} style={[styles.score, {paddingTop: 20}]}>
-                    <View>
-                        <Text style={styles.text}>Recommended:</Text>
-                    </View>
-                    <View style={styles.contactsCircle}>
-                        <Text style={styles.contactsNumber}>{recommendedContacts.length}</Text>
-                    </View>
-                </TouchableOpacity>
-                <Text style={styles.text}>You have recommended {recommendedContacts.length} of 25 possible contacts. </Text>
+                <Text style={styles.smallPrint}>Reputation is made up of two parts. Who you recommend and who recommends you.</Text>
                 <TouchableOpacity onPress={() => nav.navigate("Recommended By")} style={styles.score}>
                     <View>
                         <Text style={styles.text}>Recommended By:</Text>
@@ -57,10 +50,68 @@ const Reputation = () => {
                         <Text style={styles.contactsNumber}>{recommendedByContacts.length}</Text>
                     </View>
                 </TouchableOpacity>
+                <View style={[styles.score, {paddingTop: 20}]}>
+                    <View>
+                        <Text style={styles.text}>Recommended:</Text>
+                    </View>
+                    <View style={styles.contactsCircle}>
+                        <Text style={styles.contactsNumber}>{recommendedContacts.length}</Text>
+                    </View>
+                </View>
+                <Text style={styles.smallPrint}>You have recommended {recommendedContacts.length} of 25 possible contacts.
+                Click on a contact to add keywords to make the recommendation more specific.</Text>
+            </View>
+
+            <View style={styles.containerListView}>
+                <FlatList
+                    data={recommendedContacts}
+                    keyExtractor={(item) => item.id}
+                    style={{width: '100%'}}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity 
+                            onPress={() => {nav.navigate('Keywords Selector', {contact: item})}}
+                        >
+                            <View style={styles.contactCon} >
+                                <View style={styles.imgCon}>
+                                    <View style={styles.contactImageTextCircle}>
+                                        <Text style={styles.contactImgTxt}>{item?.name[0]}</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.contactDat}>
+                                    <Text style={styles.contactName}>
+                                        {item.name}
+                                    </Text>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    )} 
+                />
+            </View>
+            <View style={localstyles.actionButton}>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => {nav.navigate('Contacts List');}}>
+                <Text style={styles.buttonText}>Add Recommended Contact</Text>
+            </TouchableOpacity>
             </View>
         </View>
 
     );
 }
+
+
+const localstyles = StyleSheet.create({
+    actionButton: {
+      width: '100%',
+      paddingLeft: 25,
+      paddingRight: 25,
+      paddingTop: 10,
+      paddingBottom: 10,
+      alignSelf: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      bottom: 0,
+    },
+  });
 
 export default Reputation;
