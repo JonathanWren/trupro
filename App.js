@@ -114,12 +114,12 @@ export const JobsTopTabNavigator = () => {
 export const AppNavigator = () => {
   const { registered } = useContext(RegisterContext);
   const { setup } = useContext(SetupContext);
-  if(true){
+  if(setup){
     return (
       <Tab.Navigator>
-        <Tab.Screen name="ChatsNav" component={ChatNavigator} options={{headerShown: false, tabBarLabel: "Chats", unmountOnBlur: true }}/>
-        <Tab.Screen name="ReputationNav" component={ReputationNavigator} options={{headerShown: false, tabBarLabel: "Reputation", unmountOnBlur: true}} />
+        {/* <Tab.Screen name="ChatsNav" component={ChatNavigator} options={{headerShown: false, tabBarLabel: "Chats", unmountOnBlur: true }}/> */}
         <Tab.Screen name="Next Move Nav" component={OpportunityNavigator} options={{headerShown: false, tabBarLabel: "Next Move"}} />
+        <Tab.Screen name="ReputationNav" component={ReputationNavigator} options={{headerShown: false, tabBarLabel: "Reputation", unmountOnBlur: true}} />
         <Tab.Screen name="JobsNav" component={JobsNavigator} options={{headerShown: false, tabBarLabel: "Jobs"}}/>
         <Tab.Screen name="ProfileNav" component={ProfileNavigator} options={{headerShown: false, tabBarLabel: "Profile"}} />
       </Tab.Navigator>
