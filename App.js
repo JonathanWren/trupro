@@ -25,6 +25,7 @@ import RoleJobType from './main/roletype';
 import RoleSeniority from './main/roleseniority';
 import Jobs from './main/jobs';
 import JobDetails from './main/jobdetails';
+import RequestLink from './setup/requestlink';
 import MyJobs from './main/myjobs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Provider } from 'react-redux';
@@ -135,6 +136,7 @@ export const AppNavigator = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Welcome} />
+        <Stack.Screen name="RequestLink" component={RequestLink} />
         <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':true}}/>
         <Stack.Screen name="Location" component={Location} />
         <Stack.Screen name="Employment" component={Employment} />
