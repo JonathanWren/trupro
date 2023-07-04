@@ -10,6 +10,8 @@ export const profileSlice = createSlice({
             lastName: '',
             email: '',
             phoneNumber: '',
+            countryCode: 'GB',
+            countryNumber: '44',
         },
         currentRole: {
             title: '',
@@ -33,6 +35,12 @@ export const profileSlice = createSlice({
         },
         updatePhoneNumber: (state, action) => {
             state.mainDetails.phoneNumber = action.payload.phoneNumber;
+        },
+        updateCountryCode: (state, action) => {
+            state.mainDetails.countryCode = action.payload.countryCode;
+        },
+        updateCountryNumber: (state, action) => {
+            state.mainDetails.countryNumber = action.payload.countryNumber;
         },
         updateEmail: (state, action) => {
             state.mainDetails.email = action.payload.email;
@@ -58,6 +66,6 @@ export const profileSlice = createSlice({
     }
 });
 
-export const { updateFirstName, updateLastName, updateEmail, updatePhoneNumber, updateCurrentRole, updateNextTitle, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
+export const { updateFirstName, updateLastName, updateEmail, updatePhoneNumber, updateCountryCode, updateCountryNumber, updateCurrentRole, updateNextTitle, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
 
 export default profileSlice.reducer;
