@@ -138,9 +138,6 @@ export const AppNavigator = () => {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="RequestLink" component={RequestLink} />
         <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':true}}/>
-        <Stack.Screen name="Location" component={Location} />
-        <Stack.Screen name="Employment" component={Employment} />
-        <Stack.Screen name="Organisation" component={Organisation} />
         <Stack.Screen name="Verification" component={Register} />
       </Stack.Navigator>
     );
