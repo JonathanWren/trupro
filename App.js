@@ -15,6 +15,7 @@ import Organisation from './setup/organisation';
 import Location from './setup/location';
 import Chats from './main/chats';
 import Chat from './main/chat';
+import ClickLink from './setup/clicklink';
 import AddChat from './main/addchat';
 import RequestIntroduction from './main/requestintroduction';
 import RecommendedBy from './main/recommendedby';
@@ -135,7 +136,8 @@ export const AppNavigator = () => {
   } else {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Welcome" component={Welcome} />
+        <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false}}/>
+        <Stack.Screen name="ClickLink" component={ClickLink} />
         <Stack.Screen name="RequestLink" component={RequestLink} />
         <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':true}}/>
         <Stack.Screen name="Verification" component={Register} />
