@@ -26,7 +26,6 @@
     "react-native-pager-view": "6.1.2",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-tab-view": "^3.5.1",
-    "react-navigation": "^4.4.4",
     "react-redux": "^8.0.7",
     "redux": "^4.2.1",
     "validator": "^13.9.0"
