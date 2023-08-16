@@ -7,47 +7,46 @@ import styles from '../component.style.js';
 import { useDispatch } from 'react-redux';
 import { updateNextLocation } from '../redux/profileSlice.js';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { useState } from 'react';
 
 const RoleLocation = () => {
 
     const nav = useNavigation();
     const dispatch = useDispatch();
 
+    const [location, setLocation] = useState('');
+
     return (
-        <View style={importedstyles.container}>
-            <Text style={importedstyles.heading}>Location</Text>
-            
-            <GooglePlacesInput/>
+        <View style={styles.container}>
+        <Text style={styles.heading}>Location</Text>
+
+        <View width={'100%'} height={'90%'}>
+          <Text style={styles.text}>Select your location</Text>
+          <GooglePlacesAutocomplete
+            placeholder='Search'
+            onPress={(data, details = null) => {
+              // 'details' is provided when fetchDetails = true
+              setLocation(data.description);
+              console.log(data, details);
+            }}
+            query={{
+              key: 'AIzaSyAzvm4cAz7g2U-NnaGqU3S5Vkqv0oinOhQ',
+              language: 'en',
+            }}
+          />
+        </View>
             <TouchableOpacity
-                style={importedstyles.button}
+                style={styles.button}
                 onPress={() => {
-                    dispatch(updateNextLocation({location: }));
+                    dispatch(updateNextLocation({location}));
                     nav.navigate("Next Move");
                 }}
             >
-                <Text style={importedstyles.buttonText}>Save</Text>
+                <Text style={styles.buttonText}>Save</Text>
             </TouchableOpacity>
         </View>
     );
 }
 
-const GooglePlacesInput = () => {
-    return (
-      <View width={'100%'} height={'90%'}>
-      <Text style={importedstyles.text}>Select your location</Text>
-      <GooglePlacesAutocomplete
-        placeholder='Search'
-        onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
-          console.log(data, details);
-        }}
-        query={{
-          key: 'AIzaSyAzvm4cAz7g2U-NnaGqU3S5Vkqv0oinOhQ',
-          language: 'en',
-        }}
-      />
-      </View>
-    );
-  };
 
 export default RoleLocation;
