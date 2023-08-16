@@ -34,7 +34,7 @@ const SalarySlider = () => {
       return slider;
     }
 
-    const [sliderValue, setSliderValue] = useState(sliderCalculator(initialSalary));
+    const initialSliderValue = sliderCalculator(initialSalary);
 
     const salaryCalculator = sliderValue => {
         
@@ -62,11 +62,10 @@ const SalarySlider = () => {
             minimumValue={0}
             maximumValue={84}
             step={1}
-            value={sliderValue}
+            value={initialSliderValue}
             minimumTrackTintColor="#FFFFFF"
             maximumTrackTintColor="#000000"
             onValueChange={(sliderValue) => {
-                setSliderValue(sliderValue);
                 setSalary(salaryCalculator(sliderValue));
             }}
         />
