@@ -31,7 +31,6 @@ import MyJobs from './main/myjobs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import * as Linking from 'expo-linking';
 import * as Sentry from 'sentry-expo';
 
 import { RegisterContext, SetupContext} from './setup/context';
