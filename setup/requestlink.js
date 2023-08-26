@@ -18,7 +18,8 @@ const RequestLink = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Please enter your email address or phone number below to receive a link inviting you to join TruPro.</Text>
+            <Text style={styles.text}>Please enter your email address below.</Text>
+            <Text style={styles.text}>You should enter the email that you use to sign into the TruPro slack group if you are part of this group.</Text>
             <Text style={styles.fieldInput}>Email address</Text>
             <TextInput
                 style={styles.input}
@@ -34,13 +35,13 @@ const RequestLink = () => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    // if ((email === '' || !email) && (phoneNumber === '' || !phoneNumber)) {
-                    //     alert('Please complete either your email address or phone number');
-                    //     return;
-                    // }
+                    if ((email === '' || !email)) {
+                        alert('Please enter an email address');
+                        return;
+                    }
                     
-                    nav.navigate('Profile');}}>
-                <Text style={styles.buttonText}>Request Link</Text>
+                    nav.navigate('Click Link');}}>
+                <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
         </View>
     );

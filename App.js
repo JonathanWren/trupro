@@ -31,6 +31,8 @@ import MyJobs from './main/myjobs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import * as Linking from 'expo-linking';
+import * as Sentry from 'sentry-expo';
 
 import { RegisterContext, SetupContext} from './setup/context';
 
@@ -137,8 +139,8 @@ export const AppNavigator = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false}}/>
-        <Stack.Screen name="ClickLink" component={ClickLink} />
-        <Stack.Screen name="RequestLink" component={RequestLink} />
+        <Stack.Screen name="Request Link" component={RequestLink} />
+        <Stack.Screen name="Click Link" component={ClickLink} />
         <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':true}}/>
         <Stack.Screen name="Verification" component={Register} />
       </Stack.Navigator>
