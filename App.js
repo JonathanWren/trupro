@@ -31,6 +31,7 @@ import MyJobs from './main/myjobs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import * as Sentry from 'sentry-expo';
 
 import { RegisterContext, SetupContext} from './setup/context';
 
@@ -147,6 +148,13 @@ export const AppNavigator = () => {
 };
 
 const App = () => {
+
+  Sentry.init({
+    dsn: "https://a92eded437e0a7221474cd2de14ffa53@o4505770833084416.ingest.sentry.io/4505770877255680",
+    enableInExpoDevelopment: true,
+    debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+  });
+
   const [registered, setRegistered] = useState(false);
   const [setup, setSetup] = useState(false);
 
