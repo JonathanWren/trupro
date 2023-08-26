@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "co.trupro.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,6 +33,20 @@
       "eas": {
         "projectId": "7617384d-7ad1-4554-b0bb-f05cf448ed55"
       }
+    },
+    "plugins": [
+      "sentry-expo"
+    ],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "trupro-c83468652",
+            "project": "trupro-app"
+          }
+        }
+      ]
     }
   }
 }
