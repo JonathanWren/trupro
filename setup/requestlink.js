@@ -61,7 +61,6 @@ const RequestLink = () => {
                         }
                     })
                     .catch((error) => {
-                        console.log("here")
                         alert(JSON.stringify(error));
                         console.error(error);
                     })
