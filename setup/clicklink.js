@@ -13,12 +13,13 @@ const ClickLink = () => {
     const dispatch = useDispatch();
     const [loading, setloading] = useState(false);
     const email = useSelector(state => state.profile.mainDetails.email);
-    const verificationCode = useSelector(state => state.profile.mainDetails.verificationCode);   
+    const verificationCode_saved = useSelector(state => state.profile.mainDetails.verificationCode);  
+    const [verificationCode, setVerificationCode] = useState(verificationCode_saved);
 
     const verifyCode = () => {
         setloading(true);
 
-        var dataToSend = {email: email, token: verificationCode};
+        var dataToSend = {email: email, token: verificationCode_saved};
         var formBody = [];
         for (var key in dataToSend) {
             var encodedKey = encodeURIComponent(key);
@@ -63,10 +64,10 @@ const ClickLink = () => {
     }
 
     useEffect(() => {
-        if(verificationCode != ''){
+        if(verificationCode_saved != ''){
             verifyCode();
         }
-    }, [verificationCode]);
+    }, [verificationCode_saved]);
 
     return (
         <View style={styles.container}>
@@ -77,16 +78,18 @@ const ClickLink = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Verification Code"
-                onEndEditing={(verificationCode) => {
-                    dispatch (
-                        updateVerificationCode({verificationCode: verificationCode.nativeEvent.text})
-                    )
+                onChangeText={(verificationCode) => {
+                    setVerificationCode(verificationCode);
                 }}
                 defaultValue={verificationCode}
             />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => verifyCode()}
+                onPress={() => {
+                    dispatch (
+                        updateVerificationCode({verificationCode: verificationCode})
+                    )
+                }}
                     >
                 <Text style={styles.buttonText}>Verify</Text>
             </TouchableOpacity>

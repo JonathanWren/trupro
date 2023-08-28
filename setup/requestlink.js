@@ -12,7 +12,8 @@ import config from '../main/config.js';
 const RequestLink = () => {
     const nav = useNavigation();
     const dispatch = useDispatch();
-    const email = useSelector(state => state.profile.mainDetails.email);
+    const email_saved = useSelector(state => state.profile.mainDetails.email);
+    const [email, setEmail] = useState(email_saved);
     const [loading, setloading] = useState(false);
     // const location = useSelector(state => state.profile.mainDetails.location);
 
@@ -25,10 +26,8 @@ const RequestLink = () => {
                 style={styles.input}
                 placeholder="Email Address"
                 keyboardType="email-address"
-                onEndEditing={(email) => {
-                    dispatch (
-                        updateEmail({email: email.nativeEvent.text})
-                    )
+                onChangeText={(email) => {
+                    setEmail(email);
                 }}
                 defaultValue={email}
             />
@@ -40,6 +39,10 @@ const RequestLink = () => {
                         return;
                     }
 
+                    dispatch (
+                        updateEmail({email: email})
+                    )
+
                     setloading(true);
 
                     var dataToSend = {email_address: email};
@@ -50,6 +53,7 @@ const RequestLink = () => {
                         formBody.push(encodedKey + '=' + encodedValue);
                     }
                     formBody = formBody.join('&');
+                    console.log(formBody)
                     fetch(config.BASE_URL + 'requestemailverification?' + formBody, {
                         method: 'GET',
                     })
