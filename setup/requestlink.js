@@ -1,19 +1,19 @@
 //Screen asking users to either click on a link to open the app or enter their email address
 //
 
-import React, {useRef} from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
-import {updateEmail, updatePhoneNumber, updateCountryCode, updateCountryNumber } from '../redux/profileSlice.js';
+import {updateEmail } from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
+import config from '../main/config.js';
 
 const RequestLink = () => {
     const nav = useNavigation();
     const dispatch = useDispatch();
     const email = useSelector(state => state.profile.mainDetails.email);
-    const phoneNumber = useSelector(state => state.profile.mainDetails.phoneNumber);
-    const countryCode = useSelector(state => state.profile.mainDetails.countryCode);
+    const [loading, setloading] = useState(false);
     // const location = useSelector(state => state.profile.mainDetails.location);
 
     return (
@@ -39,10 +39,43 @@ const RequestLink = () => {
                         alert('Please enter an email address');
                         return;
                     }
-                    
-                    nav.navigate('Click Link');}}>
+
+                    setloading(true);
+
+                    var dataToSend = {email_address: email};
+                    var formBody = [];
+                    for (var key in dataToSend) {
+                        var encodedKey = encodeURIComponent(key);
+                        var encodedValue = encodeURIComponent(dataToSend[key]);
+                        formBody.push(encodedKey + '=' + encodedValue);
+                    }
+                    formBody = formBody.join('&');
+                    fetch(config.BASE_URL + 'requestemailverification?' + formBody, {
+                        method: 'GET',
+                    })
+                    .then((response) => {
+                        if(response.status !== 200){
+                            alert('There was an error sending the email. Please try again later.');
+                        } else {
+                            nav.navigate('Click Link');
+                        }
+                    })
+                    .catch((error) => {
+                        console.log("here")
+                        alert(JSON.stringify(error));
+                        console.error(error);
+                    })
+                    .finally(() => {
+                        setloading(false);
+                    });
+                }}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
+            {loading &&
+                <View style={styles.loading}>
+                <ActivityIndicator size='large' />
+                </View>
+            }
         </View>
     );
 }
