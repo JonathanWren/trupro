@@ -9,9 +9,11 @@ export const profileSlice = createSlice({
             firstName: '',
             lastName: '',
             email: '',
-            phoneNumber: '',
-            countryCode: 'GB',
-            countryNumber: '44',
+            verificationCode: '',
+            deviceID: '',
+            deviceCode: '',
+            sessionCode: '',
+            users_id: '',
         },
         currentRole: {
             title: '',
@@ -33,17 +35,23 @@ export const profileSlice = createSlice({
         updateLastName: (state, action) => {
             state.mainDetails.lastName = action.payload.lastName;
         },
-        updatePhoneNumber: (state, action) => {
-            state.mainDetails.phoneNumber = action.payload.phoneNumber;
-        },
-        updateCountryCode: (state, action) => {
-            state.mainDetails.countryCode = action.payload.countryCode;
-        },
-        updateCountryNumber: (state, action) => {
-            state.mainDetails.countryNumber = action.payload.countryNumber;
+        updateUsersID: (state, action) => {
+            state.mainDetails.users_id = action.payload.users_id;
         },
         updateEmail: (state, action) => {
             state.mainDetails.email = action.payload.email;
+        },
+        updateSessionCode: (state, action) => {
+            state.mainDetails.sessionCode = action.payload.sessionCode;
+        },
+        updateVerificationCode: (state, action) => {
+            state.mainDetails.verificationCode = action.payload.verificationCode;
+        },
+        updateDeviceID: (state, action) => {
+            state.mainDetails.deviceID = action.payload.deviceID;
+        },
+        updateDeviceCode: (state, action) => {
+            state.mainDetails.deviceCode = action.payload.deviceCode;
         },
         updateCurrentRole: (state, action) => {
             state.currentRole = action.payload;
@@ -66,6 +74,6 @@ export const profileSlice = createSlice({
     }
 });
 
-export const { updateFirstName, updateLastName, updateEmail, updatePhoneNumber, updateCountryCode, updateCountryNumber, updateCurrentRole, updateNextTitle, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
+export const { updateFirstName, updateUsersID, updateLastName, updateEmail, updateSessionCode, updateVerificationCode, updateDeviceID, updateDeviceCode, updateCurrentRole, updateNextTitle, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
 
 export default profileSlice.reducer;
