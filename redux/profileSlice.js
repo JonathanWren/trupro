@@ -20,7 +20,11 @@ export const profileSlice = createSlice({
         },
         nextMove: {
             title: '',
-            location: '',
+            location: {
+                name: '',
+                lat: 0,
+                lng: 0,
+            },
             salary: 0,
             jobType: [],
             seniority: [],

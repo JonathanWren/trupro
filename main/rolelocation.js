@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { updateNextLocation } from '../redux/profileSlice.js';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { useState } from 'react';
+import {config} from 'secretconfig.js';
 
 const RoleLocation = () => {
 
@@ -18,32 +19,35 @@ const RoleLocation = () => {
 
     return (
         <View style={styles.container}>
-        <Text style={styles.heading}>Location</Text>
+            <Text style={styles.heading}>Location</Text>
 
-        <View width={'100%'} height={'90%'}>
-          <Text style={styles.text}>Select your location</Text>
-          <GooglePlacesAutocomplete
-            placeholder='Search'
-            onPress={(data, details = null) => {
-              // 'details' is provided when fetchDetails = true
-              setLocation(data.description);
-              console.log(data, details);
-            }}
-            query={{
-              key: 'AIzaSyAzvm4cAz7g2U-NnaGqU3S5Vkqv0oinOhQ',
-              language: 'en',
-            }}
-          />
-        </View>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                    dispatch(updateNextLocation({location}));
-                    nav.navigate("Next Move");
-                }}
-            >
-                <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
+            <View width={'100%'} height={'100%'}>
+                <GooglePlacesAutocomplete
+                    placeholder='Enter Location'
+                    //currentLocation={true}
+                    fetchDetails={true}
+                    onPress={(data, details = null) => {
+                        updateNextLocation({
+                            location:{
+                                name: data.description,
+                                lat: details.geometry.location.lat,
+                                lng: details.geometry.location.lng,
+                            }
+                        });
+                        //navigate (close this screen)
+                        console.log(data, details);
+                    }}
+                    query={{
+                        key: config.GooglePlacesKey, 
+                        language: 'en',
+                        types: 'geocode',
+                    }}
+                    textInputProps={{
+                        defaultvalue: location,
+                    }}
+                />
+            </View>
+
         </View>
     );
 }
