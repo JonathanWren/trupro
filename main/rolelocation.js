@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { updateNextLocationName,updateNextLocationlat,updateNextLocationlng,updateNextLocation } from '../redux/profileSlice.js';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { useState } from 'react';
-import {secretconfig} from '../main/secretconfig.js';
+import secretconfig from '../main/secretconfig.js';
 
 const RoleLocation = () => {
 
@@ -50,7 +50,7 @@ const RoleLocation = () => {
                         console.log(data, details);
                     }}
                     query={{
-                        key: secretconfig.GooglePlacesKey, 
+                        key: secretconfig.GooglePlacesKey,
                         language: 'en',
                         types: 'geocode',
                     }}
