@@ -9,46 +9,75 @@ import { updateNextLocation } from '../redux/profileSlice.js';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { useState } from 'react';
 import secretconfig from '../main/secretconfig.js';
+import * as Location from 'expo-location';
 
 const RoleLocation = () => {
 
     const nav = useNavigation();
-    const dispatch = useDispatch();
-
-    const [location, setLocation] = useState('');
-
+  
+    const [location, setLocation] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
+    let text = '';
+  
+    if (errorMsg) {
+      text = errorMsg;
+    } else if (location) {
+      //text = JSON.stringify(location);
+      text = location.coords.latitude + ', ' + location.coords.longitude;
+    }
+  
     return (
-        <View style={styles.container}>
-            <Text style={styles.heading}>Location</Text>
-
-            <View width={'100%'} height={'100%'}>
-                <GooglePlacesAutocomplete
-                    placeholder='Enter Location'
-                    //currentLocation={true}
-                    fetchDetails={true}
-                    onPress={(data, details = null) => {
-                        updateNextLocation({
-                            locationName: data.description,
-                            locationLat: details.geometry.location.lat,
-                            locationLng: details.geometry.location.lng,
-                        })
-                        console.log('updateNextLocation called');
-                        //navigate (close this screen)
-                    }}
-                    query={{
-                        key: secretconfig.GooglePlacesKey,
-                        language: 'en',
-                        types: 'geocode',
-                    }}
-                    textInputProps={{
-                        defaultvalue: location,
-                    }}
-                />
-            </View>
-
+      <View style={styles.container}>
+        <Text style={styles.heading}>Location</Text>
+        <Text style={styles.text}>{text}</Text>
+  
+        <View width={'100%'} height={'90%'}>
+          <GooglePlacesAutocomplete
+          placeholder='Enter Location'
+            fetchDetails={true}
+            onPress={(data, details = null) => {
+              if (data.description === 'Current Location') {
+                //fetching location
+                (async () => {
+                  text = 'Loading...';
+                  let { status } = await Location.requestForegroundPermissionsAsync();
+                  if (status !== 'granted') {
+                    setErrorMsg('Permission to access location was denied');
+                    return;
+                  }
+            
+                  let location = await Location.getCurrentPositionAsync({});
+                    updateNextLocation({
+                        locationName: 'Current Location',
+                        locationLat: location.coords.latitude,
+                        locationLng: location.coords.longitude,
+                    })
+                    setLocation(location);
+                })();}              
+              else {
+                //set the location of item
+                updateNextLocation({
+                    locationName: data.description,
+                    locationLat: details.geometry.location.lat,
+                    locationLng: details.geometry.location.lng,
+                })
+                setLocation({coords: {latitude: details.geometry.location.lat, longitude: details.geometry.location.lng}, description: data.description})
+              }
+              //navigate (close this screen)
+            }}
+            query={{
+              key: secretconfig.GooglePlacesKey,
+              language: 'en',
+              types: 'geocode',
+            }}
+            textInputProps={{
+              defaultvalue: location,
+            }}
+            predefinedPlaces={[{description: 'Current Location', geometry: {location: {lat: 0, lng: 0}}}]}
+          />
         </View>
+      </View>
     );
-}
-
+  }
 
 export default RoleLocation;
