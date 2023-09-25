@@ -11,10 +11,16 @@ const Opportunity = () => {
     const nav = useNavigation();
 
     const nextTitle = useSelector(state => state.profile.nextMove.title);
-    const nextLocation = useSelector(state => state.profile.nextMove.location);
+    const nextLocation = useSelector(state => state.profile.nextMove.locationName);
     const nextSalary = useSelector(state => state.profile.nextMove.salary);
     const nextJobType = useSelector(state => state.profile.nextMove.jobType);
     const nextSeniority = useSelector(state => state.profile.nextMove.seniority);
+
+    console.log(nextTitle);
+    console.log(nextLocation);
+    console.log(nextSalary);
+    console.log(nextJobType);
+    console.log(nextSeniority);
 
     return (
         <View style={styles.container}>

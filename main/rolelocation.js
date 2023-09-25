@@ -14,6 +14,7 @@ import * as Location from 'expo-location';
 const RoleLocation = () => {
 
     const nav = useNavigation();
+    const dispatch = useDispatch();
   
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -47,23 +48,23 @@ const RoleLocation = () => {
                   }
             
                   let location = await Location.getCurrentPositionAsync({});
-                    updateNextLocation({
+                    dispatch(updateNextLocation({
                         locationName: 'Current Location',
                         locationLat: location.coords.latitude,
                         locationLng: location.coords.longitude,
-                    })
+                    }))
                     setLocation(location);
                 })();}              
               else {
                 //set the location of item
-                updateNextLocation({
+                dispatch(updateNextLocation({
                     locationName: data.description,
                     locationLat: details.geometry.location.lat,
                     locationLng: details.geometry.location.lng,
-                })
+                }))
                 setLocation({coords: {latitude: details.geometry.location.lat, longitude: details.geometry.location.lng}, description: data.description})
               }
-              //navigate (close this screen)
+              nav.navigate("Next Move");
             }}
             query={{
               key: secretconfig.GooglePlacesKey,
