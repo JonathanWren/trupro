@@ -16,21 +16,18 @@ const RoleLocation = () => {
     const nav = useNavigation();
     const dispatch = useDispatch();
   
-    const [location, setLocation] = useState(null);
+    const location = null;
     const [errorMsg, setErrorMsg] = useState(null);
     let text = '';
   
     if (errorMsg) {
-      text = errorMsg;
-    } else if (location) {
-      //text = JSON.stringify(location);
-      text = location.coords.latitude + ', ' + location.coords.longitude;
-    }
+      text = errorMsg;}
+
+      //this error message will not be displayed to the user currently
   
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>Location</Text>
-        <Text style={styles.text}>{text}</Text>
   
         <View width={'100%'} height={'90%'}>
           <GooglePlacesAutocomplete
@@ -53,7 +50,6 @@ const RoleLocation = () => {
                         locationLat: location.coords.latitude,
                         locationLng: location.coords.longitude,
                     }))
-                    setLocation(location);
                 })();}              
               else {
                 //set the location of item
@@ -62,7 +58,6 @@ const RoleLocation = () => {
                     locationLat: details.geometry.location.lat,
                     locationLng: details.geometry.location.lng,
                 }))
-                setLocation({coords: {latitude: details.geometry.location.lat, longitude: details.geometry.location.lng}, description: data.description})
               }
               nav.navigate("Next Move");
             }}
