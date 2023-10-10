@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ContactsList from './setup/ContactsList';
 import Register from './setup/register';
@@ -31,6 +31,10 @@ import MyJobs from './main/myjobs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import * as Sentry from 'sentry-expo';
+import * as Linking from 'expo-linking';
+import { useDispatch } from 'react-redux';
+import {updateVerificationCode } from './redux/profileSlice.js';
 
 import { RegisterContext, SetupContext} from './setup/context';
 
@@ -116,6 +120,30 @@ export const JobsTopTabNavigator = () => {
 export const AppNavigator = () => {
   const { registered } = useContext(RegisterContext);
   const { setup } = useContext(SetupContext);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const linkingEvent = Linking.addEventListener('url', handleDeepLink);
+    Linking.getInitialURL().then(url => {
+       if (url) {
+          handleDeepLink({url});
+       }
+    });
+    return () => {
+       linkingEvent.remove();
+    };
+  }, [handleDeepLink]);
+  
+  const handleDeepLink = async (url) => {
+      // add your code here
+      const { hostname, path, queryParams } = Linking.parse(url.url);
+      
+      if(path == "verify"){
+        dispatch (
+          updateVerificationCode({verificationCode: queryParams.token})
+        )
+      }     
+  }
   if(setup){
     return (
       <Tab.Navigator>
@@ -137,8 +165,8 @@ export const AppNavigator = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false}}/>
-        <Stack.Screen name="ClickLink" component={ClickLink} />
-        <Stack.Screen name="RequestLink" component={RequestLink} />
+        <Stack.Screen name="Request Link" component={RequestLink} />
+        <Stack.Screen name="Click Link" component={ClickLink} />
         <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':true}}/>
         <Stack.Screen name="Verification" component={Register} />
       </Stack.Navigator>
@@ -147,6 +175,13 @@ export const AppNavigator = () => {
 };
 
 const App = () => {
+
+  Sentry.init({
+    dsn: "https://a92eded437e0a7221474cd2de14ffa53@o4505770833084416.ingest.sentry.io/4505770877255680",
+    enableInExpoDevelopment: false,
+    debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+  });
+
   const [registered, setRegistered] = useState(false);
   const [setup, setSetup] = useState(false);
 

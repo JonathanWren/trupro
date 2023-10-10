@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateNextSalary } from '../redux/profileSlice.js';
 
 
-const SalarySlider = () => {
+const RoleSalary = () => {
 
     const nav = useNavigation();
     const dispatch = useDispatch();
@@ -82,4 +82,4 @@ const SalarySlider = () => {
     )
     };
 
-  export default SalarySlider;
+  export default RoleSalary;

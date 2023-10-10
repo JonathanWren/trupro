@@ -13,7 +13,7 @@ const Welcome = () => {
             <Text style={localStyles.text}>TruPro is a reputation network for professionals. It allows you to recommend colleagues you trust, get recommended in return and showcase your reputation amongst your peers.</Text>
             <TouchableOpacity
                 style={localStyles.button}
-                onPress={() => {nav.navigate('ClickLink');}}>
+                onPress={() => {nav.navigate('Request Link');}}>
                 <Text style={localStyles.buttonText}>Join TruPro</Text>
             </TouchableOpacity>
         </View>
