@@ -22,7 +22,11 @@ export const profileSlice = createSlice({
         },
         nextMove: {
             title: '',
-            location: '',
+
+            locationName: '',
+            locationLat: 0,
+            locationLng: 0,
+            
             salary: 0,
             jobType: [],
             seniority: [],
@@ -58,10 +62,14 @@ export const profileSlice = createSlice({
         },
         updateNextTitle: (state, action) => {
             state.nextMove.title = action.payload.title;
-        },
+        }, 
+
         updateNextLocation: (state, action) => {
-            state.nextMove.location = action.payload.location;
-        },
+            for (let key in action.payload) {
+                state.nextMove[key] = action.payload[key];
+            };
+        },  
+
         updateNextSalary: (state, action) => {
             state.nextMove.salary = action.payload.salary;
         },
