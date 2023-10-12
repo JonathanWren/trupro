@@ -30,11 +30,12 @@ import RequestLink from './setup/requestlink';
 import MyJobs from './main/myjobs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Provider } from 'react-redux';
-import store from './redux/store';
 import * as Sentry from 'sentry-expo';
 import * as Linking from 'expo-linking';
 import { useDispatch } from 'react-redux';
 import {updateVerificationCode } from './redux/profileSlice.js';
+import { persistor, store } from './redux/store.js';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { RegisterContext, SetupContext} from './setup/context';
 
@@ -187,6 +188,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <RegisterContext.Provider value={{ registered, setRegistered }}>
         <SetupContext.Provider value={{ setup, setSetup }}>
           <NavigationContainer>
@@ -194,6 +196,7 @@ const App = () => {
           </NavigationContainer>
         </SetupContext.Provider>
       </RegisterContext.Provider>
+      </PersistGate>
     </Provider>
   );
 }
