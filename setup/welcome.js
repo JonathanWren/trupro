@@ -20,7 +20,7 @@ const Welcome = () => {
     );
 }  
 
-localStyles = StyleSheet.create({
+const localStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'blue',
