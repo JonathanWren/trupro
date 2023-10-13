@@ -19,7 +19,7 @@ const ClickLink = () => {
     const verifyCode = () => {
         setloading(true);
 
-        var dataToSend = {email: email, token: verificationCode_saved};
+        var dataToSend = {email: email, token: verificationCode};
         var formBody = [];
         for (var key in dataToSend) {
             var encodedKey = encodeURIComponent(key);
@@ -43,7 +43,8 @@ const ClickLink = () => {
                     dispatch (
                         updateDeviceID(json.device_id),
                         updateDeviceCode(json.device_code),
-                        updateUsersID(json.users_id)
+                        updateUsersID(json.users_id),
+                        updateVerificationCode('')
                     )
                     setRegistered(true);
                 })
@@ -86,9 +87,7 @@ const ClickLink = () => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    dispatch (
-                        updateVerificationCode({verificationCode: verificationCode})
-                    )
+                    verifyCode();
                 }}
                     >
                 <Text style={styles.buttonText}>Verify</Text>
