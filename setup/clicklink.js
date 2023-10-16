@@ -6,15 +6,15 @@ import styles, { colors } from '../component.style.js';
 import { updateDeviceCode, updateDeviceID, updateUsersID, updateVerificationCode } from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../main/config.js';
-import { RegisterContext } from './context.js';
+import { useNavigation, StackActions } from '@react-navigation/native';
 
 const ClickLink = () => {
-    const { setRegistered } = useContext(RegisterContext);
     const dispatch = useDispatch();
     const [loading, setloading] = useState(false);
     const email = useSelector(state => state.profile.mainDetails.email);
     const verificationCode_saved = useSelector(state => state.profile.mainDetails.verificationCode);  
     const [verificationCode, setVerificationCode] = useState(verificationCode_saved);
+    const nav = useNavigation();
 
     const verifyCode = () => {
         setloading(true);
@@ -46,7 +46,12 @@ const ClickLink = () => {
                         updateUsersID(json.users_id),
                         updateVerificationCode('')
                     )
-                    setRegistered(true);
+                    NavigationActions
+                    const resetAction = StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({ routeName: 'Setup' })],
+                      });
+                    nav.dispatch(resetAction);
                 })
                 .catch((error) => {
                     console.error(error);

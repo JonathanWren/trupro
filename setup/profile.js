@@ -5,11 +5,9 @@ import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-nativ
 import styles, { colors } from '../component.style.js';
 import { updateFirstName, updateLastName} from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { RegisterContext } from './context.js';
 import config from '../main/config.js';
 
 const Profile = ({route}) => {
-    const { setRegistered } = useContext(RegisterContext);
     const dispatch = useDispatch();
 
     const firstName = useSelector(state => state.profile.mainDetails.firstName); 
@@ -83,7 +81,6 @@ const Profile = ({route}) => {
                             }
 
                             saveProfile();
-                            setRegistered(true);
                         }}
                     >
                         <Text style={styles.buttonText}>Continue</Text>

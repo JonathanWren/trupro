@@ -29,15 +29,12 @@ import JobDetails from './main/jobdetails';
 import RequestLink from './setup/requestlink';
 import MyJobs from './main/myjobs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Provider } from 'react-redux';
 import * as Sentry from 'sentry-expo';
 import * as Linking from 'expo-linking';
-import { useDispatch } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import {updateVerificationCode } from './redux/profileSlice.js';
 import { persistor, store } from './redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
-
-import { RegisterContext, SetupContext} from './setup/context';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -119,9 +116,12 @@ export const JobsTopTabNavigator = () => {
 };
 
 export const AppNavigator = () => {
-  const { registered } = useContext(RegisterContext);
-  const { setup } = useContext(SetupContext);
+  var setup = false;
   const dispatch = useDispatch();
+  const deviceID = useSelector(state => state.profile.mainDetails.deviceID);
+  if(deviceID != ''){
+    setup = true;
+  }
 
   useEffect(() => {
     const linkingEvent = Linking.addEventListener('url', handleDeepLink);
@@ -155,13 +155,6 @@ export const AppNavigator = () => {
         <Tab.Screen name="ProfileNav" component={ProfileNavigator} options={{headerShown: false, tabBarLabel: "Profile"}} />
       </Tab.Navigator>
     );
-  } else if (registered) {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen name="Setup" component={Setup} />
-        <Stack.Screen name="Recommended Colleagues" component={ContactsList} initialParams={{'inWizard':true}}/>
-      </Stack.Navigator>
-    );
   } else {
     return (
       <Stack.Navigator>
@@ -170,6 +163,8 @@ export const AppNavigator = () => {
         <Stack.Screen name="Click Link" component={ClickLink} />
         <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':true}}/>
         <Stack.Screen name="Verification" component={Register} />
+        <Stack.Screen name="Setup" component={Setup} />
+        <Stack.Screen name="Recommended Colleagues" component={ContactsList} initialParams={{'inWizard':true}}/>
       </Stack.Navigator>
     );
   }
@@ -183,19 +178,12 @@ const App = () => {
     debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   });
 
-  const [registered, setRegistered] = useState(false);
-  const [setup, setSetup] = useState(false);
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <RegisterContext.Provider value={{ registered, setRegistered }}>
-        <SetupContext.Provider value={{ setup, setSetup }}>
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>
-        </SetupContext.Provider>
-      </RegisterContext.Provider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
       </PersistGate>
     </Provider>
   );

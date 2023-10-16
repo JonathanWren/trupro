@@ -5,7 +5,6 @@ import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity } from 'r
 import { useNavigation } from '@react-navigation/native';
 import * as Contacts from 'expo-contacts';
 import styles, { colors } from '../component.style.js';
-import { SetupContext } from './context';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import validator from 'validator';
 import {defaultList} from './names';
@@ -16,7 +15,6 @@ const ContactsList = ({route}) => {
     const [added, setAdded] = useState([]);
     const [showIntro, setShowIntro] = useState(true);
     const nav = useNavigation();
-    const { setSetup } = useContext(SetupContext);
 
     useEffect(() => {
         showFirstContactAsync();
@@ -51,7 +49,7 @@ const ContactsList = ({route}) => {
         return sourceContacts.filter((contact) => {
             const searchLower = search.toLowerCase();
             const searchlowerlist = searchLower.split(' ');
-            found = true
+            var found = true
             const namelower = contact.name ? contact.name.toLowerCase() : "";
             searchlowerlist.forEach((searchlower) => {
                 if (!namelower.includes(searchlower)) {

@@ -2,12 +2,10 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import styles from '../component.style.js';
-import { RegisterContext } from './context.js';
 
 const Register = () => {
     const [code, setCode] = useState('');
     const [showText, setShowText] = useState(false);
-    const { setRegistered } = useContext(RegisterContext);
 
   return (
     <View style={styles.container}>
@@ -23,7 +21,8 @@ const Register = () => {
         <TouchableOpacity
             style={styles.button}
             onPress={() => {                    
-                setRegistered(true);}}
+                // setRegistered(true);
+            }}
         >
             <Text style={styles.buttonText}>Verify</Text>
         </TouchableOpacity>
