@@ -7,8 +7,8 @@ import styles from '../component.style.js';
 import { useDispatch } from 'react-redux';
 import { updateNextLocation } from '../redux/profileSlice.js';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import secretconfig from '../main/secretconfig.js';
 import * as Location from 'expo-location';
+import config from '../main/config.js';
 
 const RoleLocation = () => {
 
@@ -22,6 +22,14 @@ const RoleLocation = () => {
           <GooglePlacesAutocomplete
             placeholder='Enter Location'
             fetchDetails={true}
+            requestUrl={{
+              useOnPlatform: 'all', // or "all"
+              url:
+                config.BASE_URL + 'googleplaces', // or any proxy server that hits https://maps.googleapis.com/maps/api
+              headers: {
+               // Authorization: `an auth token`, // if required for your proxy
+              },
+            }}
             onPress={ (data, details = null) => {
                 if (data.description === 'Current Location') {
                   //fetching location
@@ -57,7 +65,6 @@ const RoleLocation = () => {
               }
             }
             query={{
-              key: secretconfig.GooglePlacesKey,
               language: 'en',
               types: 'geocode',
             }}

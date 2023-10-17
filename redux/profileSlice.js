@@ -9,6 +9,9 @@ export const profileSlice = createSlice({
             firstName: '',
             lastName: '',
             email: '',
+            hasLinkedId: false,
+            linkedInProfileURL: '',
+            currentRole: '',
             verificationCode: '',
             deviceID: '',
             deviceCode: '',
@@ -39,6 +42,12 @@ export const profileSlice = createSlice({
         updateLastName: (state, action) => {
             state.mainDetails.lastName = action.payload.lastName;
         },
+        updateHasLinkedId: (state, action) => {
+            state.mainDetails.hasLinkedId = action.payload.hasLinkedId;
+        },
+        updateLinkedInProfileURL: (state, action) => {
+            state.mainDetails.linkedInProfileURL = action.payload.linkedInProfileURL;
+        },
         updateUsersID: (state, action) => {
             state.mainDetails.users_id = action.payload.users_id;
         },
@@ -57,19 +66,17 @@ export const profileSlice = createSlice({
         updateDeviceCode: (state, action) => {
             state.mainDetails.deviceCode = action.payload.deviceCode;
         },
-        updateCurrentRole: (state, action) => {
-            state.currentRole = action.payload;
+        updateCurrentRoleTitle: (state, action) => {
+            state.currentRole.title = action.payload.title;
         },
         updateNextTitle: (state, action) => {
             state.nextMove.title = action.payload.title;
         }, 
-
         updateNextLocation: (state, action) => {
             for (let key in action.payload) {
                 state.nextMove[key] = action.payload[key];
             };
         },  
-
         updateNextSalary: (state, action) => {
             state.nextMove.salary = action.payload.salary;
         },
@@ -82,6 +89,6 @@ export const profileSlice = createSlice({
     }
 });
 
-export const { updateFirstName, updateUsersID, updateLastName, updateEmail, updateSessionCode, updateVerificationCode, updateDeviceID, updateDeviceCode, updateCurrentRole, updateNextTitle, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
+export const { updateFirstName, updateUsersID, updateLastName, updateHasLinkedId, updateLinkedInProfileURL, updateEmail, updateSessionCode, updateVerificationCode, updateDeviceID, updateDeviceCode, updateCurrentRoleTitle, updateNextTitle, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
 
 export default profileSlice.reducer;
