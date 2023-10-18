@@ -44,7 +44,7 @@ const RoleSeniority = () => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
-                        newSeniority = [];
+                        var newSeniority = [];
                         if (seniorityInternship) {
                             newSeniority.push('Internship');
                         }

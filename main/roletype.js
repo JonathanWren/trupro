@@ -40,7 +40,7 @@ const RoleJobType = () => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
-                        newJobType = [];
+                        var newJobType = [];
                         if (jobTypeFullTime) {
                             newJobType.push('Full Time');
                         }

@@ -4,7 +4,7 @@ import React, {useState, useEffect, useRef } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
-import { updateMainLocation } from '../redux/profileSlice.js';
+// import { updateMainLocation } from '../redux/profileSlice.js';
 import { useDispatch } from 'react-redux';
 
 const Location = () => {
@@ -92,7 +92,7 @@ const Location = () => {
 
     const handlePress = (item) => {
         // show another screen passing in the contact object
-        dispatch(updateMainLocation({location: item.name}));
+        // dispatch(updateMainLocation({location: item.name}));
         nav.navigate('Profile');
     }
 

@@ -5,12 +5,10 @@ import { View, Text, TouchableOpacity, TextInput, FlatList } from 'react-native'
 import CheckBox from "expo-checkbox";
 import { useNavigation } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
-import { RegisterContext } from './context.js';
 
 const Role = ({route}) => {
     
         const nav = useNavigation();
-        const { setRegistered } = useContext(RegisterContext);
     
         const [role, setRole] = useState('');
         const [stillInRole, setStillInRole] = useState(false);
@@ -47,8 +45,6 @@ const Role = ({route}) => {
                             alert('Please enter your role and organisation');
                             return;
                         }
-
-                        setRegistered(true);
                     }}
                 >
                     <Text style={styles.buttonText}>Continue</Text>

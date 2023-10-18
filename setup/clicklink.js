@@ -6,10 +6,8 @@ import styles, { colors } from '../component.style.js';
 import { updateDeviceCode, updateDeviceID, updateUsersID, updateVerificationCode } from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../main/config.js';
-import { RegisterContext } from './context.js';
 
 const ClickLink = () => {
-    const { setRegistered } = useContext(RegisterContext);
     const dispatch = useDispatch();
     const [loading, setloading] = useState(false);
     const email = useSelector(state => state.profile.mainDetails.email);
@@ -19,7 +17,7 @@ const ClickLink = () => {
     const verifyCode = () => {
         setloading(true);
 
-        var dataToSend = {email: email, token: verificationCode_saved};
+        var dataToSend = {email: email, token: verificationCode};
         var formBody = [];
         for (var key in dataToSend) {
             var encodedKey = encodeURIComponent(key);
@@ -43,9 +41,9 @@ const ClickLink = () => {
                     dispatch (
                         updateDeviceID(json.device_id),
                         updateDeviceCode(json.device_code),
-                        updateUsersID(json.users_id)
+                        updateUsersID(json.users_id),
+                        updateVerificationCode('')
                     )
-                    setRegistered(true);
                 })
                 .catch((error) => {
                     console.error(error);
@@ -86,9 +84,7 @@ const ClickLink = () => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    dispatch (
-                        updateVerificationCode({verificationCode: verificationCode})
-                    )
+                    verifyCode();
                 }}
                     >
                 <Text style={styles.buttonText}>Verify</Text>
