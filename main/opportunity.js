@@ -25,7 +25,7 @@ const Opportunity = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Where would you like your career to go next?</Text>
-            <Text style={styles.text}>We will use this information to match you with the right opportunities within your network and filter the jobs shown in the app.</Text>
+            <Text style={styles.text}>We will use this information to match you with the right opportunities within your network.</Text>
             <Text style={styles.fieldInput}>Role</Text>
             <Text
                     style={[styles.input, !nextTitle && {color: colors.fieldPlaceHolderTextColor}]}

@@ -35,6 +35,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import {updateVerificationCode } from './redux/profileSlice.js';
 import { persistor, store } from './redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -149,10 +150,12 @@ export const AppNavigator = () => {
     return (
       <Tab.Navigator>
         {/* <Tab.Screen name="ChatsNav" component={ChatNavigator} options={{headerShown: false, tabBarLabel: "Chats", unmountOnBlur: true }}/> */}
-        <Tab.Screen name="Next Move Nav" component={OpportunityNavigator} options={{headerShown: false, tabBarLabel: "Next Move"}} />
-        <Tab.Screen name="ReputationNav" component={ReputationNavigator} options={{headerShown: false, tabBarLabel: "Reputation", unmountOnBlur: true}} />
-        <Tab.Screen name="JobsNav" component={JobsNavigator} options={{headerShown: false, tabBarLabel: "Jobs"}}/>
-        <Tab.Screen name="ProfileNav" component={ProfileNavigator} options={{headerShown: false, tabBarLabel: "Profile"}} />
+        <Tab.Screen name="Next Move Nav" component={OpportunityNavigator} options={{headerShown: false, tabBarLabel: "Next Move", tabBarIcon: ({tintColor}) =>
+          <FontAwesome name="mail-forward" size={24} color={tintColor} />}} />
+        {/* <Tab.Screen name="ReputationNav" component={ReputationNavigator} options={{headerShown: false, tabBarLabel: "Reputation", unmountOnBlur: true}} />
+        <Tab.Screen name="JobsNav" component={JobsNavigator} options={{headerShown: false, tabBarLabel: "Jobs"}}/> */}
+        <Tab.Screen name="ProfileNav" component={ProfileNavigator} options={{headerShown: false, tabBarLabel: "Profile", tabBarIcon: ({tintColor}) =>
+          <AntDesign name="profile" size={24} color={tintColor} />}} />
       </Tab.Navigator>
     );
   } else {
