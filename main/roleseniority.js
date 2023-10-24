@@ -36,12 +36,14 @@ const RoleSeniority = () => {
                 <ScrollView style={styles.scrollView}>
                 <Text style={styles.heading}>Seniority</Text>
                 <Text style={styles.text}>What level of job are you looking for?</Text>
-                <SeniorityCheckBox type="Internship" checked={seniorityInternship} onChange={setSeniorityInternship}/>
-                <SeniorityCheckBox type="Entry Level" checked={seniorityEntryLevel} onChange={setSeniorityEntryLevel}/>
-                <SeniorityCheckBox type="Junior" checked={seniorityJunior} onChange={setSeniorityJunior}/>
-                <SeniorityCheckBox type="Mid Level" checked={seniorityMidLevel} onChange={setSeniorityMidLevel}/>
-                <SeniorityCheckBox type="Senior" checked={senioritySenior} onChange={setSenioritySenior}/>
-                <SeniorityCheckBox type="Expert" checked={seniorityExpert} onChange={setSeniorityExpert}/>
+                <View style={styles.checkboxGroup}>
+                    <SeniorityCheckBox type="Internship" checked={seniorityInternship} onChange={setSeniorityInternship}/>
+                    <SeniorityCheckBox type="Entry Level" checked={seniorityEntryLevel} onChange={setSeniorityEntryLevel}/>
+                    <SeniorityCheckBox type="Junior" checked={seniorityJunior} onChange={setSeniorityJunior}/>
+                    <SeniorityCheckBox type="Mid Level" checked={seniorityMidLevel} onChange={setSeniorityMidLevel}/>
+                    <SeniorityCheckBox type="Senior" checked={senioritySenior} onChange={setSenioritySenior}/>
+                    <SeniorityCheckBox type="Expert" checked={seniorityExpert} onChange={setSeniorityExpert}/>
+                </View>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {

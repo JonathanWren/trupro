@@ -34,10 +34,12 @@ const RoleJobType = () => {
                 <ScrollView style={styles.scrollView}>
                 <Text style={styles.heading}>Job Type</Text>
                 <Text style={styles.text}>What type of job are you looking for?</Text>
-                <JobTypeCheckBox type="Full Time"  checked={jobTypeFullTime} onChange={setJobTypeFullTime}/>
-                <JobTypeCheckBox type="Part Time" checked={jobTypePartTime} onChange={setJobTypePartTime}/>
-                <JobTypeCheckBox type="Contract" checked={jobTypeContract} onChange={setJobTypeContract}/>
-                <JobTypeCheckBox type="Temporary" checked={jobTypeTemporary} onChange={setJobTypeTemporary}/>
+                <View style={styles.checkboxGroup}>
+                    <JobTypeCheckBox type="Full Time"  checked={jobTypeFullTime} onChange={setJobTypeFullTime}/>
+                    <JobTypeCheckBox type="Part Time" checked={jobTypePartTime} onChange={setJobTypePartTime}/>
+                    <JobTypeCheckBox type="Contract" checked={jobTypeContract} onChange={setJobTypeContract}/>
+                    <JobTypeCheckBox type="Temporary" checked={jobTypeTemporary} onChange={setJobTypeTemporary}/>
+                </View>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {

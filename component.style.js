@@ -53,6 +53,9 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
         marginBottom: 15,
     },
+    checkboxGroup: {
+        marginTop: 15,
+    },
     checkboxText: {
         fontSize: 14,
         fontWeight: 'bold',

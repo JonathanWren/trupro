@@ -168,10 +168,12 @@ const Role = () => {
                 </View>
             }
 
+            <View style={styles.checkboxGroup}>
             {roleTypes.map((roleType) => (
                 (selectedRole.includes(roleType[0]) || (search.length <= 2 && selectedRoleCategories.includes(roleType[1])) || (search.length > 2 && roleType[0].includes(search))) && 
                 <RoleCheckbox type={roleType[0]} checked={selectedRole.includes(roleType[0])} onChange={handleRoleSelected} key={roleType[0]}/>
             ))} 
+            </View>
 
             <TouchableOpacity
                 style={styles.button}

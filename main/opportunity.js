@@ -29,21 +29,13 @@ const Opportunity = () => {
                     }}
                 >{nextTitles.length > 0 ? nextTitles.join(", ") : 'Role'}
             </Text>
-            <Text style={styles.fieldInput}>Location</Text>
+            <Text style={styles.fieldInput}>Seniority</Text>
             <Text
-                    style={[styles.input, !nextLocation && {color: colors.fieldPlaceHolderTextColor}]}
+                    style={[styles.input, (!nextSeniority || nextSeniority.length == 0) && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
-                        nav.navigate('RoleLocation');
+                        nav.navigate('RoleSeniority');
                     }}
-                >{nextLocation ? nextLocation : 'Location'}
-            </Text>
-            <Text style={styles.fieldInput}>Salary</Text>
-            <Text
-                    style={[styles.input, !nextSalary && {color: colors.fieldPlaceHolderTextColor}]}
-                    onPress={() => {
-                        nav.navigate('RoleSalary');
-                    }}
-                >{nextSalary ? '£' + nextSalary + 'K' : 'Salary'}
+                >{nextSeniority && nextSeniority.length > 0 ? nextSeniority.map(item => item).join(', ') : 'Seniority'}
             </Text>
             <Text style={styles.fieldInput}>Job Type</Text>
             <Text
@@ -53,13 +45,21 @@ const Opportunity = () => {
                     }}
                 >{nextJobType && nextJobType.length > 0 ? nextJobType.map(item => item).join(', ') : 'Job Type'}
             </Text>
-            <Text style={styles.fieldInput}>Seniority</Text>
+            <Text style={styles.fieldInput}>Minimum Salary</Text>
             <Text
-                    style={[styles.input, (!nextSeniority || nextSeniority.length == 0) && {color: colors.fieldPlaceHolderTextColor}]}
+                    style={[styles.input, !nextSalary && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
-                        nav.navigate('RoleSeniority');
+                        nav.navigate('RoleSalary');
                     }}
-                >{nextSeniority && nextSeniority.length > 0 ? nextSeniority.map(item => item).join(', ') : 'Seniority'}
+                >{nextSalary ? '£' + nextSalary + 'K' : 'Salary'}
+            </Text>
+            <Text style={styles.fieldInput}>Location</Text>
+            <Text
+                    style={[styles.input, !nextLocation && {color: colors.fieldPlaceHolderTextColor}]}
+                    onPress={() => {
+                        nav.navigate('RoleLocation');
+                    }}
+                >{nextLocation ? nextLocation : 'Location'}
             </Text>
             </ScrollView>
         </View>
