@@ -1,7 +1,7 @@
 //Screen allowing user to select their location.
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import { useDispatch } from 'react-redux';
@@ -17,6 +17,7 @@ const RoleLocation = () => {
   
     return (
       <View style={styles.container}>
+        <ScrollView style={styles.scrollView}>
         <Text style={styles.heading}>Location</Text>
         <View width={'100%'} height={'90%'}>
           <GooglePlacesAutocomplete
@@ -71,6 +72,7 @@ const RoleLocation = () => {
             predefinedPlaces={[{description: 'Current Location', geometry: {location: {lat: 0, lng: 0}}}]}
           />
         </View>
+        </ScrollView>
       </View>
     );
   }

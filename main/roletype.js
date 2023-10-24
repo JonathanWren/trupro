@@ -1,6 +1,6 @@
 //Screen allowing users to enter the job type. The job types should be a list of checkboxes which are saved in an array. The options are full time, part time, contract, temporary.
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import CheckBox from "expo-checkbox";
@@ -31,6 +31,7 @@ const RoleJobType = () => {
     
         return (
             <View style={styles.container}>
+                <ScrollView style={styles.scrollView}>
                 <Text style={styles.heading}>Job Type</Text>
                 <Text style={styles.text}>What type of job are you looking for?</Text>
                 <JobTypeCheckBox type="Full Time"  checked={jobTypeFullTime} onChange={setJobTypeFullTime}/>
@@ -59,6 +60,7 @@ const RoleJobType = () => {
                 >
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
+                </ScrollView>
             </View>
         );
     }

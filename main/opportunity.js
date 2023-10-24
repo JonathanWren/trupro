@@ -1,7 +1,7 @@
 //Screen asking questions about what roles they are looking for
 //
 import React from 'react';
-import { View, Text, } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles, {colors} from '../component.style.js';
 import { useSelector } from 'react-redux';
@@ -10,29 +10,24 @@ const Opportunity = () => {
 
     const nav = useNavigation();
 
-    const nextTitle = useSelector(state => state.profile.nextMove.title);
+    const nextTitles = useSelector(state => state.profile.nextMove.titles);
     const nextLocation = useSelector(state => state.profile.nextMove.locationName);
     const nextSalary = useSelector(state => state.profile.nextMove.salary);
     const nextJobType = useSelector(state => state.profile.nextMove.jobType);
     const nextSeniority = useSelector(state => state.profile.nextMove.seniority);
 
-    console.log(nextTitle);
-    console.log(nextLocation);
-    console.log(nextSalary);
-    console.log(nextJobType);
-    console.log(nextSeniority);
-
     return (
         <View style={styles.container}>
+            <ScrollView style={styles.scrollView}>
             <Text style={styles.heading}>Where would you like your career to go next?</Text>
             <Text style={styles.text}>We will use this information to match you with the right opportunities within your network.</Text>
             <Text style={styles.fieldInput}>Role</Text>
             <Text
-                    style={[styles.input, !nextTitle && {color: colors.fieldPlaceHolderTextColor}]}
+                    style={[styles.input, nextTitles.length == 0 && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
                         nav.navigate('Role');
                     }}
-                >{nextTitle ? nextTitle : 'Role'}
+                >{nextTitles.length > 0 ? nextTitles.join(", ") : 'Role'}
             </Text>
             <Text style={styles.fieldInput}>Location</Text>
             <Text
@@ -66,6 +61,7 @@ const Opportunity = () => {
                     }}
                 >{nextSeniority && nextSeniority.length > 0 ? nextSeniority.map(item => item).join(', ') : 'Seniority'}
             </Text>
+            </ScrollView>
         </View>
     );
 }

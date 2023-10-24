@@ -1,6 +1,6 @@
 //Screen allowing users to enter the seniority. The seniority should be a list of checkboxes which are saved in an array. The options are internship, entrylevel,  junior, midlevel, senior, expert.
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import CheckBox from "expo-checkbox";
@@ -33,6 +33,7 @@ const RoleSeniority = () => {
     
         return (
             <View style={styles.container}>
+                <ScrollView style={styles.scrollView}>
                 <Text style={styles.heading}>Seniority</Text>
                 <Text style={styles.text}>What level of job are you looking for?</Text>
                 <SeniorityCheckBox type="Internship" checked={seniorityInternship} onChange={setSeniorityInternship}/>
@@ -71,6 +72,7 @@ const RoleSeniority = () => {
                 >
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
+                </ScrollView>
             </View>
         );
     }

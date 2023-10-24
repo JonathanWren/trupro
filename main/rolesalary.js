@@ -1,7 +1,7 @@
 //Screen with a slider for selecting the minimum salary required
 
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import Slider from '@react-native-community/slider';
@@ -54,6 +54,7 @@ const RoleSalary = () => {
     } 
     return(
         <View style={styles.container}>
+        <ScrollView style={styles.scrollView}>
         <Text style={styles.heading}>What is the minimum salary you would accept for your next role?</Text>
         <Text style={styles.text}>Drag the slider to set your minimum salary</Text>
         <Text style={styles.text}>£{salary}K</Text>
@@ -78,6 +79,7 @@ const RoleSalary = () => {
         >
             <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
+        </ScrollView>
     </View>
     )
     };

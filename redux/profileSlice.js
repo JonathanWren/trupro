@@ -24,12 +24,10 @@ export const profileSlice = createSlice({
             stillInRole: true,
         },
         nextMove: {
-            title: '',
-
+            titles: [],
             locationName: '',
             locationLat: 0,
             locationLng: 0,
-            
             salary: 0,
             jobType: [],
             seniority: [],
@@ -69,8 +67,8 @@ export const profileSlice = createSlice({
         updateCurrentRoleTitle: (state, action) => {
             state.currentRole.title = action.payload.title;
         },
-        updateNextTitle: (state, action) => {
-            state.nextMove.title = action.payload.title;
+        updateNextTitles: (state, action) => {
+            state.nextMove.titles = action.payload.titles;
         }, 
         updateNextLocation: (state, action) => {
             for (let key in action.payload) {
@@ -89,6 +87,6 @@ export const profileSlice = createSlice({
     }
 });
 
-export const { updateFirstName, updateUsersID, updateLastName, updateHasLinkedId, updateLinkedInProfileURL, updateEmail, updateSessionCode, updateVerificationCode, updateDeviceID, updateDeviceCode, updateCurrentRoleTitle, updateNextTitle, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
+export const { updateFirstName, updateUsersID, updateLastName, updateHasLinkedId, updateLinkedInProfileURL, updateEmail, updateSessionCode, updateVerificationCode, updateDeviceID, updateDeviceCode, updateCurrentRoleTitle, updateNextTitles, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -27,12 +27,12 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        padding: 25,
         backgroundColor: colors.appBackgroundColor,
     },
     scrollView: {
         flex: 1,
         width: '100%',
+        padding: 25,
         alignContent: 'center',
     },
     heading: {
@@ -126,6 +126,33 @@ export default StyleSheet.create({
     buttonText: {
         color: colors.buttonTextColor,
         fontSize: 16,
+    },
+    optionButton:{
+        backgroundColor: colors.appBackgroundColor,
+        borderColor: colors.buttonBackgroundColor,
+        borderWidth: 2,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginTop: 10,
+        paddingRight: 10,
+        paddingLeft: 10,
+    },
+    optionButtonText: {
+        fontSize: 16,
+    },
+    optionButtonSelected:{
+        backgroundColor: colors.buttonBackgroundColor,
+        borderColor: colors.buttonBackgroundColor,
+        height: 40,
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginTop: 10,
+        paddingRight: 10,
+        paddingLeft: 10,
     },
     reputationCircle: {
         width: 40,
