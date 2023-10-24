@@ -16,8 +16,7 @@ const RoleLocation = () => {
     const dispatch = useDispatch();
   
     return (
-      <View style={styles.container}>
-        <ScrollView style={styles.scrollView}>
+      <View style={[styles.container, {padding: 25}]}>
         <Text style={styles.heading}>Location</Text>
         <View width={'100%'} height={'90%'}>
           <GooglePlacesAutocomplete
@@ -72,7 +71,6 @@ const RoleLocation = () => {
             predefinedPlaces={[{description: 'Current Location', geometry: {location: {lat: 0, lng: 0}}}]}
           />
         </View>
-        </ScrollView>
       </View>
     );
   }

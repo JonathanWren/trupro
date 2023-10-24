@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-nativ
 import styles, { colors } from '../component.style.js';
 import { updateFirstName, updateLastName, updateHasLinkedId, updateLinkedInProfileURL, updateCurrentRoleTitle} from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
-import config from '../main/config.js';
+import config from './config.js';
 import CheckBox from "expo-checkbox";
 
 const Profile = ({route}) => {

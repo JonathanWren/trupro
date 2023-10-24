@@ -8,14 +8,10 @@ import thunk from 'redux-thunk';
 //storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //slices
-import jobsReducer from './jobsSlice';
 import profileReducer from './profileSlice';
-import chatsReducer from './chatsSlice';
 
 const rootReducer = combineReducers({
-    jobs: jobsReducer,
     profile: profileReducer,
-    chats: chatsReducer,
 });
 
 const persistConfig = {

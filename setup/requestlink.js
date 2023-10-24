@@ -2,7 +2,7 @@
 //
 
 import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles, { colors } from '../component.style.js';
 import {updateEmail } from '../redux/profileSlice.js';
@@ -19,6 +19,7 @@ const RequestLink = () => {
 
     return (
         <View style={styles.container}>
+            <ScrollView style={styles.scrollView}>
             <Text style={styles.text}>Please enter your email address below.</Text>
             <Text style={styles.text}>You should enter the email that you use to sign into the TruPro slack group if you are part of this group.</Text>
             <Text style={styles.fieldInput}>Email address</Text>
@@ -74,6 +75,7 @@ const RequestLink = () => {
                 }}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
+            </ScrollView>
             {loading &&
                 <View style={styles.loading}>
                 <ActivityIndicator size='large' />

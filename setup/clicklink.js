@@ -1,7 +1,7 @@
 //Screen asking the user to click the link or enter the code below, and listens for the link to be clicked
 
 import React, {useContext, useState, useEffect} from 'react';
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, ScrollView } from 'react-native';
 import styles, { colors } from '../component.style.js';
 import { updateDeviceCode, updateDeviceID, updateUsersID, updateVerificationCode } from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -69,10 +69,10 @@ const ClickLink = () => {
 
     return (
         <View style={styles.container}>
+            <ScrollView style={styles.scrollView}>
             <Text style={styles.text}>You should now receive an email from us with a link to verify your email.</Text>
             <Text style={styles.text}>Click the link in this email to continue or enter the code received below.</Text>
 
-            <Text style={styles.fieldInput}>Verification Code</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Verification Code"
@@ -89,6 +89,7 @@ const ClickLink = () => {
                     >
                 <Text style={styles.buttonText}>Verify</Text>
             </TouchableOpacity>
+            </ScrollView>
             {loading &&
                 <View style={styles.loading}>
                 <ActivityIndicator size='large' />
