@@ -17,3 +17,4 @@ web-build/
 .metro-health-check*
 main/secretconfig.js
 pc-api-7721101772464735010-944-43d69c47c082.json
+.idea/*
