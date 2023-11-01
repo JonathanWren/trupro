@@ -49,8 +49,8 @@ export const OpportunityNavigator = () => {
 export const AppNavigator = () => {
   var setup = false;
   const dispatch = useDispatch();
-  const deviceID = useSelector(state => state.profile.mainDetails.deviceID);
-  if(deviceID != ''){
+  const deviceID = useSelector(state => state.profile.authenticationDetails.deviceID);
+  if(deviceID != '' && deviceID){
     setup = true;
   }
 
