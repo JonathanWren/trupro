@@ -1,9 +1,9 @@
 //Screen to allow entering name and job title and validate that are completed before continuing
 //
-import React, {useContext} from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import styles, { colors } from '../component.style.js';
-import { updateFirstName, updateLastName, updateHasLinkedId, updateLinkedInProfileURL, updateCurrentRoleTitle} from '../redux/profileSlice.js';
+import { saveMainDetails} from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import config from './config.js';
 import CheckBox from "expo-checkbox";
@@ -15,7 +15,7 @@ const Profile = ({route}) => {
     const lastName = useSelector(state => state.profile.mainDetails.lastName);
     const hasLinkedId = useSelector(state => state.profile.mainDetails.hasLinkedId);
     const linkedInProfileURL = useSelector(state => state.profile.mainDetails.linkedInProfileURL);
-    const currentRoleTitle = useSelector(state => state.profile.currentRole.title);
+    const currentRoleTitle = useSelector(state => state.profile.mainDetails.currentRole);
 
     const saveProfile = () => {
         var dataToSend = {first_name: firstName, last_name: lastName, has_linked_id: hasLinkedId, linkedin_profile_url: linkedInProfileURL};
@@ -36,9 +36,8 @@ const Profile = ({route}) => {
     }
 
     const checkboxChange = (checked) => {
-
         dispatch (
-            updateHasLinkedId({hasLinkedId: checked})
+            saveMainDetails({has_linked_id: checked})
         )
     }
     
@@ -53,7 +52,7 @@ const Profile = ({route}) => {
                     defaultValue={firstName}
                     onChangeText={(name) => {
                         dispatch (
-                            updateFirstName({firstName: name})
+                            saveMainDetails({first_name: name})
                         )
                     }}
                 />
@@ -65,7 +64,7 @@ const Profile = ({route}) => {
                     defaultValue={lastName}
                     onChangeText={(name) => {
                         dispatch (
-                            updateLastName({lastName: name})
+                            saveMainDetails({last_name: name})
                         )
                     }}
                 />
@@ -82,7 +81,7 @@ const Profile = ({route}) => {
                     defaultValue={linkedInProfileURL}
                     onChangeText={(url) => {
                         dispatch (
-                            updateLinkedInProfileURL({linkedInProfileURL: url})
+                            saveMainDetails({linkedin_profile_url: url})
                         )
                     }}
                 />
@@ -94,19 +93,11 @@ const Profile = ({route}) => {
                     defaultValue={currentRoleTitle}
                     onChangeText={(text) => {
                         dispatch (
-                            updateCurrentRoleTitle({title: text})
+                            saveMainDetails({job_title: text})
                         )
                     }}
                 />
-
-                {/* <Text style={styles.fieldInput}>Where do you live?</Text>
-                <Text
-                    style={[styles.input, !location && {color: colors.fieldPlaceHolderTextColor}]}
-                    onPress={() => {
-                        nav.navigate('Location');
-                    }}
-                >{location ? location : 'Location'}
-                </Text> */}
+                
                 {route.params.inWizard &&
                     <TouchableOpacity
                         style={styles.button}

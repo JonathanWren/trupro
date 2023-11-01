@@ -1,17 +1,17 @@
 //Screen asking the user to click the link or enter the code below, and listens for the link to be clicked
 
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, ScrollView } from 'react-native';
-import styles, { colors } from '../component.style.js';
-import { updateDeviceCode, updateDeviceID, updateUsersID, updateVerificationCode } from '../redux/profileSlice.js';
+import styles from '../component.style.js';
+import { updateDeviceDetails } from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../main/config.js';
 
 const ClickLink = () => {
     const dispatch = useDispatch();
     const [loading, setloading] = useState(false);
-    const email = useSelector(state => state.profile.mainDetails.email);
-    const verificationCode_saved = useSelector(state => state.profile.mainDetails.verificationCode);  
+    const email = useSelector(state => state.profile.authenticationDetails.email);
+    const verificationCode_saved = useSelector(state => state.profile.authenticationDetails.verificationCode);  
     const [verificationCode, setVerificationCode] = useState(verificationCode_saved);
 
     const verifyCode = () => {
@@ -39,10 +39,10 @@ const ClickLink = () => {
                 response.json()
                 .then((json) => {
                     dispatch (
-                        updateDeviceID(json.device_id),
-                        updateDeviceCode(json.device_code),
-                        updateUsersID(json.users_id),
-                        updateVerificationCode('')
+                        updateDeviceDetails({ deviceID: json.device_id,
+                                              deviceCode: json.device_code,
+                                              users_id: json.users_id,
+                                              verificationCode: ''})
                     )
                 })
                 .catch((error) => {
