@@ -5,7 +5,6 @@ import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-nativ
 import styles, { colors } from '../component.style.js';
 import { saveMainDetails} from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
-import config from './config.js';
 import CheckBox from "expo-checkbox";
 
 const Profile = ({route}) => {
@@ -16,24 +15,6 @@ const Profile = ({route}) => {
     const hasLinkedId = useSelector(state => state.profile.mainDetails.hasLinkedId);
     const linkedInProfileURL = useSelector(state => state.profile.mainDetails.linkedInProfileURL);
     const currentRoleTitle = useSelector(state => state.profile.mainDetails.currentRole);
-
-    const saveProfile = () => {
-        var dataToSend = {first_name: firstName, last_name: lastName, has_linked_id: hasLinkedId, linkedin_profile_url: linkedInProfileURL};
-        var formBody = [];
-        for (var key in dataToSend) {
-            var encodedKey = encodeURIComponent(key);
-            var encodedValue = encodeURIComponent(dataToSend[key]);
-            formBody.push(encodedKey + '=' + encodedValue);
-        }
-        formBody = formBody.join('&');
-        fetch(config.BASE_URL + 'saveprofile?' + formBody, {
-            method: 'GET',
-        })
-        .catch((error) => {
-            alert(JSON.stringify(error));
-            console.error(error);
-        });
-    }
 
     const checkboxChange = (checked) => {
         dispatch (
@@ -70,8 +51,10 @@ const Profile = ({route}) => {
                 />
                 <Text style={styles.fieldInput}>LinkedIn Profile URL</Text>
                 <View style={styles.checkboxContainer}>
-                    <CheckBox value={hasLinkedId} onValueChange={(checked) => checkboxChange(checked)}
-                    color={hasLinkedId ? 'blue' : undefined}/>
+                    <CheckBox value={hasLinkedId} 
+                        onValueChange={(checked) => checkboxChange(checked)}
+                        color={hasLinkedId ? 'blue' : undefined}
+                    />
                     <Text style={styles.checkboxText} onPress={() => checkboxChange(!hasLinkedId)}>I do not have a LinkedIn Account</Text>
                 </View>
                 <TextInput
@@ -111,8 +94,6 @@ const Profile = ({route}) => {
                                 alert('Please complete your last name');
                                 return;
                             }
-
-                            saveProfile();
                         }}
                     >
                         <Text style={styles.buttonText}>Continue</Text>

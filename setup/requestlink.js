@@ -12,10 +12,9 @@ import config from '../main/config.js';
 const RequestLink = () => {
     const nav = useNavigation();
     const dispatch = useDispatch();
-    const email_saved = useSelector(state => state.profile.mainDetails.email);
+    const email_saved = useSelector(state => state.profile.authenticationDetails.email);
     const [email, setEmail] = useState(email_saved);
     const [loading, setloading] = useState(false);
-    // const location = useSelector(state => state.profile.mainDetails.location);
 
     return (
         <View style={styles.container}>

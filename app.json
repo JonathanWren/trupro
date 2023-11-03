@@ -13,6 +13,7 @@
     },
 
     "plugins": [
+      "sentry-expo",
       [
         "expo-location",
         {
@@ -57,9 +58,6 @@
         "projectId": "7617384d-7ad1-4554-b0bb-f05cf448ed55"
       }
     },
-    "plugins": [
-      "sentry-expo"
-    ],
     "hooks": {
       "postPublish": [
         {

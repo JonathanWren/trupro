@@ -1,71 +1,39 @@
 //Screen asking the user to click the link or enter the code below, and listens for the link to be clicked
 
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, ScrollView } from 'react-native';
 import styles from '../component.style.js';
-import { updateDeviceDetails } from '../redux/profileSlice.js';
+import { validateEmailToken, updateVerificationCode } from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
-import config from '../main/config.js';
 
 const ClickLink = () => {
     const dispatch = useDispatch();
     const [loading, setloading] = useState(false);
-    const email = useSelector(state => state.profile.authenticationDetails.email);
-    const verificationCode_saved = useSelector(state => state.profile.authenticationDetails.verificationCode);  
-    const [verificationCode, setVerificationCode] = useState(verificationCode_saved);
+    const verificationCode = useSelector(state => state.profile.authenticationDetails.verificationCode); 
 
     const verifyCode = () => {
         setloading(true);
 
-        var dataToSend = {email: email, token: verificationCode};
-        var formBody = [];
-        for (var key in dataToSend) {
-            var encodedKey = encodeURIComponent(key);
-            var encodedValue = encodeURIComponent(dataToSend[key]);
-            formBody.push(encodedKey + '=' + encodedValue);
-        }
-        formBody = formBody.join('&');
-        fetch(config.BASE_URL + 'validateemailtoken?' + formBody, {
-            method: 'GET',
-        })
-        .then(response => {
-            if(response.status == 401){
-                alert('This code is invalid please try again');
-                setloading(false);
-            } else if (!response.ok){
-                alert('Failed to validate code. Please try again later.');
-                setloading(false);
-            } else {
-                response.json()
-                .then((json) => {
-                    dispatch (
-                        updateDeviceDetails({ deviceID: json.device_id,
-                                              deviceCode: json.device_code,
-                                              users_id: json.users_id,
-                                              verificationCode: ''})
-                    )
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert('There was an error validating the code. Please try again later.');
-                })
-                .finally(() => {
-                    setloading(false);
-                });
+        dispatch(
+            validateEmailToken()
+        )
+        .then((response) => {
+            if(response.type != 'profile/validateEmailToken/fulfilled'){
+                if(response.payload == "Invalidtoken"){
+                    alert("Invalid token");
+                } else {
+                    alert("Failed to validate token")
+                }
             }
         })
         .catch((error) => {
             alert(JSON.stringify(error));
             console.error(error);
-            setloading(false);
         })
+        .finally(() => {
+            setloading(false);
+        });
     }
-
-    useEffect(() => {
-        if(verificationCode_saved != ''){
-            verifyCode();
-        }
-    }, [verificationCode_saved]);
 
     return (
         <View style={styles.container}>
@@ -77,7 +45,9 @@ const ClickLink = () => {
                 style={styles.input}
                 placeholder="Verification Code"
                 onChangeText={(verificationCode) => {
-                    setVerificationCode(verificationCode);
+                    dispatch(
+                        updateVerificationCode({verificationCode: verificationCode})
+                    );
                 }}
                 defaultValue={verificationCode}
             />
@@ -86,7 +56,7 @@ const ClickLink = () => {
                 onPress={() => {
                     verifyCode();
                 }}
-                    >
+            >
                 <Text style={styles.buttonText}>Verify</Text>
             </TouchableOpacity>
             </ScrollView>

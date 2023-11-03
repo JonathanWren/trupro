@@ -15,7 +15,7 @@ import RequestLink from './setup/requestlink';
 import * as Sentry from 'sentry-expo';
 import * as Linking from 'expo-linking';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { updateVerificationCode } from './redux/profileSlice.js';
+import { updateVerificationCodeAndEmail, validateEmailToken } from './redux/profileSlice.js';
 import { persistor, store } from './redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -49,6 +49,7 @@ export const OpportunityNavigator = () => {
 
 export const AppNavigator = () => {
   var setup = false;
+  const url = Linking.useURL();
   const dispatch = useDispatch();
   const deviceID = useSelector(state => state.profile.authenticationDetails.deviceID);
   if(deviceID != '' && deviceID){
@@ -56,16 +57,10 @@ export const AppNavigator = () => {
   }
 
   useEffect(() => {
-    const linkingEvent = Linking.addEventListener('url', handleDeepLink);
-    Linking.getInitialURL().then(url => {
-       if (url) {
-          handleDeepLink({url});
-       }
-    });
-    return () => {
-       linkingEvent.remove();
-    };
-  }, [handleDeepLink]);
+    if(url && !setup){
+      handleDeepLink(url);
+    }
+  }, [url]);
 
   useEffect(() => {
     if(deviceID != '' && deviceID){
@@ -76,12 +71,13 @@ export const AppNavigator = () => {
   
   const handleDeepLink = async (url) => {
       // add your code here
-      const { hostname, path, queryParams } = Linking.parse(url.url);
+      const { hostname, path, queryParams } = Linking.parse(url);
       
       if(path == "verify"){
-        dispatch (
-          updateVerificationCode({verificationCode: queryParams.token})
-        )
+        await dispatch (
+          updateVerificationCodeAndEmail({verificationCode: queryParams.token, email: queryParams.email})
+        );
+        dispatch(validateEmailToken());
       }     
   }
   if(setup){

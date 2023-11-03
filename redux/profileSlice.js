@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import config from '../main/config.js';
 
-const callAPI = async (url, input, getState, dispatch) => {
+const callAuthenticatedAPI = async (url, input, getState, dispatch, rejectWithValue) => {
     const { authenticationDetails } = getState().profile;
 
     const SecondTry = "SecondTry" in input;
@@ -29,7 +29,7 @@ const callAPI = async (url, input, getState, dispatch) => {
     if (response.status === 401 && !SecondTry) {
       await dispatch(login());
       input["SecondTry"] = true;
-      return callAPI(url, input, getState, dispatch);
+      return callAuthenticatedAPI(url, input, getState, dispatch);
     }
 
     if(!response.ok){
@@ -45,39 +45,72 @@ const callAPI = async (url, input, getState, dispatch) => {
 
 export const getMainDetails = createAsyncThunk(
     'profile/getMainDetails',
-    async (input, { getState, dispatch }) => {
-        const response = await callAPI('getprofile', {}, getState, dispatch);
+    async (input, { getState, dispatch, rejectWithValue }) => {
+        const response = await callAuthenticatedAPI('getprofile', {}, getState, dispatch, rejectWithValue);
         return response;
     }
 );
 
 export const saveMainDetails = createAsyncThunk(
     'profile/saveMainDetails',
-    async (input, { getState, dispatch }) => {
-        const response = await callAPI('saveprofile', input, getState, dispatch);
+    async (input, { getState, dispatch, rejectWithValue }) => {
+        const response = await callAuthenticatedAPI('saveprofile', input, getState, dispatch, rejectWithValue);
         return input;
     }
   );
 
 export const getNextMove = createAsyncThunk(
     'profile/getNextMove',
-    async (input, { getState, dispatch }) => {
-        const response = await callAPI('getnextmove', {}, getState, dispatch);
+    async (input, { getState, dispatch, rejectWithValue }) => {
+        const response = await callAuthenticatedAPI('getnextmove', {}, getState, dispatch, rejectWithValue);
         return response;
+    }
+);
+
+export const validateEmailToken = createAsyncThunk(
+    'profile/validateEmailToken',
+    async (input, { getState, rejectWithValue }) => {
+        const { authenticationDetails } = getState().profile;
+
+        const params = {
+            email: authenticationDetails.email,
+            token: authenticationDetails.verificationCode,
+        };
+
+        var options = {
+            method: 'POST',
+            headers: {
+                'sessionID': authenticationDetails.sessionCode,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        }
+    
+        const response = await fetch(config.BASE_URL + 'validateemailtoken', options);
+
+        if(response.status === 401){
+            return rejectWithValue("Invalidtoken");
+        }
+
+        if(!response.ok){
+            return rejectWithValue("Failed")
+        }
+
+        return response.json();
     }
 );
 
 export const saveNextMove = createAsyncThunk(
     'profile/saveNextMove',
-    async (input, { getState, dispatch }) => {
-        const response = await callAPI('savenextmove', input, getState, dispatch);
+    async (input, { getState, dispatch, rejectWithValue }) => {
+        const response = await callAuthenticatedAPI('savenextmove', input, getState, dispatch, rejectWithValue);
         return input;
     }
   );
 
  export const login = createAsyncThunk(
     'profile/login',
-    async (_, { getState }) => {
+    async (_, { getState, rejectWithValue }) => {
         const { authenticationDetails } = getState().profile;  
         const formBody = [];
         formBody.push("deviceID=" + encodeURIComponent(authenticationDetails.deviceID));
@@ -194,6 +227,10 @@ export const profileSlice = createSlice({
         updateVerificationCode: (state, action) => {
             state.authenticationDetails.verificationCode = action.payload.verificationCode;
         },
+        updateVerificationCodeAndEmail: (state, action) => {
+            state.authenticationDetails.verificationCode = action.payload.verificationCode;
+            state.authenticationDetails.email = action.payload.email;
+        },
         updateDeviceDetails: (state, action) => {
             state.authenticationDetails.deviceID = action.payload.deviceID;
             state.authenticationDetails.deviceCode = action.payload.deviceCode;
@@ -209,9 +246,18 @@ export const profileSlice = createSlice({
         });
         builder.addCase(getNextMove.fulfilled, updateNextMove);
         builder.addCase(saveNextMove.fulfilled, updateNextMove);
+        builder.addCase(validateEmailToken.fulfilled, (state, action) => {
+            state.authenticationDetails.verificationCode = '';
+            state.authenticationDetails.deviceID = action.payload.device_id;
+            state.authenticationDetails.deviceCode = action.payload.device_code;
+            state.authenticationDetails.users_id = action.payload.users_id;
+        });
+        builder.addCase(validateEmailToken.rejected, (state, action) => {
+            state.authenticationDetails.verificationCode = '';
+        });
     },
 });
 
-export const { updateEmail, updateSessionCode, updateVerificationCode, updateDeviceDetails} = profileSlice.actions;
+export const { updateEmail, updateSessionCode, updateVerificationCode, updateVerificationCodeAndEmail, updateDeviceDetails} = profileSlice.actions;
 
 export default profileSlice.reducer;
