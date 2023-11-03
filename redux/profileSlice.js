@@ -1,38 +1,48 @@
 //Redux slice for storing the profile data
 //
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import config from '/main/config.js';
+import config from '../main/config.js';
+
+const callAPI = async (url, input, getState, dispatch) => {
+    const { authenticationDetails } = getState().profile;
+    const json = JSON.stringify(input);
+
+    const response = await fetch(config.BASE_URL + url, {
+      method: 'POST',
+      headers: {
+        'sessionID': authenticationDetails.sessionCode,
+        'Content-Type': 'application/json',
+      },
+      body: json,
+    });
+
+    if (response.status === 401 && !input["SecondTry"]) {
+      await dispatch(login());
+      input["SecondTry"] = true;
+      await dispatch(callAPI(url, input, getState, dispatch));
+      return rejectWithValue("Not Logged In")
+    }
+
+    if(!response.ok){
+      return rejectWithValue("Failed")
+    }
+
+    return input;
+  }
 
 export const saveMainDetails = createAsyncThunk(
     'profile/saveMainDetails',
     async (input, { getState, dispatch }) => {
-      const { authenticationDetails } = getState().profile;
-      const formBody = [];
-      for (let key in input) {
-          const encodedKey = encodeURIComponent(key);
-          const encodedValue = encodeURIComponent(input[key]);
-          formBody.push(encodedKey + '=' + encodedValue);
-      }
-      const formBodyString = formBody.join('&');
-      const response = await fetch(config.BASE_URL + 'saveprofile?' + formBodyString, {
-        method: 'GET',
-        headers: {
-          'sessionID': authenticationDetails.sessionCode,
-        }
-      });
+        const response = await callAPI('saveprofile', input, getState, dispatch);
+        return response;
+    }
+  );
 
-      if (response.status === 401 && !input["SecondTry"]) {
-        await dispatch(login());
-        input["SecondTry"] = true;
-        await dispatch(saveMainDetails(input));
-        return rejectWithValue("Not Logged In")
-      }
-
-      if(!response.ok){
-        return rejectWithValue("Failed")
-      }
-
-      return input;
+export const saveNextMove = createAsyncThunk(
+    'profile/saveNextMove',
+    async (input, { getState, dispatch }) => {
+        const response = await callAPI('savenextmove', input, getState, dispatch);
+        return response;
     }
   );
 
@@ -84,13 +94,13 @@ export const profileSlice = createSlice({
             locationName: '',
             locationLat: 0,
             locationLng: 0,
+            locationDistance: 10,
             salary: 0,
             jobType: [],
             seniority: [],
         }
     },
     reducers: {
-
         updateEmail: (state, action) => {
             state.authenticationDetails.email = action.payload.email;
         },
@@ -106,26 +116,6 @@ export const profileSlice = createSlice({
             state.authenticationDetails.users_id = action.payload.users_id;
             state.authenticationDetails.verificationCode = action.payload.verificationCode;
         },
-        updateCurrentRoleTitle: (state, action) => {
-            state.mainDetails.currentRole = action.payload.title;
-        },
-        updateNextTitles: (state, action) => {
-            state.nextMove.titles = action.payload.titles;
-        }, 
-        updateNextLocation: (state, action) => {
-            for (let key in action.payload) {
-                state.nextMove[key] = action.payload[key];
-            };
-        },  
-        updateNextSalary: (state, action) => {
-            state.nextMove.salary = action.payload.salary;
-        },
-        updateNextJobType: (state, action) => {
-            state.nextMove.jobType = action.payload.jobType;
-        },
-        updateNextSeniority: (state, action) => {
-            state.nextMove.seniority = action.payload.seniority;
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(saveMainDetails.fulfilled, (state, action) => {
@@ -151,55 +141,44 @@ export const profileSlice = createSlice({
         });
         builder.addCase(login.fulfilled, (state, action) => {
             state.authenticationDetails.sessionCode = action.payload;
-        })
+        });
+        builder.addCase(saveNextMove.fulfilled, (state, action) => {
+            if ("titles" in action.payload) {
+                state.nextMove.titles = action.payload.titles;
+            }
+
+            if ("locationName" in action.payload) {
+                state.nextMove.locationName = action.payload.locationName;
+            }
+
+            if ("locationLat" in action.payload) {
+                state.nextMove.locationLat = action.payload.locationLat;
+            }
+
+            if ("locationLng" in action.payload) {
+                state.nextMove.locationLng = action.payload.locationLng;
+            }
+
+            if ("locationDistance" in action.payload) {
+                state.nextMove.locationDistance = action.payload.locationDistance;
+            }
+
+            if ("salary" in action.payload) {
+                state.nextMove.salary = action.payload.salary;
+            }
+
+            if ("jobType" in action.payload) {
+                state.nextMove.jobType = action.payload.jobType;
+            }
+
+            if ("seniority" in action.payload) {
+                state.nextMove.seniority = action.payload.seniority;
+            }
+
+        });
     },
 });
 
-const updateDetails = (state, first_call = true) => {
-    const formBody = [];
-    for (let key in state.mainDetails) {
-        const encodedKey = encodeURIComponent(key);
-        const encodedValue = encodeURIComponent(state.mainDetails[key]);
-        formBody.push(encodedKey + '=' + encodedValue);
-    }
-    const formBodyString = formBody.join('&');
-    fetch(config.BASE_URL + 'saveprofile?' + formBodyString, {
-        method: 'GET',
-        headers: {
-            'sessionID': state.authenticationDetails.sessionCode,
-        },
-    })
-    .then(response => {
-        console.log("here")
-        console.log(formBodyString)
-        if (!response.ok){
-            if(response.status === 401 && first_call){
-                login(state);
-                updateDetails(state, false);
-            } else {
-                console.error(response);
-                alert('Failed to update details. Please try again later.');
-            }
-        } else {
-            response.json()
-            .then((json) => {
-                console.log(json);
-            })
-            .catch((error) => {
-                console.error(error);
-                alert('There was an error updating your details. Please try again later.');
-            })
-            .finally(() => {
-            });
-        }
-    })
-    .catch((error) => {
-        alert(JSON.stringify(error));
-        console.error(error);
-    })
-}
-
-
-export const { updateEmail, updateSessionCode, updateVerificationCode, updateDeviceDetails, updateCurrentRoleTitle, updateNextTitles, updateNextLocation, updateNextSalary, updateNextJobType, updateNextSeniority } = profileSlice.actions;
+export const { updateEmail, updateSessionCode, updateVerificationCode, updateDeviceDetails} = profileSlice.actions;
 
 export default profileSlice.reducer;

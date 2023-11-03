@@ -15,6 +15,7 @@ const Opportunity = () => {
     const nextSalary = useSelector(state => state.profile.nextMove.salary);
     const nextJobType = useSelector(state => state.profile.nextMove.jobType);
     const nextSeniority = useSelector(state => state.profile.nextMove.seniority);
+    const nextLocationDistance = useSelector(state => state.profile.nextMove.locationDistance);
 
     return (
         <View style={styles.container}>
@@ -51,7 +52,7 @@ const Opportunity = () => {
                     onPress={() => {
                         nav.navigate('RoleSalary');
                     }}
-                >{nextSalary ? '£' + nextSalary + 'K' : 'Salary'}
+                >{nextSalary ? '£' + nextSalary : 'Salary'}
             </Text>
             <Text style={styles.fieldInput}>Location</Text>
             <Text
@@ -59,7 +60,7 @@ const Opportunity = () => {
                     onPress={() => {
                         nav.navigate('RoleLocation');
                     }}
-                >{nextLocation ? nextLocation : 'Location'}
+                >{nextLocation ? nextLocationDistance + " miles from " + nextLocation  : 'Location'}
             </Text>
             </ScrollView>
         </View>

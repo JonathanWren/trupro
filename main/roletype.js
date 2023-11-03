@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import CheckBox from "expo-checkbox";
 import { useDispatch, useSelector } from 'react-redux';
-import { updateNextJobType } from '../redux/profileSlice.js';
+import { saveNextMove } from '../redux/profileSlice.js';
 
 const JobTypeCheckBox = ({ type, checked: isChecked, onChange }) => {
     return (
@@ -44,9 +44,6 @@ const RoleJobType = () => {
                     style={styles.button}
                     onPress={() => {
                         var newJobType = [];
-                        if (jobTypeFullTime) {
-                            newJobType.push('Full Time');
-                        }
                         if (jobTypePartTime) {
                             newJobType.push('Part Time');
                         }
@@ -56,7 +53,10 @@ const RoleJobType = () => {
                         if (jobTypeTemporary) {
                             newJobType.push('Temporary');
                         }
-                        dispatch(updateNextJobType({jobType: newJobType}));
+                        if (jobTypeFullTime || newJobType.length == 0) {
+                            newJobType.push('Full Time');
+                        }
+                        dispatch(saveNextMove({jobType: newJobType}));
                         nav.navigate("Next Move");
                     }}
                 >

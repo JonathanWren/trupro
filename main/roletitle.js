@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-nativ
 import { useNavigation } from '@react-navigation/native';
 import styles, {colors} from '../component.style.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateNextTitles } from '../redux/profileSlice.js';
+import { saveNextMove } from '../redux/profileSlice.js';
 import CheckBox from "expo-checkbox";
 
 const roleCategories = ['Data', 'Design', 'Development', 'Finance', 'HR', 'Infrastructure', 'IT Support', 'Marketing', 'Project and Product', 'Sales'];
@@ -118,7 +118,7 @@ const RoleCheckbox = ({ type, checked: isChecked, onChange }) => {
     );
 }
 
-const Role = () => {
+const RoleTitle = () => {
 
     const nav = useNavigation();
     const dispatch = useDispatch();
@@ -178,7 +178,7 @@ const Role = () => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    dispatch(updateNextTitles({titles: selectedRole}));
+                    dispatch(saveNextMove({titles: selectedRole}));
                     nav.navigate("Next Move");
                 }}
             >
@@ -189,4 +189,4 @@ const Role = () => {
     )
 }
 
-export default Role;
+export default RoleTitle;

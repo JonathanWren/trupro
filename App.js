@@ -6,7 +6,7 @@ import Welcome from './setup/welcome';
 import Opportunity from './main/opportunity';
 import Profile from './main/profile';
 import ClickLink from './setup/clicklink';
-import Role from './main/role';
+import RoleTitle from './main/roletitle';
 import RoleLocation from './main/rolelocation';
 import RoleSalary from './main/rolesalary';
 import RoleJobType from './main/roletype';
@@ -37,7 +37,7 @@ export const OpportunityNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Next Move" component={Opportunity} />
-      <Stack.Screen name="Role" component={Role} />
+      <Stack.Screen name="Role" component={RoleTitle} />
       <Stack.Screen name="RoleLocation" component={RoleLocation} />
       <Stack.Screen name="RoleSalary" component={RoleSalary} />
       <Stack.Screen name="RoleJobType" component={RoleJobType} />

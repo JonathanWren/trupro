@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../component.style.js';
 import CheckBox from "expo-checkbox";
 import { useDispatch, useSelector } from 'react-redux';
-import { updateNextSeniority } from '../redux/profileSlice.js';
+import { saveNextMove } from '../redux/profileSlice.js';
 
 const SeniorityCheckBox = ({ type, checked: isChecked, onChange }) => {
     return (
@@ -57,17 +57,17 @@ const RoleSeniority = () => {
                         if (seniorityJunior) {
                             newSeniority.push('Junior');
                         }
-                        if (seniorityMidLevel) {
-                            newSeniority.push('Mid Level');
-                        }
                         if (senioritySenior) {
                             newSeniority.push('Senior');
                         }
                         if (seniorityExpert) {
                             newSeniority.push('Expert');
                         }
+                        if (seniorityMidLevel || newSeniority.length == 0) {
+                            newSeniority.push('Mid Level');
+                        }
 
-                        dispatch(updateNextSeniority({seniority: newSeniority}));
+                        dispatch(saveNextMove({seniority: newSeniority}));
     
                         nav.navigate("Next Move");
                     }}
