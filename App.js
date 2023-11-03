@@ -19,6 +19,7 @@ import { updateVerificationCode } from './redux/profileSlice.js';
 import { persistor, store } from './redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { getMainDetails, getNextMove } from './redux/profileSlice.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -65,6 +66,13 @@ export const AppNavigator = () => {
        linkingEvent.remove();
     };
   }, [handleDeepLink]);
+
+  useEffect(() => {
+    if(deviceID != '' && deviceID){
+      dispatch(getMainDetails());
+      dispatch(getNextMove());
+    }
+  }, [deviceID])
   
   const handleDeepLink = async (url) => {
       // add your code here

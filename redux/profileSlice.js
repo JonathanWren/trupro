@@ -5,44 +5,73 @@ import config from '../main/config.js';
 
 const callAPI = async (url, input, getState, dispatch) => {
     const { authenticationDetails } = getState().profile;
-    const json = JSON.stringify(input);
 
-    const response = await fetch(config.BASE_URL + url, {
-      method: 'POST',
-      headers: {
-        'sessionID': authenticationDetails.sessionCode,
-        'Content-Type': 'application/json',
-      },
-      body: json,
-    });
+    const SecondTry = "SecondTry" in input;
+    if (SecondTry) {
+        delete input["SecondTry"];
+    }
+    const dataLen = Object.keys(input).length;
 
-    if (response.status === 401 && !input["SecondTry"]) {
+    var options = {
+        method: dataLen > 0 ? 'POST' : 'GET',
+        headers: {
+            'sessionID': authenticationDetails.sessionCode,
+        }
+    }
+
+    if (dataLen > 0) {
+        options.body = JSON.stringify(input);;
+        options.headers['Content-Type'] = 'application/json';
+    }
+
+    const response = await fetch(config.BASE_URL + url, options);
+
+    if (response.status === 401 && !SecondTry) {
       await dispatch(login());
       input["SecondTry"] = true;
-      await dispatch(callAPI(url, input, getState, dispatch));
-      return rejectWithValue("Not Logged In")
+      return callAPI(url, input, getState, dispatch);
     }
 
     if(!response.ok){
       return rejectWithValue("Failed")
     }
 
-    return input;
+    if (response.headers.get('Content-Type') === 'application/json') {
+        return response.json();
+    } else {
+        return input;
+    }
   }
+
+export const getMainDetails = createAsyncThunk(
+    'profile/getMainDetails',
+    async (input, { getState, dispatch }) => {
+        const response = await callAPI('getprofile', {}, getState, dispatch);
+        return response;
+    }
+);
 
 export const saveMainDetails = createAsyncThunk(
     'profile/saveMainDetails',
     async (input, { getState, dispatch }) => {
         const response = await callAPI('saveprofile', input, getState, dispatch);
-        return response;
+        return input;
     }
   );
+
+export const getNextMove = createAsyncThunk(
+    'profile/getNextMove',
+    async (input, { getState, dispatch }) => {
+        const response = await callAPI('getnextmove', {}, getState, dispatch);
+        return response;
+    }
+);
 
 export const saveNextMove = createAsyncThunk(
     'profile/saveNextMove',
     async (input, { getState, dispatch }) => {
         const response = await callAPI('savenextmove', input, getState, dispatch);
-        return response;
+        return input;
     }
   );
 
@@ -70,6 +99,61 @@ export const saveNextMove = createAsyncThunk(
         }
     }
 );
+
+const updateMainDetails = (state, action) => {
+    if ("first_name" in action.payload) {
+        state.mainDetails.firstName = action.payload.first_name;
+    }
+    if ("last_name" in action.payload) {
+        state.mainDetails.lastName = action.payload.last_name;
+    }
+
+    if ("has_linked_id" in action.payload) {
+        state.mainDetails.hasLinkedId = action.payload.has_linked_id;
+    }
+
+    if ("linkedin_profile_url" in action.payload) {
+        state.mainDetails.linkedInProfileURL = action.payload.linkedin_profile_url;
+    }
+
+    if ("job_title" in action.payload) {
+        state.mainDetails.currentRole = action.payload.job_title;
+    }   
+};
+
+const updateNextMove = (state, action) => {
+    if ("titles" in action.payload) {
+        state.nextMove.titles = action.payload.titles;
+    }
+
+    if ("locationName" in action.payload) {
+        state.nextMove.locationName = action.payload.locationName;
+    }
+
+    if ("locationLat" in action.payload) {
+        state.nextMove.locationLat = action.payload.locationLat;
+    }
+
+    if ("locationLng" in action.payload) {
+        state.nextMove.locationLng = action.payload.locationLng;
+    }
+
+    if ("locationDistance" in action.payload) {
+        state.nextMove.locationDistance = action.payload.locationDistance;
+    }
+
+    if ("salary" in action.payload) {
+        state.nextMove.salary = action.payload.salary;
+    }
+
+    if ("jobType" in action.payload) {
+        state.nextMove.jobType = action.payload.jobType;
+    }
+
+    if ("seniority" in action.payload) {
+        state.nextMove.seniority = action.payload.seniority;
+    }
+};
 
 export const profileSlice = createSlice({
     name: 'profile',
@@ -118,64 +202,13 @@ export const profileSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(saveMainDetails.fulfilled, (state, action) => {
-            // Handle the state update here update all values contained in the payload
-            if ("first_name" in action.payload) {
-                state.mainDetails.firstName = action.payload.first_name;
-            }
-            if ("last_name" in action.payload) {
-                state.mainDetails.lastName = action.payload.last_name;
-            }
-
-            if ("has_linked_id" in action.payload) {
-                state.mainDetails.hasLinkedId = action.payload.has_linked_id;
-            }
-
-            if ("linkedin_profile_url" in action.payload) {
-                state.mainDetails.linkedInProfileURL = action.payload.linkedin_profile_url;
-            }
-
-            if ("job_title" in action.payload) {
-                state.mainDetails.currentRole = action.payload.job_title;
-            }   
-        });
+        builder.addCase(getMainDetails.fulfilled, updateMainDetails);
+        builder.addCase(saveMainDetails.fulfilled, updateMainDetails);
         builder.addCase(login.fulfilled, (state, action) => {
             state.authenticationDetails.sessionCode = action.payload;
         });
-        builder.addCase(saveNextMove.fulfilled, (state, action) => {
-            if ("titles" in action.payload) {
-                state.nextMove.titles = action.payload.titles;
-            }
-
-            if ("locationName" in action.payload) {
-                state.nextMove.locationName = action.payload.locationName;
-            }
-
-            if ("locationLat" in action.payload) {
-                state.nextMove.locationLat = action.payload.locationLat;
-            }
-
-            if ("locationLng" in action.payload) {
-                state.nextMove.locationLng = action.payload.locationLng;
-            }
-
-            if ("locationDistance" in action.payload) {
-                state.nextMove.locationDistance = action.payload.locationDistance;
-            }
-
-            if ("salary" in action.payload) {
-                state.nextMove.salary = action.payload.salary;
-            }
-
-            if ("jobType" in action.payload) {
-                state.nextMove.jobType = action.payload.jobType;
-            }
-
-            if ("seniority" in action.payload) {
-                state.nextMove.seniority = action.payload.seniority;
-            }
-
-        });
+        builder.addCase(getNextMove.fulfilled, updateNextMove);
+        builder.addCase(saveNextMove.fulfilled, updateNextMove);
     },
 });
 
