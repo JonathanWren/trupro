@@ -16,8 +16,7 @@ const RoleLocation = () => {
     const nav = useNavigation();
     const dispatch = useDispatch();
     const initialDistance = useSelector(state => state.profile.nextMove.locationDistance);
-    const initialRemote = useSelector(state => state.profile.nextMove.locationRemote);
-    const [remote, setRemote] = useState(initialRemote);
+    const [remote, setRemote] = useState(false);
     const [distance, setDistance] = useState(initialDistance);
     const CURRENT_LOCATION = 'Current Location';
     const REMOTE = 'Remote';
