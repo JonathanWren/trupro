@@ -16,7 +16,11 @@ const RoleLocation = () => {
     const nav = useNavigation();
     const dispatch = useDispatch();
     const initialDistance = useSelector(state => state.profile.nextMove.locationDistance);
+    const initialRemote = useSelector(state => state.profile.nextMove.locationRemote);
+    const [remote, setRemote] = useState(initialRemote);
     const [distance, setDistance] = useState(initialDistance);
+    const CURRENT_LOCATION = 'Current Location';
+    const REMOTE = 'Remote';
 
     const distanceArray = [[9,1],[8,2],[4,5],[10,10],[6,25],[4,50],[5,100]];
     const minimumDistance = 5;
@@ -46,63 +50,79 @@ const RoleLocation = () => {
     const initialSliderValue = distanceToSlider(initialDistance);
   
     return (
-      <View style={[styles.container, {padding: 25}]}>
-        <Text style={styles.heading}>Location</Text>
-        <View style={{width: '100%'}}>
-          <GooglePlacesAutocomplete
-            styles={{textInput: styles.input}}
-            placeholder='Enter Location'
-            fetchDetails={true}
-            requestUrl={{
-              useOnPlatform: 'all',
-              url:
-                config.BASE_URL + 'googleplaces',
-            }}
-            onPress={ (data, details = null) => {
-                if (data.description === 'Current Location') {
-                  Location.requestForegroundPermissionsAsync()
-                  .then((status) => {
-                    console.log(status);
+      <View style={[styles.container, {padding: 25, width:"100%"}]}>
+        <View style={{width:"100%", zIndex: 1, height: 50}}>
+        <GooglePlacesAutocomplete
+          styles={{textInput: styles.input, listView: {position: 'absolute', top: 50, width: '100%'}}}
+          placeholder='Enter Location'
+          fetchDetails={true}
+          requestUrl={{
+            useOnPlatform: 'all',
+            url:
+              config.BASE_URL + 'googleplaces',
+          }}
+          onPress={ (data, details = null) => {
+              if (data.description === CURRENT_LOCATION) {
+                Location.requestForegroundPermissionsAsync()
+                .then((status) => {
+                  console.log(status);
 
-                    if (!status.granted) {
-                      alert('Permission to access location was denied');
-                      return;
-                    }
-                
-                    Location.getCurrentPositionAsync({})
-                    .then((location) => {
-                      console.log(location.coords.latitude, location.coords.longitude)
-                      dispatch(
-                        saveNextMove({
-                          locationName: 'Current Location',
-                          locationLat: location.coords.latitude,
-                          locationLng: location.coords.longitude,
-                        })
-                      )
-                    })
+                  if (!status.granted) {
+                    alert('Permission to access location was denied');
+                    return;
+                  }
+              
+                  Location.getCurrentPositionAsync({})
+                  .then((location) => {
+                    console.log(location.coords.latitude, location.coords.longitude)
+                    dispatch(
+                      saveNextMove({
+                        locationName: 'Current Location',
+                        locationLat: location.coords.latitude,
+                        locationLng: location.coords.longitude,
+                        locationRemote: false,
+                      })
+                    );
+                    setRemote(false);
+                  });
+                })
+              } else if (data.description === REMOTE) {
+                dispatch(
+                  saveNextMove({
+                    locationName: 'Remote',
+                    locationLat: 0,
+                    locationLng: 0,
+                    locationRemote: true,
                   })
-                } else {
-                  //set the location of item
-                  dispatch(
-                    saveNextMove({
-                      locationName: data.description,
-                      locationLat: details.geometry.location.lat,
-                      locationLng: details.geometry.location.lng,
-                    })
-                  )
-                }
+                );
+                setRemote(true);
+              } else {
+                //set the location of item
+                dispatch(
+                  saveNextMove({
+                    locationName: data.description,
+                    locationLat: details.geometry.location.lat,
+                    locationLng: details.geometry.location.lng,
+                    locationRemote: false,
+                  })
+                );
+                setRemote(false);
               }
             }
-            query={{
-              language: 'en',
-              types: 'geocode',
-            }}
-            predefinedPlaces={[{description: 'Current Location', 
-                                geometry: {location: {lat: 0, lng: 0}}},
-                              {description: 'Remote',
-                                geometry: {location: {lat: 0, lng: 0}}}]}
-          />
+          }
+          query={{
+            language: 'en',
+            types: 'geocode',
+          }}
+          predefinedPlaces={[{description: CURRENT_LOCATION, 
+                              geometry: {location: {lat: 0, lng: 0}}},
+                            {description: REMOTE,
+                              geometry: {location: {lat: 0, lng: 0}}}]}
+        />
         </View>
+        <View style={{width: "100%"}}>
+        {!remote && 
+        <View style={{width: "100%"}}>
         <Text style={styles.text}>Drag the slider to set how far you are willing to travel.</Text>
         <Text style={styles.text}>{distance} miles</Text>
         <Slider
@@ -117,6 +137,8 @@ const RoleLocation = () => {
               setDistance(sliderToDistance(sliderValue));
             }}
         />
+        </View>
+                  }
         <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -126,6 +148,7 @@ const RoleLocation = () => {
         >
             <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
+      </View>
       </View>
     );
   }

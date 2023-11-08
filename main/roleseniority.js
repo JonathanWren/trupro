@@ -34,7 +34,6 @@ const RoleSeniority = () => {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollView}>
-                <Text style={styles.heading}>Seniority</Text>
                 <Text style={styles.text}>What level of job are you looking for?</Text>
                 <View style={styles.checkboxGroup}>
                     <SeniorityCheckBox type="Internship" checked={seniorityInternship} onChange={setSeniorityInternship}/>

@@ -45,7 +45,6 @@ const RoleSalary = () => {
     return(
         <View style={styles.container}>
         <ScrollView style={styles.scrollView}>
-        <Text style={styles.heading}>What is the minimum salary you would accept for your next role?</Text>
         <Text style={styles.text}>Drag the slider to set your minimum salary</Text>
         <Text style={styles.text}>£{salary}</Text>
         <Slider

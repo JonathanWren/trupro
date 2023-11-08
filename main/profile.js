@@ -50,13 +50,6 @@ const Profile = ({route}) => {
                     }}
                 />
                 <Text style={styles.fieldInput}>LinkedIn Profile URL</Text>
-                <View style={styles.checkboxContainer}>
-                    <CheckBox value={hasLinkedId} 
-                        onValueChange={(checked) => checkboxChange(checked)}
-                        color={hasLinkedId ? 'blue' : undefined}
-                    />
-                    <Text style={styles.checkboxText} onPress={() => checkboxChange(!hasLinkedId)}>I do not have a LinkedIn Account</Text>
-                </View>
                 <TextInput
                     style={styles.input}
                     placeholder="LinkedIn Profile URL"
@@ -68,6 +61,13 @@ const Profile = ({route}) => {
                         )
                     }}
                 />
+                <View style={styles.checkboxContainer}>
+                    <CheckBox value={hasLinkedId} 
+                        onValueChange={(checked) => checkboxChange(checked)}
+                        color={hasLinkedId ? 'blue' : undefined}
+                    />
+                    <Text style={styles.checkboxText} onPress={() => checkboxChange(!hasLinkedId)}>I do not have a LinkedIn Account</Text>
+                </View>
                 <Text style={styles.fieldInput}>Current or Most Recent Job Title</Text>
                 <TextInput
                     style={styles.input}

@@ -39,10 +39,10 @@ export const OpportunityNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen name="Next Move" component={Opportunity} />
       <Stack.Screen name="Role" component={RoleTitle} />
-      <Stack.Screen name="RoleLocation" component={RoleLocation} />
-      <Stack.Screen name="RoleSalary" component={RoleSalary} />
-      <Stack.Screen name="RoleJobType" component={RoleJobType} />
-      <Stack.Screen name="RoleSeniority" component={RoleSeniority} />
+      <Stack.Screen name="Location" component={RoleLocation} />
+      <Stack.Screen name="Minimum Salary" component={RoleSalary} />
+      <Stack.Screen name="Job Type" component={RoleJobType} />
+      <Stack.Screen name="Seniority" component={RoleSeniority} />
     </Stack.Navigator>
   );
 };

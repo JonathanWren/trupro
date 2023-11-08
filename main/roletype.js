@@ -32,7 +32,6 @@ const RoleJobType = () => {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollView}>
-                <Text style={styles.heading}>Job Type</Text>
                 <Text style={styles.text}>What type of job are you looking for?</Text>
                 <View style={styles.checkboxGroup}>
                     <JobTypeCheckBox type="Full Time"  checked={jobTypeFullTime} onChange={setJobTypeFullTime}/>

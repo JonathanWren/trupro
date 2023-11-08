@@ -175,6 +175,10 @@ const updateNextMove = (state, action) => {
         state.nextMove.locationDistance = action.payload.locationDistance;
     }
 
+    if ("locationRemote" in action.payload) {
+        state.nextMove.locationRemote = action.payload.locationRemote;
+    }
+
     if ("salary" in action.payload) {
         state.nextMove.salary = action.payload.salary;
     }
@@ -212,6 +216,7 @@ export const profileSlice = createSlice({
             locationLat: 0,
             locationLng: 0,
             locationDistance: 10,
+            locationRemote: false,
             salary: 0,
             jobType: [],
             seniority: [],

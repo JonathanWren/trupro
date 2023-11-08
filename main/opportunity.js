@@ -16,6 +16,7 @@ const Opportunity = () => {
     const nextJobType = useSelector(state => state.profile.nextMove.jobType);
     const nextSeniority = useSelector(state => state.profile.nextMove.seniority);
     const nextLocationDistance = useSelector(state => state.profile.nextMove.locationDistance);
+    const nextLocationRemote = useSelector(state => state.profile.nextMove.locationRemote);
 
     return (
         <View style={styles.container}>
@@ -34,7 +35,7 @@ const Opportunity = () => {
             <Text
                     style={[styles.input, (!nextSeniority || nextSeniority.length == 0) && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
-                        nav.navigate('RoleSeniority');
+                        nav.navigate('Seniority');
                     }}
                 >{nextSeniority && nextSeniority.length > 0 ? nextSeniority.map(item => item).join(', ') : 'Seniority'}
             </Text>
@@ -42,7 +43,7 @@ const Opportunity = () => {
             <Text
                     style={[styles.input, (!nextJobType || nextJobType.length == 0) && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
-                        nav.navigate('RoleJobType');
+                        nav.navigate('Job Type');
                     }}
                 >{nextJobType && nextJobType.length > 0 ? nextJobType.map(item => item).join(', ') : 'Job Type'}
             </Text>
@@ -50,7 +51,7 @@ const Opportunity = () => {
             <Text
                     style={[styles.input, !nextSalary && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
-                        nav.navigate('RoleSalary');
+                        nav.navigate('Minimum Salary');
                     }}
                 >{nextSalary ? '£' + nextSalary : 'Salary'}
             </Text>
@@ -58,9 +59,9 @@ const Opportunity = () => {
             <Text
                     style={[styles.input, !nextLocation && {color: colors.fieldPlaceHolderTextColor}]}
                     onPress={() => {
-                        nav.navigate('RoleLocation');
+                        nav.navigate('Location');
                     }}
-                >{nextLocation ? nextLocationDistance + " miles from " + nextLocation  : 'Location'}
+                >{nextLocation ? (nextLocationRemote? "" : nextLocationDistance + " miles from ") + nextLocation  : 'Location'}
             </Text>
             </ScrollView>
         </View>
