@@ -165,6 +165,10 @@ const updateMainDetails = (state, action) => {
     if ("job_title" in action.payload) {
         state.mainDetails.currentRole = action.payload.job_title;
     }   
+
+    if ("signed_up" in action.payload) {
+        state.authenticationDetails.signed_up = action.payload.signed_up;
+    }
 };
 
 const updateNextMove = (state, action) => {
@@ -266,9 +270,6 @@ export const profileSlice = createSlice({
             state.authenticationDetails.users_id = action.payload.users_id;
             state.authenticationDetails.verificationCode = action.payload.verificationCode;
         },
-        setSignedUp: (state, action) => {
-            state.authenticationDetails.signed_up = action.payload.signed_up;
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(getMainDetails.fulfilled, updateMainDetails);

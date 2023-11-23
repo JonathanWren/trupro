@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../component.style.js';
 import { useDispatch } from 'react-redux';
-import { setSignedUp } from '../redux/profileSlice.js';
+import { saveMainDetails } from '../redux/profileSlice.js';
 
 const SignedUp = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const SignedUp = () => {
             <Text></Text>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => {dispatch(setSignedUp({signed_up: true}));}}>
+                onPress={() => {dispatch(saveMainDetails({signed_up: true}));}}>
                 <Text style={styles.buttonText}>Finish</Text>
             </TouchableOpacity>
             </View>
