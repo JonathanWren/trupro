@@ -59,7 +59,6 @@ export const AppNavigator = () => {
   const deviceID = useSelector(state => state.profile.authenticationDetails.deviceID);
   const signedUp = useSelector(state => state.profile.authenticationDetails.signed_up);
   const [roleID, setRoleID] = React.useState();
-  const [verify, setVerify] = React.useState(false);
   const [loading, setLoading] = React.useState(true);  
 
   if(deviceID != '' && deviceID){
@@ -87,11 +86,7 @@ export const AppNavigator = () => {
         await dispatch (
           updateVerificationCodeAndEmail({verificationCode: queryParams.token, email: queryParams.email})
         );
-        const result = await dispatch(validateEmailToken());
-        console.log(result);
-        if(result.meta.requestStatus == 'fulfilled'){
-          setVerify(true);
-        }
+        await dispatch(validateEmailToken());
       } else if(path == "role"){    
         setRoleID(queryParams.roleID);
         await dispatch(getRole({roleID: queryParams.roleID}));
@@ -110,14 +105,13 @@ export const AppNavigator = () => {
         <Stack.Screen name="Apply" component={RoleApply} />
       </Stack.Navigator>
     );
-  } else if (verify || (setup && !signedUp)) {
+  } else if (!signedUp && setup) {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Signup}/>
         <Stack.Screen name="Complete" component={SignedUp} />
       </Stack.Navigator>
     );
-    
   } else if(setup){
     return (
       <Tab.Navigator>
