@@ -18,7 +18,8 @@ const RequestLink = () => {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+                <View style={styles.centerView}>
             <Text style={styles.text}>Please enter your email address below.</Text>
             <Text style={styles.text}>You should enter the email that you use to sign into the TruPro slack group if you are part of this group.</Text>
             <Text style={styles.fieldInput}>Email address</Text>
@@ -74,6 +75,7 @@ const RequestLink = () => {
                 }}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
+            </View>
             </ScrollView>
             {loading &&
                 <View style={styles.loading}>

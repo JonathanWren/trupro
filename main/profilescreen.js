@@ -8,8 +8,10 @@ import Profile from './profile.js';
 const ProfileScreen = () => {    
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-                <Profile inWizard={false}/>
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+                <View style={styles.centerView}>
+                    <Profile inWizard={false}/>
+                </View>
             </ScrollView>
         </View>
     );

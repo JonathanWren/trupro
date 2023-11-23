@@ -30,10 +30,15 @@ export default StyleSheet.create({
         backgroundColor: colors.appBackgroundColor,
     },
     scrollView: {
-        flex: 1,
         width: '100%',
+    },
+    scrollViewContainer: {
         padding: 25,
-        alignContent: 'center',
+        alignItems: 'center',
+    },
+    centerView: {
+        maxWidth: 800,
+        width: '100%',
     },
     heading: {
         fontSize: 20,

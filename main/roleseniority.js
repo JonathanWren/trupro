@@ -33,46 +33,48 @@ const RoleSeniority = () => {
     
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.scrollView}>
-                <Text style={styles.text}>What level of job are you looking for?</Text>
-                <View style={styles.checkboxGroup}>
-                    <SeniorityCheckBox type="Internship" checked={seniorityInternship} onChange={setSeniorityInternship}/>
-                    <SeniorityCheckBox type="Entry Level" checked={seniorityEntryLevel} onChange={setSeniorityEntryLevel}/>
-                    <SeniorityCheckBox type="Junior" checked={seniorityJunior} onChange={setSeniorityJunior}/>
-                    <SeniorityCheckBox type="Mid Level" checked={seniorityMidLevel} onChange={setSeniorityMidLevel}/>
-                    <SeniorityCheckBox type="Senior" checked={senioritySenior} onChange={setSenioritySenior}/>
-                    <SeniorityCheckBox type="Expert" checked={seniorityExpert} onChange={setSeniorityExpert}/>
-                </View>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        var newSeniority = [];
-                        if (seniorityInternship) {
-                            newSeniority.push('Internship');
-                        }
-                        if (seniorityEntryLevel) {
-                            newSeniority.push('Entry Level');
-                        }
-                        if (seniorityJunior) {
-                            newSeniority.push('Junior');
-                        }
-                        if (senioritySenior) {
-                            newSeniority.push('Senior');
-                        }
-                        if (seniorityExpert) {
-                            newSeniority.push('Expert');
-                        }
-                        if (seniorityMidLevel || newSeniority.length == 0) {
-                            newSeniority.push('Mid Level');
-                        }
+                <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+                    <View style={styles.centerView}>
+                        <Text style={styles.text}>What level of job are you looking for?</Text>
+                        <View style={styles.checkboxGroup}>
+                            <SeniorityCheckBox type="Internship" checked={seniorityInternship} onChange={setSeniorityInternship}/>
+                            <SeniorityCheckBox type="Entry Level" checked={seniorityEntryLevel} onChange={setSeniorityEntryLevel}/>
+                            <SeniorityCheckBox type="Junior" checked={seniorityJunior} onChange={setSeniorityJunior}/>
+                            <SeniorityCheckBox type="Mid Level" checked={seniorityMidLevel} onChange={setSeniorityMidLevel}/>
+                            <SeniorityCheckBox type="Senior" checked={senioritySenior} onChange={setSenioritySenior}/>
+                            <SeniorityCheckBox type="Expert" checked={seniorityExpert} onChange={setSeniorityExpert}/>
+                        </View>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => {
+                                var newSeniority = [];
+                                if (seniorityInternship) {
+                                    newSeniority.push('Internship');
+                                }
+                                if (seniorityEntryLevel) {
+                                    newSeniority.push('Entry Level');
+                                }
+                                if (seniorityJunior) {
+                                    newSeniority.push('Junior');
+                                }
+                                if (senioritySenior) {
+                                    newSeniority.push('Senior');
+                                }
+                                if (seniorityExpert) {
+                                    newSeniority.push('Expert');
+                                }
+                                if (seniorityMidLevel || newSeniority.length == 0) {
+                                    newSeniority.push('Mid Level');
+                                }
 
-                        dispatch(saveNextMove({seniority: newSeniority}));
-    
-                        nav.navigate("Next Move");
-                    }}
-                >
-                    <Text style={styles.buttonText}>Save</Text>
-                </TouchableOpacity>
+                                dispatch(saveNextMove({seniority: newSeniority}));
+            
+                                nav.navigate("Next Move");
+                            }}
+                        >
+                            <Text style={styles.buttonText}>Save</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
             </View>
         );

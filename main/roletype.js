@@ -31,7 +31,8 @@ const RoleJobType = () => {
     
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.scrollView}>
+                <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+                    <View style={styles.centerView}>
                 <Text style={styles.text}>What type of job are you looking for?</Text>
                 <View style={styles.checkboxGroup}>
                     <JobTypeCheckBox type="Full Time"  checked={jobTypeFullTime} onChange={setJobTypeFullTime}/>
@@ -61,6 +62,7 @@ const RoleJobType = () => {
                 >
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
+                </View>
                 </ScrollView>
             </View>
         );

@@ -20,7 +20,8 @@ const Opportunity = () => {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+                <View style={styles.centerView}>
             <Text style={styles.heading}>Where would you like your career to go next?</Text>
             <Text style={styles.text}>We will use this information to match you with the right opportunities within your network.</Text>
             <Text style={styles.fieldInput}>Role</Text>
@@ -63,6 +64,7 @@ const Opportunity = () => {
                     }}
                 >{nextLocation ? (nextLocationRemote? "" : nextLocationDistance + " miles from ") + nextLocation  : 'Location'}
             </Text>
+            </View>
             </ScrollView>
         </View>
     );

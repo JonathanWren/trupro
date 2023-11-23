@@ -146,7 +146,8 @@ const RoleTitle = () => {
     return (
 
         <View style={styles.container}> 
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+            <View style={styles.centerView}>
             <Text style={styles.text}>What role would you like to do next (select up to 5)?</Text>
             <TextInput 
                 style={[styles.input, {marginBottom: 0}]} 
@@ -184,6 +185,7 @@ const RoleTitle = () => {
             >
                 <Text style={styles.buttonText}>Save</Text>
             </TouchableOpacity>
+            </View>
             </ScrollView>
         </View>
     )

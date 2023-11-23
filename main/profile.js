@@ -12,13 +12,13 @@ const Profile = (props) => {
 
     const firstName = useSelector(state => state.profile.mainDetails.firstName); 
     const lastName = useSelector(state => state.profile.mainDetails.lastName);
-    const hasLinkedId = useSelector(state => state.profile.mainDetails.hasLinkedId);
+    const hasLinkedIn = useSelector(state => state.profile.mainDetails.hasLinkedIn);
     const linkedInProfileURL = useSelector(state => state.profile.mainDetails.linkedInProfileURL);
     const currentRoleTitle = useSelector(state => state.profile.mainDetails.currentRole);
 
     const checkboxChange = (checked) => {
         dispatch (
-            saveMainDetails({has_linked_id: checked})
+            saveMainDetails({has_linked_in: !checked})
         )
     }
     
@@ -61,11 +61,11 @@ const Profile = (props) => {
                 }}
             />
             <View style={styles.checkboxContainer}>
-                <CheckBox value={hasLinkedId} 
+                <CheckBox value={!hasLinkedIn} 
                     onValueChange={(checked) => checkboxChange(checked)}
-                    color={hasLinkedId ? 'blue' : undefined}
+                    color={!hasLinkedIn ? 'blue' : undefined}
                 />
-                <Text style={styles.checkboxText} onPress={() => checkboxChange(!hasLinkedId)}>I do not have a LinkedIn Account</Text>
+                <Text style={styles.checkboxText} onPress={() => checkboxChange(hasLinkedIn)}>I do not have a LinkedIn Account</Text>
             </View>
             <Text style={styles.fieldInput}>Current or Most Recent Job Title</Text>
             <TextInput
@@ -91,6 +91,14 @@ const Profile = (props) => {
                         }
                         if (lastName === '') {
                             alert('Please complete your last name');
+                            return;
+                        }
+                        if (hasLinkedIn && (linkedInProfileURL === '' || !linkedInProfileURL)) {
+                            alert('Please complete your LinkedIn Profile URL');
+                            return;
+                        }
+                        if (currentRoleTitle === '' || !currentRoleTitle) {
+                            alert('Please complete your Job Title');
                             return;
                         }
                         props.onComplete();

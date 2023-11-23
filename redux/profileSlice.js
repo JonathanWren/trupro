@@ -154,8 +154,8 @@ const updateMainDetails = (state, action) => {
         state.mainDetails.lastName = action.payload.last_name;
     }
 
-    if ("has_linked_id" in action.payload) {
-        state.mainDetails.hasLinkedId = action.payload.has_linked_id;
+    if ("has_linked_in" in action.payload) {
+        state.mainDetails.hasLinkedIn = action.payload.has_linked_in;
     }
 
     if ("linkedin_profile_url" in action.payload) {
@@ -211,7 +211,7 @@ export const profileSlice = createSlice({
         mainDetails: {
             firstName: '',
             lastName: '',
-            hasLinkedId: false,
+            hasLinkedIn: true,
             linkedInProfileURL: '',
             currentRole: ''
         },

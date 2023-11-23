@@ -37,28 +37,30 @@ const ClickLink = () => {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-            <Text style={styles.text}>You should now receive an email from us with a link to verify your email.</Text>
-            <Text style={styles.text}>Click the link in this email to continue or enter the code received below.</Text>
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+                <View style={styles.centerView}>
+                    <Text style={styles.text}>You should now receive an email from us with a link to verify your email.</Text>
+                    <Text style={styles.text}>Click the link in this email to continue or enter the code received below.</Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Verification Code"
-                onChangeText={(verificationCode) => {
-                    dispatch(
-                        updateVerificationCode({verificationCode: verificationCode})
-                    );
-                }}
-                defaultValue={verificationCode}
-            />
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                    verifyCode();
-                }}
-            >
-                <Text style={styles.buttonText}>Verify</Text>
-            </TouchableOpacity>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Verification Code"
+                        onChangeText={(verificationCode) => {
+                            dispatch(
+                                updateVerificationCode({verificationCode: verificationCode})
+                            );
+                        }}
+                        defaultValue={verificationCode}
+                    />
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            verifyCode();
+                        }}
+                    >
+                        <Text style={styles.buttonText}>Verify</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
             {loading &&
                 <View style={styles.loading}>

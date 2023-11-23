@@ -62,7 +62,7 @@ export const AppNavigator = () => {
   const [verify, setVerify] = React.useState(false);
   const [loading, setLoading] = React.useState(true);  
 
-  if(deviceID != '' && deviceID && signedUp){
+  if(deviceID != '' && deviceID){
     setup = true;
   }
 
@@ -110,7 +110,7 @@ export const AppNavigator = () => {
         <Stack.Screen name="Apply" component={RoleApply} />
       </Stack.Navigator>
     );
-  } else if (verify || !signedUp) {
+  } else if (verify || (setup && !signedUp)) {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Signup}/>

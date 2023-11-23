@@ -44,7 +44,8 @@ const RoleSalary = () => {
 
     return(
         <View style={styles.container}>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+            <View style={styles.centerView}>
         <Text style={styles.text}>Drag the slider to set your minimum salary</Text>
         <Text style={styles.text}>£{salary}</Text>
         <Slider
@@ -68,6 +69,7 @@ const RoleSalary = () => {
         >
             <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
+        </View> 
         </ScrollView>
     </View>
     )

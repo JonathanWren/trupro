@@ -49,7 +49,8 @@ const RoleLocation = () => {
     const initialSliderValue = distanceToSlider(initialDistance);
   
     return (
-      <View style={[styles.container, {padding: 25, width:"100%"}]}>
+      <View style={[styles.container, {padding: 25, width:"100%", alignItems: 'center'}]}>
+        <View style={styles.centerView}>
         <View style={{width:"100%", zIndex: 1, height: 50}}>
         <GooglePlacesAutocomplete
           styles={{textInput: styles.input, listView: {position: 'absolute', top: 50, width: '100%'}}}
@@ -147,6 +148,7 @@ const RoleLocation = () => {
         >
             <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
+      </View>
       </View>
       </View>
     );
