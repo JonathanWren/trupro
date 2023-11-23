@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Welcome from './setup/welcome';
 import Opportunity from './main/opportunity';
-import Profile from './main/profile';
+import ProfileScreen from './main/profilescreen';
 import ClickLink from './setup/clicklink';
 import RoleTitle from './main/roletitle';
 import RoleLocation from './main/rolelocation';
@@ -12,6 +12,9 @@ import RoleSalary from './main/rolesalary';
 import RoleJobType from './main/roletype';
 import RoleSeniority from './main/roleseniority';
 import RequestLink from './setup/requestlink';
+import RoleView from './main/roleview';
+import RoleApply from './main/roleapply';
+import Signup from './setup/signup';
 import * as Sentry from 'sentry-expo';
 import * as Linking from 'expo-linking';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -19,7 +22,9 @@ import { updateVerificationCodeAndEmail, validateEmailToken } from './redux/prof
 import { persistor, store } from './redux/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import { getMainDetails, getNextMove } from './redux/profileSlice.js';
+import { getMainDetails, getNextMove, getRole } from './redux/profileSlice.js';
+import LoadingScreen from './setup/loading.js';
+import SignedUp from './setup/signedup.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,7 +34,7 @@ const Stack = createStackNavigator();
 export const ProfileNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={Profile} initialParams={{'inWizard':false}}/>
+      <Stack.Screen name="Profile" component={ProfileScreen}/>
     </Stack.Navigator>
   );
 };
@@ -52,12 +57,17 @@ export const AppNavigator = () => {
   const url = Linking.useURL();
   const dispatch = useDispatch();
   const deviceID = useSelector(state => state.profile.authenticationDetails.deviceID);
-  if(deviceID != '' && deviceID){
+  const signedUp = useSelector(state => state.profile.authenticationDetails.signed_up);
+  const [roleID, setRoleID] = React.useState();
+  const [verify, setVerify] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);  
+
+  if(deviceID != '' && deviceID && signedUp){
     setup = true;
   }
 
   useEffect(() => {
-    if(url && !setup){
+    if(url){
       handleDeepLink(url);
     }
   }, [url]);
@@ -73,14 +83,42 @@ export const AppNavigator = () => {
       // add your code here
       const { hostname, path, queryParams } = Linking.parse(url);
       
-      if(path == "verify"){
+      if(path == "verify" && !setup){
         await dispatch (
           updateVerificationCodeAndEmail({verificationCode: queryParams.token, email: queryParams.email})
         );
-        dispatch(validateEmailToken());
-      }     
+        const result = await dispatch(validateEmailToken());
+        console.log(result);
+        if(result.meta.requestStatus == 'fulfilled'){
+          setVerify(true);
+        }
+      } else if(path == "role"){    
+        setRoleID(queryParams.roleID);
+        await dispatch(getRole({roleID: queryParams.roleID}));
+      }
+      setLoading(false);
   }
-  if(setup){
+
+  if (loading) {
+    return (
+      <LoadingScreen />
+    );
+  } else if (roleID){
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Role" component={RoleView} />
+        <Stack.Screen name="Apply" component={RoleApply} />
+      </Stack.Navigator>
+    );
+  } else if (verify || !signedUp) {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Welcome" component={Signup}/>
+        <Stack.Screen name="Complete" component={SignedUp} />
+      </Stack.Navigator>
+    );
+    
+  } else if(setup){
     return (
       <Tab.Navigator>
         <Tab.Screen name="Next Move Nav" component={OpportunityNavigator} options={{headerShown: false, tabBarLabel: "Next Move", tabBarIcon: ({tintColor}) =>

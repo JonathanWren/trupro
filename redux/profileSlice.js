@@ -37,7 +37,7 @@ const callAuthenticatedAPI = async (url, input, getState, dispatch, rejectWithVa
     }
 
     if (response.headers.get('Content-Type') === 'application/json') {
-        return response.json();
+        return await response.json();
     } else {
         return input;
     }
@@ -105,6 +105,19 @@ export const saveNextMove = createAsyncThunk(
     async (input, { getState, dispatch, rejectWithValue }) => {
         const response = await callAuthenticatedAPI('savenextmove', input, getState, dispatch, rejectWithValue);
         return input;
+    }
+  );
+
+export const getRole = createAsyncThunk(
+    'profile/getRole',
+    async (input, { getState, dispatch, rejectWithValue }) => {
+        const { viewRole } = getState().profile;
+        if (viewRole != null && viewRole.roleID != input.roleID) {
+            const response = await callAuthenticatedAPI('getrole', input, getState, dispatch, rejectWithValue);
+            return response;
+        } else {
+            return;
+        }
     }
   );
 
@@ -209,6 +222,7 @@ export const profileSlice = createSlice({
             deviceCode: '',
             sessionCode: '',
             users_id: '',
+            signed_up: false,
         },
         nextMove: {
             titles: [],
@@ -220,7 +234,17 @@ export const profileSlice = createSlice({
             salary: 0,
             jobType: [],
             seniority: [],
-        }
+        },
+        viewRole: {
+            roleID: 0,
+            title: '',
+            location: '',
+            salary: '',
+            jobType: '',
+            seniority: '',
+            description: '',
+            flexibility: '',
+        },
     },
     reducers: {
         updateEmail: (state, action) => {
@@ -242,6 +266,9 @@ export const profileSlice = createSlice({
             state.authenticationDetails.users_id = action.payload.users_id;
             state.authenticationDetails.verificationCode = action.payload.verificationCode;
         },
+        setSignedUp: (state, action) => {
+            state.authenticationDetails.signed_up = action.payload.signed_up;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(getMainDetails.fulfilled, updateMainDetails);
@@ -260,9 +287,32 @@ export const profileSlice = createSlice({
         builder.addCase(validateEmailToken.rejected, (state, action) => {
             state.authenticationDetails.verificationCode = '';
         });
+        builder.addCase(getRole.fulfilled, (state, action) => {
+            console.log("fulfilled");
+            console.log(action.payload);
+            if(state.viewRole == null){
+                state.viewRole = {};
+            }
+            state.viewRole.roleID = action.payload.roleID;
+            state.viewRole.title = action.payload.title;
+            state.viewRole.location = action.payload.Name;
+            state.viewRole.salary = action.payload.salary_range;
+            if (action.payload.jobtype_fulltime) {
+                state.viewRole.jobType = ("Full Time");
+            } else if (action.payload.jobtype_parttime) {
+                state.viewRole.jobType = ("Part Time");
+            } else if (action.payload.jobtype_contract) {
+                state.viewRole.jobType = ("Contract");
+            } else if (action.payload.jobtype_temporary) {
+                state.viewRole.jobType = ("Temporary");
+            }
+            state.viewRole.seniority = action.payload.seniority;
+            state.viewRole.description = action.payload.description;
+            state.viewRole.flexibility = action.payload.flexibility;
+        });
     },
 });
 
-export const { updateEmail, updateSessionCode, updateVerificationCode, updateVerificationCodeAndEmail, updateDeviceDetails} = profileSlice.actions;
+export const { updateEmail, setSignedUp, updateSessionCode, updateVerificationCode, updateVerificationCodeAndEmail, updateDeviceDetails} = profileSlice.actions;
 
 export default profileSlice.reducer;

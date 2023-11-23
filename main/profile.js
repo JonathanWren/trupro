@@ -7,7 +7,7 @@ import { saveMainDetails} from '../redux/profileSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckBox from "expo-checkbox";
 
-const Profile = ({route}) => {
+const Profile = (props) => {
     const dispatch = useDispatch();
 
     const firstName = useSelector(state => state.profile.mainDetails.firstName); 
@@ -23,83 +23,82 @@ const Profile = ({route}) => {
     }
     
     return (
-        <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-                <Text style={styles.fieldInput}>First name</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="First name"
-                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                    defaultValue={firstName}
-                    onChangeText={(name) => {
-                        dispatch (
-                            saveMainDetails({first_name: name})
-                        )
-                    }}
+        <View>
+            <Text style={styles.fieldInput}>First name</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="First name"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
+                defaultValue={firstName}
+                onChangeText={(name) => {
+                    dispatch (
+                        saveMainDetails({first_name: name})
+                    )
+                }}
+            />
+            <Text style={styles.fieldInput}>Last name</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Last name"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
+                defaultValue={lastName}
+                onChangeText={(name) => {
+                    dispatch (
+                        saveMainDetails({last_name: name})
+                    )
+                }}
+            />
+            <Text style={styles.fieldInput}>LinkedIn Profile URL</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="LinkedIn Profile URL"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
+                defaultValue={linkedInProfileURL}
+                onChangeText={(url) => {
+                    dispatch (
+                        saveMainDetails({linkedin_profile_url: url})
+                    )
+                }}
+            />
+            <View style={styles.checkboxContainer}>
+                <CheckBox value={hasLinkedId} 
+                    onValueChange={(checked) => checkboxChange(checked)}
+                    color={hasLinkedId ? 'blue' : undefined}
                 />
-                <Text style={styles.fieldInput}>Last name</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Last name"
-                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                    defaultValue={lastName}
-                    onChangeText={(name) => {
-                        dispatch (
-                            saveMainDetails({last_name: name})
-                        )
+                <Text style={styles.checkboxText} onPress={() => checkboxChange(!hasLinkedId)}>I do not have a LinkedIn Account</Text>
+            </View>
+            <Text style={styles.fieldInput}>Current or Most Recent Job Title</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Job Title"
+                placeholderTextColor={colors.fieldPlaceHolderTextColor}
+                defaultValue={currentRoleTitle}
+                onChangeText={(text) => {
+                    dispatch (
+                        saveMainDetails({job_title: text})
+                    )
+                }}
+            />
+            
+            {props.inWizard &&
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {            
+                        //Validate that name and job title are completed
+                        if (firstName === '') {
+                            alert('Please complete your first name');
+                            return;
+                        }
+                        if (lastName === '') {
+                            alert('Please complete your last name');
+                            return;
+                        }
+                        props.onComplete();
                     }}
-                />
-                <Text style={styles.fieldInput}>LinkedIn Profile URL</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="LinkedIn Profile URL"
-                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                    defaultValue={linkedInProfileURL}
-                    onChangeText={(url) => {
-                        dispatch (
-                            saveMainDetails({linkedin_profile_url: url})
-                        )
-                    }}
-                />
-                <View style={styles.checkboxContainer}>
-                    <CheckBox value={hasLinkedId} 
-                        onValueChange={(checked) => checkboxChange(checked)}
-                        color={hasLinkedId ? 'blue' : undefined}
-                    />
-                    <Text style={styles.checkboxText} onPress={() => checkboxChange(!hasLinkedId)}>I do not have a LinkedIn Account</Text>
-                </View>
-                <Text style={styles.fieldInput}>Current or Most Recent Job Title</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Job Title"
-                    placeholderTextColor={colors.fieldPlaceHolderTextColor}
-                    defaultValue={currentRoleTitle}
-                    onChangeText={(text) => {
-                        dispatch (
-                            saveMainDetails({job_title: text})
-                        )
-                    }}
-                />
-                
-                {route.params.inWizard &&
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => {            
-                            //Validate that name and job title are completed
-                            if (firstName === '') {
-                                alert('Please complete your first name');
-                                return;
-                            }
-                            if (lastName === '') {
-                                alert('Please complete your last name');
-                                return;
-                            }
-                        }}
-                    >
-                        <Text style={styles.buttonText}>Continue</Text>
-                    </TouchableOpacity>
-                }
-            </ScrollView>
+                >
+                    <Text style={styles.buttonText}>Continue</Text>
+                </TouchableOpacity>
+            }
         </View>
     );
 }
