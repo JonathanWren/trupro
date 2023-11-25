@@ -37,7 +37,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     centerView: {
-        maxWidth: 800,
+        maxWidth: 668,
         width: '100%',
     },
     heading: {
@@ -68,7 +68,7 @@ export default StyleSheet.create({
         paddingLeft: 7,
     },
     text: {
-        fontSize: 15,
+        fontSize: 16,
         paddingBottom: 5,
     },
     contactCon: {
@@ -209,4 +209,9 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'rgba(52, 52, 52, 0.5 )'
       },
+      roleTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        paddingBottom: 8,
+      }
 });
