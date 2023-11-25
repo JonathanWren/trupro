@@ -104,7 +104,7 @@ const Profile = (props) => {
                         props.onComplete();
                     }}
                 >
-                    <Text style={styles.buttonText}>Continue</Text>
+                    <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
             }
         </View>

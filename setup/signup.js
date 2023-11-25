@@ -16,7 +16,7 @@ const Signup = () => {
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.centerView}>
                 <Text style={styles.heading}>Welcome to TruPro</Text>
-                <Text style={styles.text}></Text>
+                <Text style={styles.text}>Complete the following information to start getting emailed roles that you are recommended for.</Text>
                 <Profile inWizard={true} onComplete={onComplete} />
             </View>
         </ScrollView>

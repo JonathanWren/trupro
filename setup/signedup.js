@@ -13,7 +13,7 @@ const SignedUp = () => {
             <View style={styles.centerView}>
             <Text style={styles.heading}>Thank you for signing up!</Text>
             <Text style={styles.text}></Text>
-            <Text> We will now send you roles that are relevant to you that are advertised at companies where you will be recommended. You can customise what roles you will be sent in more detail on the next screen.</Text>
+            <Text>We will now send you roles that are relevant to you that are advertised at companies where you will be recommended. You can customise what roles you will be sent in more detail on the next screen.</Text>
             <Text></Text>
             <TouchableOpacity
                 style={styles.button}
