@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import config from '../main/config.js';
 
-const callAuthenticatedAPI = async (url, input, getState, dispatch, rejectWithValue) => {
+export const callAuthenticatedAPI = async (url, input, getState, dispatch, rejectWithValue) => {
     const { authenticationDetails } = getState().profile;
 
     const SecondTry = "SecondTry" in input;
@@ -29,7 +29,7 @@ const callAuthenticatedAPI = async (url, input, getState, dispatch, rejectWithVa
     if (response.status === 401 && !SecondTry) {
       await dispatch(login());
       input["SecondTry"] = true;
-      return callAuthenticatedAPI(url, input, getState, dispatch);
+      return await callAuthenticatedAPI(url, input, getState, dispatch);
     }
 
     if(!response.ok){
@@ -66,6 +66,15 @@ export const getNextMove = createAsyncThunk(
         return response;
     }
 );
+
+export const submitApplication = createAsyncThunk(
+    'profile/submitApplication',
+    async (input, { getState, dispatch, rejectWithValue }) => {
+        const response = await callAuthenticatedAPI('applyforrole', input, getState, dispatch, rejectWithValue);
+        return response;
+    }
+);
+
 
 export const validateEmailToken = createAsyncThunk(
     'profile/validateEmailToken',
@@ -248,6 +257,7 @@ export const profileSlice = createSlice({
             seniority: '',
             description: '',
             flexibility: '',
+            applied: false,
         },
     },
     reducers: {
@@ -294,22 +304,28 @@ export const profileSlice = createSlice({
             if(state.viewRole == null){
                 state.viewRole = {};
             }
-            state.viewRole.roleID = action.payload.roleID;
-            state.viewRole.title = action.payload.title;
-            state.viewRole.location = action.payload.Name;
-            state.viewRole.salary = action.payload.salary_range;
-            if (action.payload.jobtype_fulltime) {
-                state.viewRole.jobType = ("Full Time");
-            } else if (action.payload.jobtype_parttime) {
-                state.viewRole.jobType = ("Part Time");
-            } else if (action.payload.jobtype_contract) {
-                state.viewRole.jobType = ("Contract");
-            } else if (action.payload.jobtype_temporary) {
-                state.viewRole.jobType = ("Temporary");
+            if(action.payload != null){
+                state.viewRole.roleID = action.payload.role_id;
+                state.viewRole.title = action.payload.title;
+                state.viewRole.location = action.payload.Name;
+                state.viewRole.salary = action.payload.salary_range;
+                if (action.payload.jobtype_fulltime) {
+                    state.viewRole.jobType = ("Full Time");
+                } else if (action.payload.jobtype_parttime) {
+                    state.viewRole.jobType = ("Part Time");
+                } else if (action.payload.jobtype_contract) {
+                    state.viewRole.jobType = ("Contract");
+                } else if (action.payload.jobtype_temporary) {
+                    state.viewRole.jobType = ("Temporary");
+                }
+                state.viewRole.seniority = action.payload.seniority;
+                state.viewRole.description = action.payload.description;
+                state.viewRole.flexibility = action.payload.flexibility;
+                state.viewRole.applied = false;
             }
-            state.viewRole.seniority = action.payload.seniority;
-            state.viewRole.description = action.payload.description;
-            state.viewRole.flexibility = action.payload.flexibility;
+        });
+        builder.addCase(submitApplication.fulfilled, (state, action) => {
+            state.viewRole.applied = true;
         });
     },
 });
